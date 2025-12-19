@@ -1,4 +1,4 @@
-package esiag.back.repositories.sample;
+package esiag.back.repositories;
 
 import esiag.back.models.Sample;
 import esiag.back.models.SampleType;
