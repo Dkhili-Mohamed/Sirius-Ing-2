@@ -1,4 +1,4 @@
-package esiag.back.services.sample;
+package esiag.back.services;
 
 import esiag.back.models.Sample;
 import esiag.back.models.SampleType;
