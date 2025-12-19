@@ -1,4 +1,4 @@
-package esiag.back.controllers.sample;
+package esiag.back.controllers;
 
 import esiag.back.models.sample.Sample;
 import esiag.back.models.sample.SampleType;
