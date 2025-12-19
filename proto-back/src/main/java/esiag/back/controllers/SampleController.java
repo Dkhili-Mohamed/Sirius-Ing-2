@@ -2,7 +2,7 @@ package esiag.back.controllers;
 
 import esiag.back.models.Sample;
 import esiag.back.models.SampleType;
-import esiag.back.services.sample.SampleService;
+import esiag.back.services.SampleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
