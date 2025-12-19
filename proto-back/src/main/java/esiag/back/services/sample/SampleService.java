@@ -1,7 +1,7 @@
 package esiag.back.services.sample;
 
-import esiag.back.models.sample.Sample;
-import esiag.back.models.sample.SampleType;
+import esiag.back.models.Sample;
+import esiag.back.models.SampleType;
 import esiag.back.repositories.sample.SampleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

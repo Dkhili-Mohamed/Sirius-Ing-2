@@ -1,7 +1,7 @@
 package esiag.back.repositories.sample;
 
-import esiag.back.models.sample.Sample;
-import esiag.back.models.sample.SampleType;
+import esiag.back.models.Sample;
+import esiag.back.models.SampleType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
