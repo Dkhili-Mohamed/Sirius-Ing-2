@@ -21,12 +21,17 @@ public class Salle extends Espace {
     @Column(name = "type_salle")
     private String typeSalle;
 
+    @Column(name = "etat_salle")
+    @Enumerated(EnumType.STRING)
+    private EtatSalle etatSalle;
+
     @Override
     public String toString() {
         return "Salle{" +
                 "idSalle=" + idSalle +
                 ", capacite=" + capacite +
                 ", typeSalle='" + typeSalle + '\'' +
+                ", etatSalle=" + etatSalle +
                 '}';
     }
 }
