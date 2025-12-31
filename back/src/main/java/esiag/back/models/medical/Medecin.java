@@ -12,8 +12,8 @@ public class Medecin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_medicin")
-    private Long idMedicin;
+    @Column(name = "id_medecin")
+    private Long idMedecin;
 
     @Column(name = "nom")
     private String nomMedecin;
@@ -29,7 +29,7 @@ public class Medecin {
     @Override
     public String toString() {
         return "Medecin{" +
-                "idMedicin=" + idMedicin +
+                "idMedecin=" + idMedecin +
                 ", nomMedecin='" + nomMedecin + '\'' +
                 ", prenomMedecin='" + prenomMedecin + '\'' +
                 ", specialiteMedecin='" + specialiteMedecin + '\'' +

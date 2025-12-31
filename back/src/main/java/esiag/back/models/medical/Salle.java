@@ -8,7 +8,7 @@ import javax.persistence.*;
 @Entity
 @Data
 @Table(name = "salle")
-public class Salle extends Espace {
+public class Salle{
 
     @Id
     @Column(name = "id_salle")
