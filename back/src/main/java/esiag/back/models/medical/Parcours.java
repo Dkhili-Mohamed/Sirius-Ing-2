@@ -19,8 +19,9 @@ public class Parcours {
     @Column(name = "id_medecin")
     private Long idMedecin;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "statut_global")
-    private String statutGlobal;
+    private StatutActeMedical statutGlobal;
 
     @Column(name = "date_creation")
     private LocalDateTime dateCreation;

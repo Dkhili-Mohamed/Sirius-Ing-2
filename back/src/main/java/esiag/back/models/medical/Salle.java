@@ -25,6 +25,12 @@ public class Salle extends Espace {
     @Enumerated(EnumType.STRING)
     private EtatSalle etatSalle;
 
+    @Column(name = "id_espace")
+    private Long idEspace;
+
+    @Column(name = "place_disponible")
+    private int placeDisponible;
+
     @Override
     public String toString() {
         return "Salle{" +
@@ -32,6 +38,8 @@ public class Salle extends Espace {
                 ", capacite=" + capacite +
                 ", typeSalle='" + typeSalle + '\'' +
                 ", etatSalle=" + etatSalle +
+                ", idEspace=" + idEspace +
+                ", placeDisponible=" + placeDisponible +
                 '}';
     }
 }

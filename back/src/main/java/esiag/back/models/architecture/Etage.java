@@ -14,8 +14,8 @@ public class Etage {
     @Column(name = "id_etage")
     private Long idEtage;
 
-    @Column(name = "numero")
-    private String numero;
+    @Column(name = "numero_etage")
+    private String numeroEtage;
 
     @Column(name = "id_batiment")
     private String idBatiment;
@@ -26,7 +26,7 @@ public class Etage {
     public String toString() {
         return "Etage{" +
                 "idEtage=" + idEtage +
-                ", numero='" + numero + '\'' +
+                ", numeroEtage='" + numeroEtage + '\'' +
                 ", idBatiment='" + idBatiment + '\'' +
                 '}';
     }

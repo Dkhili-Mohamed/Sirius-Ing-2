@@ -20,8 +20,9 @@ public class ActeMedical {
     @Column(name = "ordre")
     private int ordre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
+    private StatutActeMedical statut;
 
     @Column(name = "id_parcours")
     private Long idParcours;
