@@ -2,7 +2,9 @@ package esiag.back.services;
 
 
 import esiag.back.models.architecture.Connexion;
+import esiag.back.models.architecture.Espace;
 import esiag.back.repositories.ConnexionRepository;
+import esiag.back.repositories.EspaceRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ public class CheminService {
 
     @Autowired
     private ConnexionRepository connexionRepository;
+    @Autowired
+    private EspaceRepository espaceRepository;
 
 
     public CheminService(ConnexionRepository connexionRepository) {
@@ -50,7 +54,7 @@ public class CheminService {
         /*
             Parcours du graphe en largeur pour trouver le chemin le plus cours entre l'espace de départ
             et tous les autres espaces.
-            La boucle s'arrête lorsqu'on visite l'espace d'arrivé
+            La boucle s'arrête lorsqu'on visite l'espace d'arrivé.
 
          */
         List<Long> chemin = new ArrayList<>();
@@ -100,6 +104,19 @@ public class CheminService {
 
 
         return chemin;
+    }
+
+    public  List<Optional<Espace>> getChemin(Espace espace1, Espace espace2){
+
+        List<Optional<Espace>> cheminEspace = new ArrayList<>();
+        List<Long> cheminId = findChemin(espace1.getIdEspace(), espace2.getIdEspace());
+
+        for (Long id : cheminId) {
+            cheminEspace.add(espaceRepository.findById(id));
+        }
+
+
+        return cheminEspace;
     }
 
 
