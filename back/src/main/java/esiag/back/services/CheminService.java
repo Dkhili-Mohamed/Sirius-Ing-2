@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Log4j2
 @Service
@@ -47,6 +44,62 @@ public class CheminService {
         }
         log.info("Construction du graphe terminé");
         return grapheDuPlan;
+    }
+
+    public List<Long> findChemin(Long idDepart, Long idArrive){
+        /*
+            Parcours du graphe en largeur pour trouver le chemin le plus cours entre l'espace de départ
+            et tous les autres espaces.
+            La boucle s'arrête lorsqu'on visite l'espace d'arrivé
+
+         */
+        List<Long> chemin = new ArrayList<>();
+
+        Queue<Long> queue = new LinkedList<>();
+        Set<Long> sommetsVisites = new HashSet<>();
+        Map<Long, Long> arbreCouvrant = new HashMap<>();
+        Map<Long, List<Long>> grapheDuPlan =  getGrapheDuPlan();
+
+        // Initialisation
+
+        queue.add(idDepart);
+        sommetsVisites.add(idDepart);
+        arbreCouvrant.put(idDepart, null);
+
+        while (!queue.isEmpty()) {
+            Long sommetCourant = queue.poll();
+
+            if (sommetCourant == idArrive) {
+                break;
+            }
+
+            for (Long voisin : grapheDuPlan.get(sommetCourant)) {
+                if (!sommetsVisites.contains(voisin)) {
+                    sommetsVisites.add(voisin);
+                    arbreCouvrant.put(voisin, sommetCourant);
+                    if (voisin == idArrive) {
+                        break;
+                        // On s'arrête dès que le sommet visité est l'espace d'arrivé
+                    }
+                    queue.add(voisin);
+                }
+            }
+        }
+
+        /*
+            Reconstruction du chemin à partir de l'arbre couvrant construit
+         */
+        Long sommet = idArrive;
+
+        while (sommet != null) {
+            chemin.add(sommet);
+            sommet = arbreCouvrant.get(sommet);
+        }
+
+        Collections.reverse(chemin);
+
+
+        return chemin;
     }
 
 
