@@ -1,3 +1,14 @@
 node_modules/
 .DS_Store/
 .idea/
+
+# IntelliJ
+
+*.iml
+
+# Maven
+target/
+
+# Java
+*.class
+*.jar
