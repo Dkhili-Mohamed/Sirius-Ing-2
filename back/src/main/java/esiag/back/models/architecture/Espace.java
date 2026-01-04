@@ -1,7 +1,6 @@
 package esiag.back.models.architecture;
 
 
-import esiag.back.models.medical.TypeEspace;
 import lombok.Data;
 
 import javax.persistence.*;
