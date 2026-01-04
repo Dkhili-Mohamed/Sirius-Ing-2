@@ -106,15 +106,19 @@ public class CheminService {
         return chemin;
     }
 
-    public  List<Optional<Espace>> getChemin(Espace espace1, Espace espace2){
+    public  List<Espace> getChemin(Espace espace1, Espace espace2){
 
-        List<Optional<Espace>> cheminEspace = new ArrayList<>();
+        List<Espace> cheminEspace = new ArrayList<>();
         List<Long> cheminId = findChemin(espace1.getIdEspace(), espace2.getIdEspace());
 
         for (Long id : cheminId) {
-            cheminEspace.add(espaceRepository.findById(id));
-        }
+            Espace espace = espaceRepository.findById(id)
+                    .orElseThrow(() -> new IllegalStateException(
+                            "Espace introuvable pour l'id " + id
+                    ));
 
+            cheminEspace.add(espace);
+        }
 
         return cheminEspace;
     }
