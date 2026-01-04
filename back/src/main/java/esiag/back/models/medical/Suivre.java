@@ -15,18 +15,20 @@ public class Suivre {
     @Column(name = "id_suivre")
     private Long idSuivre;
 
-    @Column(name = "id_patient")
-    private Long idPatient;
+    @ManyToOne
+    @JoinColumn(name = "id_parcours", nullable = false)
+    private Parcours parcours;
 
-    @Column(name = "id_parcours")
-    private Long idParcours;
+    @ManyToOne
+    @JoinColumn(name = "id_patient", nullable = false)
+    private Patient patient;
 
     @Override
     public String toString() {
         return "Suivre{" +
                 "idSuivre=" + idSuivre +
-                ", idPatient=" + idPatient +
-                ", idParcours=" + idParcours +
+                ", parcours=" + parcours +
+                ", patient=" + patient +
                 '}';
     }
 }

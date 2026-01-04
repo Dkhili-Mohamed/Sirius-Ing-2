@@ -25,11 +25,12 @@ public class Salle{
     @Enumerated(EnumType.STRING)
     private EtatSalle etatSalle;
 
-    @Column(name = "id_espace")
-    private Long idEspace;
-
     @Column(name = "place_disponible")
     private int placeDisponible;
+
+    @ManyToOne
+    @JoinColumn(name = "id_espace", nullable = false)
+    private Espace espace;
 
     @Override
     public String toString() {
@@ -38,8 +39,8 @@ public class Salle{
                 ", capacite=" + capacite +
                 ", typeSalle='" + typeSalle + '\'' +
                 ", etatSalle=" + etatSalle +
-                ", idEspace=" + idEspace +
                 ", placeDisponible=" + placeDisponible +
+                ", espace=" + espace +
                 '}';
     }
 }
