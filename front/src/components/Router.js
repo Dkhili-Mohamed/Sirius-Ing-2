@@ -4,6 +4,7 @@ import App from "./App";
 import Sample from "./Sample";
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
+import Patient from "./Patient";
 
 export default function Router () {
     return (
@@ -13,6 +14,7 @@ export default function Router () {
                 <Routes>
                     <Route path="/" element={<App />}/>
                     <Route path="/sample" element={<Sample />}/>
+                    <Route path="/patient" element={<Patient />}/>
                     <Route path="*" element={<NotFound />}/>
                 </Routes>
             </div>
