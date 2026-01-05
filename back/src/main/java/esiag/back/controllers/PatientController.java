@@ -19,12 +19,12 @@ public class PatientController {
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Long id){
 
-        return new ResponseEntity<>(patientService.findByIdpatient(id), HttpStatus.OK);
+        return new ResponseEntity<>(patientService.findByIdPatient(id), HttpStatus.OK);
     }
 
     @GetMapping("all")
     public ResponseEntity<List<Patient>> findAllPatient(){
-        return new ResponseEntity<>(patientService.findAllpatient(), HttpStatus.OK);
+        return new ResponseEntity<>(patientService.findAllPatients(), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
