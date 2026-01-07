@@ -10,6 +10,9 @@ export default function Navbar(){
                 <li className="nav-item">
                     <Link className="nav-link" to="/sample">Sample</Link>
                 </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/api/parcours/all">Parcours</Link>
+                </li>
             </ul>
     );
 };

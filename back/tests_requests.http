@@ -25,4 +25,9 @@ GET {{baseUrl}}/parcourspatient/1
 Accept: application/json
 
 ### 5. Récupérer le statut des parcours pour tous les patients (findAllPatientStatutParcours)
-GET {{baseUrl}}/patientstatutparcours
+GET http://localhost:8081/api/parcours/all
+Accept: application/json
+
+### 6. Récupérer le statut du parcours pour un patient spécifique (findPatientStatutParcoursById)
+GET http://localhost:8081/api/parcours/1
+Accept: application/json

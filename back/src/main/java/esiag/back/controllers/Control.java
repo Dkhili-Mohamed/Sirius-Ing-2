@@ -24,12 +24,8 @@ public class Control {
 
     @GetMapping("/")
     public ResponseEntity<List<Espace>> findChemin() {
-        Espace  espace1 = new Espace();
-        espace1.setIdEspace(2L);
-        Espace  espace2 = new Espace();
-        espace2.setIdEspace(5L);
-        
-        return new ResponseEntity<>(cheminService.getChemin(espace1,espace2), HttpStatus.OK);
+
+        return new ResponseEntity<>(cheminService.findChemin(1L, 5L), HttpStatus.OK);
     }
 
     @GetMapping("/{idPatient}")
@@ -45,5 +41,5 @@ public class Control {
     @GetMapping("parcourspatient/{idPatient}")
     public ResponseEntity<List<ParcoursPatient>>  findActeMedicalById(@PathVariable Long idPatient) {
         return new ResponseEntity<>(parcoursService.findParcoursPatientById(idPatient), HttpStatus.OK);
-    }   
-}
+    }
+    }

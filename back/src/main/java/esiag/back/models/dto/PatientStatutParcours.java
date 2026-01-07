@@ -21,6 +21,7 @@ public class PatientStatutParcours{
         this.nomPatient = nomPatient;
         this.prenomPatient = prenomPatient;
         this.statutParcours = statutParcours;
+        this.nomParcours = nomParcours;
     }   
 
 
