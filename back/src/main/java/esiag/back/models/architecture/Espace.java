@@ -22,6 +22,10 @@ public class Espace {
     @Column(name = "type_espace")
     private TypeEspace typeEspace;
 
+    @ManyToOne
+    @JoinColumn(name = "id_etage", nullable = false)
+    private Etage etage;
+
     @Override
     public String toString() {
         return "Espace{" +

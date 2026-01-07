@@ -17,7 +17,7 @@ public class Etage {
     @Column(name = "numero_etage")
     private String numeroEtage;
 
-    @ManyToMany
+    @ManyToOne
     @JoinColumn(name = "id_batiment", nullable = false)
     private Batiment batiment;
 
