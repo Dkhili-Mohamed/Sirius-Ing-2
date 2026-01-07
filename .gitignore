@@ -1,6 +1,9 @@
 node_modules/
 .DS_Store/
 .idea/
+.vscode/
+tests_requests.http
+*.log
 
 # IntelliJ
 

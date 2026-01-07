@@ -1,0 +1,25 @@
+### Variables
+@baseUrl = http://localhost:8081/test
+
+### 1. Récupérer le chemin (findChemin)
+GET {{baseUrl}}/
+Accept: application/json
+
+###
+
+### 2. Récupérer le parcours d'un patient par son ID (findParcours)
+# Remplacez 123 par un ID existant
+GET {{baseUrl}}/1
+Accept: application/json
+
+###
+
+### 3. Récupérer tous les actes médicaux (findActeMedicals)
+GET {{baseUrl}}/all
+Accept: application/json
+
+###
+
+### 4. Récupérer le parcours patient spécifique (findActeMedicalById)
+GET {{baseUrl}}/parcourspatient/1
+Accept: application/json
