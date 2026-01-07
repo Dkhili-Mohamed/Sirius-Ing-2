@@ -97,6 +97,7 @@ CREATE TABLE patient (
 
 CREATE TABLE parcours (
     id_parcours SERIAL PRIMARY KEY,
+    nom_parcours VARCHAR(100) NOT NULL,
     statut_global statut_acte_medical_enum,
     date_creation TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     id_medecin INTEGER NOT NULL,

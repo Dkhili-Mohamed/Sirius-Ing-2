@@ -26,6 +26,9 @@ public class Parcours {
     @Column(name = "date_creation")
     private LocalDateTime dateCreation;
 
+    @Column(name = "nom_parcours")
+    private String nomParcours;
+
     @Override
     public String toString() {
         return "Parcours{" +
@@ -33,6 +36,7 @@ public class Parcours {
                 ", idMedecin=" + idMedecin +
                 ", statutGlobal='" + statutGlobal + '\'' +
                 ", dateCreation=" + dateCreation +
+                ", nomParcours='" + nomParcours + '\'' +
                 '}';
     }
 }
