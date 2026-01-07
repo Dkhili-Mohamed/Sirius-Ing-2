@@ -25,6 +25,12 @@ public class PatientA {
 
     @Column(name = "numeropatientA")
     private String numeropatientA;
+    
+    @Column(name = "patientAlatitude")
+    private Double patientAlatitude;
+
+    @Column(name = "patientAlongitude")
+    private Double patientAlongitude;
 
     @Override
     public String toString() {
@@ -33,6 +39,8 @@ public class PatientA {
                 ", nomPatientA=" + nompatientA +
                 ", adresssepatientA" + adressepatientA +
                 ", numeropatientA" + numeropatientA +
+                ", patientAlatitude=" + patientAlatitude +
+                ", patientAlongitude=" + patientAlongitude +
                 '}';
     }
 

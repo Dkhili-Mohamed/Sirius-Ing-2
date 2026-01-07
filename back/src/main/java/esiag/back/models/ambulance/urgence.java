@@ -21,6 +21,11 @@ public class urgence {
 
     @Column(name = "adresseurgence")
     private String adresseurgence;
+     @Column(name = "urgenceAlatitude")
+    private Double urgencelatitude;
+
+    @Column(name = "urgencelongitude")
+    private Double urgencelongitude;
 
     @Override
     public String toString() {
@@ -28,6 +33,8 @@ public class urgence {
                 "idurgence=" + idurgence +
                 ", nomurgence=" + nomurgence +
                 ", adresseurgence" + adresseurgence+
+                ", urgencelatitude=" + urgencelatitude +
+                ", urgencelongitude=" + urgencelongitude +
                 '}';
     }
 

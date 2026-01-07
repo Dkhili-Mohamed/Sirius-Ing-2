@@ -1,4 +1,5 @@
 package esiag.back.models.ambulance;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,40 +8,85 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+
 @Entity
 @Data
 @Table(name = "ambulance")
-public class ambulance {
-    @Id
-    @Column(name="id_ambulance")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long idAmbulance;
+public class Ambulance {
 
-    @Column(name = "disponibilite_ambulance")
-    private boolean disponibiliteAmbulance;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)  
+    @Column(name = "idambulance")
+    private Long idambulance;
 
     @Column(name = "adresseambulance")
-    private double adresseambulance;
+    private String adresseambulance;
 
-    @Column(name = "vitessemoy_ambulance")
-    private float vitessemoyAmbulance;
+    @Column(name = "disponibiliteambulance")
+    private Boolean disponibiliteambulance;
 
-    @Column(name = "equipement_ambulance")
-    private int equipementAmbulance;
+    @Column(name = "vitessemoyambulance")
+    private Double vitessemoyambulance;
 
-    @Column(name = "experience_ambulance")
-    private float experienceAmbulance;
+    @Column(name = "equipementambulance")
+    private Double equipementambulance;
 
-    @Override
-    public String toString() {
-        return "ambulance{" +
-                "idambulance=" + idAmbulance +
-                ", adresseambulance=" + adresseambulance +
-                ", vitessemoyambulance" + vitessemoyAmbulance +
-                ", equipementambulance" + equipementAmbulance +
-                ", experienceambulance" + experienceAmbulance +
-                '}';
+    @Column(name = "experienceambulance")
+    private Double experienceambulance;
+    
+    @Column(name = "ambulancelatitude")
+    private Double ambulancelatitude;
+
+    @Column(name = "ambulancelongitude")
+    private Double ambulancelongitude;
+
+    public Long getIdambulance() {
+        return idambulance;
+    }
+
+    public String getAdresseambulance() {
+        return adresseambulance;
+    }
+
+    public Boolean getDisponibiliteambulance() {
+        return disponibiliteambulance;
+    }
+
+    public Double getVitessemoyambulance() {
+        return vitessemoyambulance;
+    }
+
+    public Double getEquipementambulance() {
+        return equipementambulance;
+    }
+
+    public Double getExperienceambulance() {
+        return experienceambulance;
+    }
+
+    public Double getAmbulancelatitude() {
+        return ambulancelatitude;
+    }
+
+    public Double getAmbulancelongitude() {
+        return ambulancelongitude;
     }
 
 
+    
+    
+
+    @Override
+    public String toString() {
+        return "Ambulance{" +
+                "idAmbulance=" + idambulance +
+                ", adresseAmbulance='" + adresseambulance + '\'' +
+                ", disponibiliteAmbulance=" + disponibiliteambulance +
+                ", vitessemoyAmbulance=" + vitessemoyambulance +
+                ", equipementAmbulance=" + equipementambulance +
+                ", experienceAmbulance=" + experienceambulance +
+                ", ambulancelatitude=" + ambulancelatitude +
+                ", ambulancelongitude=" + ambulancelongitude +
+                '}';
+    }
 }

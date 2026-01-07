@@ -1,21 +1,23 @@
 import React from 'react';
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import Sample from "./Sample";
+import AmbulanceList from "./AmbulanceList";   // <-- import avec nouveau nom
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 
-export default function Router () {
+export default function Router() {
     return (
         <BrowserRouter>
             <div>
                 <Navbar />
                 <Routes>
-                    <Route path="/" element={<App />}/>
-                    <Route path="/sample" element={<Sample />}/>
-                    <Route path="*" element={<NotFound />}/>
+                    <Route path="/" element={<App />} />
+                    <Route path="/sample" element={<Sample />} />
+                    <Route path="/ambulance" element={<AmbulanceList />} />  {/* <-- route mise à jour */}
+                    <Route path="*" element={<NotFound />} />
                 </Routes>
             </div>
         </BrowserRouter>
     );
-};
+}

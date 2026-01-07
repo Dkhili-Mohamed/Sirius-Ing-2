@@ -107,7 +107,19 @@ CREATE TABLE patientA (
     idpatientA SERIAL PRIMARY KEY,
     nompatientA VARCHAR(255) NOT NULL,
     adressepatientA VARCHAR(255),
-    numeropatientA VARCHAR(50)
+    numeropatientA VARCHAR(50),
+    patientAlatitude DOUBLE PRECISION,        
+    patientAlongitude DOUBLE PRECISION
+);
+CREATE TABLE ambulance (
+    idambulance SERIAL PRIMARY KEY,        
+    adresseambulance VARCHAR(255),         
+    disponibiliteambulance BOOLEAN DEFAULT true,  
+    vitessemoyambulance DOUBLE PRECISION,    
+    equipementambulance DOUBLE PRECISION,    
+    experienceambulance DOUBLE PRECISION,     
+    ambulancelatitude DOUBLE PRECISION,        
+    ambulancelongitude DOUBLE PRECISION
 );
 
 
