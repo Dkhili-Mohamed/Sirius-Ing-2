@@ -16,8 +16,9 @@ public class Parcours {
     @Column(name = "id_parcours")
     private Long idParcours;
 
-    @Column(name = "id_medecin")
-    private Long idMedecin;
+    @ManyToOne
+    @JoinColumn(name = "id_medecin", nullable = false)
+    private Medecin medecin;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "statut_global")
@@ -33,7 +34,7 @@ public class Parcours {
     public String toString() {
         return "Parcours{" +
                 "idParcours=" + idParcours +
-                ", idMedecin=" + idMedecin +
+                ", medecin=" + medecin +
                 ", statutGlobal='" + statutGlobal + '\'' +
                 ", dateCreation=" + dateCreation +
                 ", nomParcours='" + nomParcours + '\'' +

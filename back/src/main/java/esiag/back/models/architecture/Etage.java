@@ -17,8 +17,9 @@ public class Etage {
     @Column(name = "numero_etage")
     private String numeroEtage;
 
-    @Column(name = "id_batiment")
-    private String idBatiment;
+    @ManyToMany
+    @JoinColumn(name = "id_batiment", nullable = false)
+    private Batiment batiment;
 
     public Etage() {}
 
@@ -27,7 +28,7 @@ public class Etage {
         return "Etage{" +
                 "idEtage=" + idEtage +
                 ", numeroEtage='" + numeroEtage + '\'' +
-                ", idBatiment='" + idBatiment + '\'' +
+                ", batiment='" + batiment + '\'' +
                 '}';
     }
 }
