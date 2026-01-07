@@ -1,7 +1,9 @@
 package esiag.back.services;
 
 import esiag.back.models.dto.ParcoursPatient;
+import esiag.back.models.dto.PatientStatutParcours;
 import esiag.back.models.medical.ActeMedical;
+import esiag.back.models.medical.Patient;
 import esiag.back.repositories.ParcoursRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +24,9 @@ public class ParcoursService {
 
     public List<ActeMedical> findAllParcoursPatient(){
         return parcoursRepository.findAll();
+    }
+
+    public List<PatientStatutParcours> findAllPatientStatutParcours() {
+        return parcoursRepository.findAllPatientStatutParcours();
     }
 }

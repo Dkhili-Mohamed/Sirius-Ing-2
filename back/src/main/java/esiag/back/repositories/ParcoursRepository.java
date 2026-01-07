@@ -1,6 +1,7 @@
 package esiag.back.repositories;
 
 import esiag.back.models.dto.ParcoursPatient;
+import esiag.back.models.dto.PatientStatutParcours;
 import esiag.back.models.medical.ActeMedical;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -39,4 +40,9 @@ public interface ParcoursRepository extends JpaRepository<ActeMedical,Long> {
     """)
     List<ParcoursPatient> getParcoursByPatientId(@Param("idPatient") Long idPatient);
 
+    @Query("SELECT new esiag.back.models.dto.PatientStatutParcours(pa.idParcours, p.idPatient, pa.nomParcours, p.nomPatient, p.prenomPatient, pa.statutGlobal) " +
+       "FROM Suivre s " +
+       "JOIN s.parcours pa " +
+       "JOIN s.patient p")
+    List<PatientStatutParcours> findAllPatientStatutParcours();
 }

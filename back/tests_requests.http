@@ -23,3 +23,6 @@ Accept: application/json
 ### 4. Récupérer le parcours patient spécifique (findActeMedicalById)
 GET {{baseUrl}}/parcourspatient/1
 Accept: application/json
+
+### 5. Récupérer le statut des parcours pour tous les patients (findAllPatientStatutParcours)
+GET {{baseUrl}}/patientstatutparcours
