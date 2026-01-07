@@ -103,6 +103,14 @@ CREATE TABLE parcours (
     CONSTRAINT fk_parcours_medecin FOREIGN KEY (id_medecin) REFERENCES medecin(id_medecin)
 );
 
+CREATE TABLE patientA (
+    idpatientA SERIAL PRIMARY KEY,
+    nompatientA VARCHAR(255) NOT NULL,
+    adressepatientA VARCHAR(255),
+    numeropatientA VARCHAR(50)
+);
+
+
 
 CREATE TABLE suivre (
     id_suivre SERIAL PRIMARY KEY,
