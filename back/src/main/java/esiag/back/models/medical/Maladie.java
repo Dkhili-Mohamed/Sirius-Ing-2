@@ -15,22 +15,22 @@ public class Maladie {
     @Column(name="id_maladie")
     private int idMaladie;
 
-    @Column(name = "date_diagnostic")
-    private LocalDate dateDiagnostic;
-
     @Column(name = "nom")
     private String nomMaladie;
 
     @Column(name = "description")
     private String descriptionMaladie;
 
+    @Column(name = "date_diagnostic")
+    private LocalDate dateDiagnostic;
+
     @Override
     public String toString() {
         return "Maladie{" +
                 " id_maladie =" + idMaladie +
+                ", nomMaladie =" + nomMaladie +
+                ", descriptionMaladie =" + descriptionMaladie +
                 ", date_diagnostic =" + dateDiagnostic +
-                ", nom =" + nomMaladie +
-                ", description =" + descriptionMaladie +
                 '}';
     }
 }

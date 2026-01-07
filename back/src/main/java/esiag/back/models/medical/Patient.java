@@ -4,6 +4,7 @@ package esiag.back.models.medical;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Data
@@ -23,6 +24,12 @@ public class Patient {
 
     @Column(name = "age")
     private Integer agePatient;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<MaladiePatient> maladies;
+
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
+    private List<DPI> dpis;
 
     @Override
     public String toString() {

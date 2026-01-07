@@ -1,6 +1,6 @@
 package esiag.back.models.medical;
 
-import esiag.back.models.SampleType;
+
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,12 +15,13 @@ public class MaladiePatient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idMaladiePatient;
 
+    @ManyToOne
+    @JoinColumn(name = "id_patient", referencedColumnName = "idPatient")
+    private Patient patient;
 
-    @Column(name="id_patient")
-    private int idPatient;
-
-    @Column(name = "id_maladie")
-    private int idMaladie;
+    @ManyToOne
+    @JoinColumn(name = "id_maladie", referencedColumnName = "idMaladie")
+    private Maladie maladie;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "niveauCCMU")
@@ -30,8 +31,8 @@ public class MaladiePatient {
     public String toString() {
         return "DPI{" +
                 "idMaladiePatient =" + idMaladiePatient +
-                ", idPatient =" + idPatient +
-                ", idMaladie =" + idMaladie +
+                ", idPatient =" + patient +
+                ", idMaladie =" + maladie +
                 ", niveauCCMU =" + niveauCCMU +
                 '}';
     }
