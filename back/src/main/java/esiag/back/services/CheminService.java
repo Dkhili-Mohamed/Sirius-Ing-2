@@ -35,9 +35,10 @@ public class CheminService {
         Map<Long, List<Long>> grapheDuPlan = new HashMap<>();
 
         for (Connexion connexion : connexions) {
-            Long sommet1 = connexion.getIdEspace1();
-            Long sommet2 = connexion.getIdEspace2();
+            Long sommet1 = connexion.getEspace1().getIdEspace();
+            Long sommet2 = connexion.getEspace2().getIdEspace();
 
+            
             grapheDuPlan.putIfAbsent(sommet1, new ArrayList<>());
             grapheDuPlan.putIfAbsent(sommet2, new ArrayList<>());
 
@@ -50,7 +51,7 @@ public class CheminService {
         return grapheDuPlan;
     }
 
-    public List<Long> findChemin(Long idDepart, Long idArrive){
+    public List<Espace> findChemin(Long idDepart, Long idArrive){
         /*
             Parcours du graphe en largeur pour trouver le chemin le plus cours entre l'espace de départ
             et tous les autres espaces.
@@ -70,9 +71,14 @@ public class CheminService {
         sommetsVisites.add(idDepart);
         arbreCouvrant.put(idDepart, null);
 
+        // Parcours en largeur
+
         while (!queue.isEmpty()) {
+
+            // On récupère le sommet courant
             Long sommetCourant = queue.poll();
 
+            // On s'arrête si on a atteint l'espace d'arrivée
             if (sommetCourant == idArrive) {
                 break;
             }
@@ -100,31 +106,21 @@ public class CheminService {
             sommet = arbreCouvrant.get(sommet);
         }
 
+        // Inversion du chemin pour avoir le bon ordre
         Collections.reverse(chemin);
 
-
-        return chemin;
-    }
-
-    public  List<Espace> getChemin(Espace espace1, Espace espace2){
-
+        // Conversion des IDs en objets Espace
         List<Espace> cheminEspace = new ArrayList<>();
-        List<Long> cheminId = findChemin(espace1.getIdEspace(), espace2.getIdEspace());
 
-        for (Long id : cheminId) {
+        for (Long id : chemin) {
             Espace espace = espaceRepository.findById(id)
                     .orElseThrow(() -> new IllegalStateException(
                             "Espace introuvable pour l'id " + id
                     ));
-
             cheminEspace.add(espace);
         }
 
         return cheminEspace;
     }
-
-
-
-
 
 }
