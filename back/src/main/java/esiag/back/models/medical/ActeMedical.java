@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Data
-@Table(name = "actemedical")
+@Table(name = "acte_medical")
 public class ActeMedical {
 
     @Id
@@ -14,20 +14,24 @@ public class ActeMedical {
     @Column(name = "id_acte_medical")
     private Long idActeMedical;
 
-    @Column(name = "id_type_acte_medical")
-    private Long idTyeActeMedical;
-
     @Column(name = "ordre")
     private int ordre;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private String statut;
+    private StatutActeMedical statut;
 
-    @Column(name = "id_parcours")
-    private Long idParcours;
+    @ManyToOne
+    @JoinColumn(name = "id_parcours", nullable = false)
+    private Parcours parcours;
 
-    @Column(name = "id_salle")
-    private Long idSalle;
+    @ManyToOne
+    @JoinColumn(name = "id_type_acte_medical", nullable = false)
+    private TypeActeMedical typeActeMedical;
+
+    @ManyToOne
+    @JoinColumn(name = "id_salle", nullable = false)
+    private Salle salle;
 
     public ActeMedical() {}
 
@@ -35,11 +39,11 @@ public class ActeMedical {
     public String toString() {
         return "ActeMedical{" +
                 "idActeMedical=" + idActeMedical +
-                ", idTyeActeMedical=" + idTyeActeMedical +
                 ", ordre=" + ordre +
-                ", statut='" + statut + '\'' +
-                ", idParcours=" + idParcours +
-                ", idSalle=" + idSalle +
+                ", statut=" + statut +
+                ", parcours=" + parcours +
+                ", typeActeMedical=" + typeActeMedical +
+                ", salle=" + salle +
                 '}';
     }
 }

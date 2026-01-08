@@ -5,6 +5,8 @@ import Sample from "./Sample";
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 import Patient from "./Patient";
+import ParcoursPatient from "./ParcoursPatient";
+import Parcours from "./Parcours";
 
 export default function Router () {
     return (
@@ -16,6 +18,8 @@ export default function Router () {
                     <Route path="/sample" element={<Sample />}/>
                     <Route path="/patient" element={<Patient />}/>
                     <Route path="*" element={<NotFound />}/>
+                    <Route path="/api/parcours/:idPatient" element={<ParcoursPatient />}/>
+                    <Route path="/api/parcours/all" element={<Parcours />}/>
                 </Routes>
             </div>
         </BrowserRouter>
