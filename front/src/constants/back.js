@@ -15,3 +15,5 @@ export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
 export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
 
+export const PARCOURS_PATIENT = LOCAL_HOST + '/api/parcours/';
+export const ALL_PATIENTS = LOCAL_HOST + '/api/parcours/all';

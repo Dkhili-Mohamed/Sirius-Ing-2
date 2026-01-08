@@ -15,18 +15,20 @@ public class Connexion {
     @Column(name = "id_connexion")
     private Long idConnexion;
 
-    @Column(name = "id_espace_1")
-    private Long idEspace1;
+    @ManyToOne
+    @JoinColumn(name = "id_espace_1", nullable = false)
+    private Espace espace1;
 
-    @Column(name = "id_espace_2")
-    private Long idEspace2;
+    @ManyToOne
+    @JoinColumn(name = "id_espace_2", nullable = false)
+    private Espace espace2; 
 
     @Override
     public String toString() {
         return "Connexion{" +
                 "idConnexion=" + idConnexion +
-                ", idEspace1=" + idEspace1 +
-                ", idEspace2=" + idEspace2 +
-                '}';
+                ", espace1=" + espace1 +
+                ", espace2=" + espace2 +
+                '}';               
     }
 }

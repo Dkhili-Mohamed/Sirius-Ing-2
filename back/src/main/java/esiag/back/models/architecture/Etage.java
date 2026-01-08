@@ -14,11 +14,12 @@ public class Etage {
     @Column(name = "id_etage")
     private Long idEtage;
 
-    @Column(name = "numero")
-    private String numero;
+    @Column(name = "numero_etage")
+    private String numeroEtage;
 
-    @Column(name = "id_batiment")
-    private String idBatiment;
+    @ManyToOne
+    @JoinColumn(name = "id_batiment", nullable = false)
+    private Batiment batiment;
 
     public Etage() {}
 
@@ -26,8 +27,8 @@ public class Etage {
     public String toString() {
         return "Etage{" +
                 "idEtage=" + idEtage +
-                ", numero='" + numero + '\'' +
-                ", idBatiment='" + idBatiment + '\'' +
+                ", numeroEtage='" + numeroEtage + '\'' +
+                ", batiment='" + batiment + '\'' +
                 '}';
     }
 }
