@@ -31,6 +31,10 @@ public class Patient {
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<DPI> dpis;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "etat_sante")
+    private EtatSante etat_sante;
+
     @Override
     public String toString() {
         return "Patient{" +
@@ -38,6 +42,7 @@ public class Patient {
                 ", nomPatient='" + nomPatient + '\'' +
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
+                ", etat_sante =" + etat_sante +
                 '}';
     }
 }
