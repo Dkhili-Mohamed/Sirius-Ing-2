@@ -22,7 +22,7 @@ public class DPIController {
         return new ResponseEntity<>(dpiService.findByIdDPI(id), HttpStatus.OK);
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<DPI>> findAllDPI(){
         return new ResponseEntity<>(dpiService.findAllDPIs(), HttpStatus.OK);
     }

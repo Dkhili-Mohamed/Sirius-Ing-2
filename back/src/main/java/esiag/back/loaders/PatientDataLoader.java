@@ -3,9 +3,11 @@ package esiag.back.loaders;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.boot.CommandLineRunner;
 
+@Order(1)
 @Component
 public class PatientDataLoader implements CommandLineRunner {
 
@@ -15,7 +17,10 @@ public class PatientDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        System.out.println("Ajout des patients à la base de données...");
+
         if(patientRepository.count() == 0) {
+
 
             Patient p1 = new Patient();
             p1.setNomPatient("Dupont");

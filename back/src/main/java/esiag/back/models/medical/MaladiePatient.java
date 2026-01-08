@@ -13,14 +13,14 @@ public class MaladiePatient {
     @Id
     @Column(name="id_maladie_patient")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMaladiePatient;
+    private Long idMaladiePatient;
 
     @ManyToOne
-    @JoinColumn(name = "id_patient", referencedColumnName = "idPatient")
+    @JoinColumn(name = "id_patient")
     private Patient patient;
 
     @ManyToOne
-    @JoinColumn(name = "id_maladie", referencedColumnName = "idMaladie")
+    @JoinColumn(name = "id_maladie")
     private Maladie maladie;
 
     @Enumerated(EnumType.STRING)

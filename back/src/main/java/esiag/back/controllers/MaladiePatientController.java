@@ -23,7 +23,7 @@ public class MaladiePatientController {
         return new ResponseEntity<>(maladiePatientService.findByIdMaladiePatient(id), HttpStatus.OK);
     }
 
-    @GetMapping("all")
+    @GetMapping("/all")
     public ResponseEntity<List<MaladiePatient>> findAllMaladiePatient(){
         return new ResponseEntity<>(maladiePatientService.findAllMaladiePatients(), HttpStatus.OK);
     }

@@ -15,7 +15,7 @@ public class DPI {
     private int idDPI;
 
     @ManyToOne
-    @JoinColumn(name = "id_patient", referencedColumnName = "idPatient")
+    @JoinColumn(name = "id_patient")
     private Patient patient;
 
     @Column(name = "antecedent")
