@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import App from "./App";
 import Sample from "./Sample";
-import Ambulance from "./Ambulance";   // <-- import avec nouveau nom
+import Ambulance from "./Ambulance";   
 import Navbar from "./Navbar";
 import NotFound from "./NotFound";
 
