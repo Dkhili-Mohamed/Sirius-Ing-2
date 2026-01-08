@@ -1,13 +1,9 @@
-
-export const LOCAL_HOST = 'http://172.31.250.15:8081';
-export const LOCAL_HOST_SAMPLE = LOCAL_HOST + '/sample/';
-export const GET_SAMPLES = LOCAL_HOST_SAMPLE + 'all'
-export const UPDATE_SAMPLES = LOCAL_HOST_SAMPLE + 'update'
-
-
-
-//Table ambulance
-export const LOCAL_HOST_AMBULANCE = LOCAL_HOST + '/ambulance/';
+// URLs pour Ambulance
+export const LOCAL_HOST_AMBULANCE = 'http://localhost:8081/api/ambulance/';
 export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE + 'all';
-export const UPDATE_AMBULANCE = LOCAL_HOST_SAMPLE + 'update';
+export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 
+// URLs pour Sample
+export const LOCAL_HOST_SAMPLE = 'http://localhost:8081/sample/';
+export const GET_SAMPLES = LOCAL_HOST_SAMPLE + 'all';
+export const UPDATE_SAMPLES = LOCAL_HOST_SAMPLE + 'update';
