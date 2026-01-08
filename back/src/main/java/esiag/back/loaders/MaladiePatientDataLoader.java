@@ -12,6 +12,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Order(4)
@@ -51,6 +53,8 @@ public class MaladiePatientDataLoader implements CommandLineRunner {
                 mp1.setPatient(p1);
                 mp1.setMaladie(m1);
                 mp1.setNiveauCCMU(NiveauCCMU.NIVEAU_2);
+                mp1.setDateDiagnostic(LocalDateTime.of(2026,1,8,10,30));
+
 
                 maladiePatientRepository.save(mp1);
 

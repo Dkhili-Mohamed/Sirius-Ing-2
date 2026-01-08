@@ -27,13 +27,11 @@ public class MaladieDataLoader implements CommandLineRunner {
             Maladie m1 = new Maladie();
             m1.setNomMaladie("Angine");
             m1.setDescriptionMaladie("Depuis deux jours");
-            m1.setDateDiagnostic(LocalDate.of(2026, 1, 7));
             maladieRepository.save(m1);
 
             Maladie m2 = new Maladie();
             m2.setNomMaladie("Grippe");
             m2.setDescriptionMaladie("Fièvre de plus de 37 degrés");
-            m2.setDateDiagnostic(LocalDate.of(2026, 1, 7));
             maladieRepository.save(m2);
 
             System.out.println("Nouvelles maladies ajoutées avec succès.");

@@ -21,16 +21,12 @@ public class Maladie {
     @Column(name = "description")
     private String descriptionMaladie;
 
-    @Column(name = "date_diagnostic")
-    private LocalDate dateDiagnostic;
-
     @Override
     public String toString() {
         return "Maladie{" +
                 " id_maladie =" + idMaladie +
                 ", nomMaladie =" + nomMaladie +
                 ", descriptionMaladie =" + descriptionMaladie +
-                ", date_diagnostic =" + dateDiagnostic +
                 '}';
     }
 }

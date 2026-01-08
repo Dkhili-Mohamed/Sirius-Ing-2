@@ -4,6 +4,7 @@ package esiag.back.models.medical;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -27,6 +28,9 @@ public class MaladiePatient {
     @Column(name = "niveauCCMU")
     private NiveauCCMU niveauCCMU;
 
+    @Column(name = "date_diagnostic")
+    private LocalDateTime dateDiagnostic;
+
     @Override
     public String toString() {
         return "DPI{" +
@@ -34,6 +38,7 @@ public class MaladiePatient {
                 ", idPatient =" + patient +
                 ", idMaladie =" + maladie +
                 ", niveauCCMU =" + niveauCCMU +
+                ", date_diagnostic =" + dateDiagnostic +
                 '}';
     }
 }

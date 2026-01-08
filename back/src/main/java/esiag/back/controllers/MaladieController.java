@@ -39,7 +39,6 @@ public class MaladieController {
 
         maladieExistante.setNomMaladie(maladieExistante.getNomMaladie());
         maladieExistante.setDescriptionMaladie(maladieExistante.getDescriptionMaladie());
-        maladieExistante.setDateDiagnostic(maladieExistante.getDateDiagnostic());
 
 
         maladieService.saveMaladie(maladieExistante);
