@@ -12,7 +12,7 @@ public class FileAttente {
 
     @Id
     @Column(name="id_patient")
-    private int idPatient;
+    private Long idPatient;
 
     @Column(name = "rang")
     private int rang;

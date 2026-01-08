@@ -1,9 +1,10 @@
 package esiag.back.models.medical;
 
-import esiag.back.models.SampleType;
+
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -13,26 +14,31 @@ public class MaladiePatient {
     @Id
     @Column(name="id_maladie_patient")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMaladiePatient;
+    private Long idMaladiePatient;
 
+    @ManyToOne
+    @JoinColumn(name = "id_patient")
+    private Patient patient;
 
-    @Column(name="id_patient")
-    private int idPatient;
-
-    @Column(name = "id_maladie")
-    private int idMaladie;
+    @ManyToOne
+    @JoinColumn(name = "id_maladie")
+    private Maladie maladie;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "niveauCCMU")
     private NiveauCCMU niveauCCMU;
 
+    @Column(name = "date_diagnostic")
+    private LocalDateTime dateDiagnostic;
+
     @Override
     public String toString() {
         return "DPI{" +
                 "idMaladiePatient =" + idMaladiePatient +
-                ", idPatient =" + idPatient +
-                ", idMaladie =" + idMaladie +
+                ", idPatient =" + patient +
+                ", idMaladie =" + maladie +
                 ", niveauCCMU =" + niveauCCMU +
+                ", date_diagnostic =" + dateDiagnostic +
                 '}';
     }
 }

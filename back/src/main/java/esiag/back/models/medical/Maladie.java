@@ -13,10 +13,7 @@ public class Maladie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id_maladie")
-    private int idMaladie;
-
-    @Column(name = "date_diagnostic")
-    private LocalDate dateDiagnostic;
+    private Long idMaladie;
 
     @Column(name = "nom")
     private String nomMaladie;
@@ -28,9 +25,8 @@ public class Maladie {
     public String toString() {
         return "Maladie{" +
                 " id_maladie =" + idMaladie +
-                ", date_diagnostic =" + dateDiagnostic +
-                ", nom =" + nomMaladie +
-                ", description =" + descriptionMaladie +
+                ", nomMaladie =" + nomMaladie +
+                ", descriptionMaladie =" + descriptionMaladie +
                 '}';
     }
 }

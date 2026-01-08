@@ -14,11 +14,9 @@ public class DPI {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idDPI;
 
-    @Column(name="id_patient")
-    private int idPatient;
-
-    @Column(name="id_maladie")
-    private int idMaladie;
+    @ManyToOne
+    @JoinColumn(name = "id_patient")
+    private Patient patient;
 
     @Column(name = "antecedent")
     private String antecedent;
@@ -30,8 +28,7 @@ public class DPI {
     public String toString() {
         return "DPI{" +
                 "idDPI=" + idDPI +
-                ", idPatient =" + idPatient +
-                ", idMaladie =" + idMaladie +
+                ", idPatient =" + patient +
                 ", antecedent =" + antecedent +
                 ", traitement =" + traitement +
                 '}';
