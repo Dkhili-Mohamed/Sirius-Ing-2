@@ -41,6 +41,8 @@ export default function Patient() {
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Age</th>
+                        <th scope="col">Etat de santé</th>
+
                     </tr>
                     </thead>
                     <tbody className="table-group-divider">
@@ -51,6 +53,7 @@ export default function Patient() {
                                 <td>{patient.nomPatient}</td>
                                 <td>{patient.prenomPatient}</td>
                                 <td>{patient.agePatient}</td>
+                                <td>{patient.etatSante}</td>
                             </tr>
 
                         ))

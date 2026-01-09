@@ -1,6 +1,7 @@
 package esiag.back.models.medical;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class MaladiePatient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMaladiePatient;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_patient")
     private Patient patient;
@@ -25,7 +27,7 @@ public class MaladiePatient {
     private Maladie maladie;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "niveauCCMU")
+    @Column(name = "niveau_ccmu")
     private NiveauCCMU niveauCCMU;
 
     @Column(name = "date_diagnostic")
@@ -35,9 +37,9 @@ public class MaladiePatient {
     public String toString() {
         return "DPI{" +
                 "idMaladiePatient =" + idMaladiePatient +
-                ", idPatient =" + patient +
-                ", idMaladie =" + maladie +
-                ", niveauCCMU =" + niveauCCMU +
+                ", patient=" + (patient != null ? patient.getNomPatient() + " " + patient.getPrenomPatient() : "null") +
+                ", maladie=" + (maladie != null ? maladie.getNomMaladie() : "null") +
+                ", niveau_ccmu =" + niveauCCMU +
                 ", date_diagnostic =" + dateDiagnostic +
                 '}';
     }

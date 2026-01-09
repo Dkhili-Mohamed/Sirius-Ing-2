@@ -16,7 +16,7 @@ export default function Router () {
                 <Routes>
                     <Route path="/" element={<App />}/>
                     <Route path="/sample" element={<Sample />}/>
-                    <Route path="/patient" element={<Patient />}/>
+                    <Route path="/api/patient/all" element={<Patient />}/>
                     <Route path="*" element={<NotFound />}/>
                     <Route path="/api/parcours/:idPatient" element={<ParcoursPatient />}/>
                     <Route path="/api/parcours/all" element={<Parcours />}/>

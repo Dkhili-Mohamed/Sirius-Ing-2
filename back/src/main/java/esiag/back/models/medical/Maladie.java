@@ -1,7 +1,6 @@
 package esiag.back.models.medical;
 
 import lombok.Data;
-import java.time.LocalDate;
 
 import javax.persistence.*;
 

@@ -1,13 +1,18 @@
 package esiag.back.models.medical;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "patient")
 public class Patient {
 
@@ -25,8 +30,10 @@ public class Patient {
     @Column(name = "age")
     private Integer agePatient;
 
+
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<MaladiePatient> maladies;
+
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<DPI> dpis;

@@ -11,7 +11,7 @@ export const UPDATE_SAMPLES = LOCAL_HOST_SAMPLE + 'update'
 
 //Table Patients
 //export const LOCAL_HOST = 'http://localhost:8081';
-export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/patient/';
+export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/api/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
 export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
 
