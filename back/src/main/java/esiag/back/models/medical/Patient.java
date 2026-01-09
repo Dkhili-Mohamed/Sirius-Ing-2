@@ -33,7 +33,7 @@ public class Patient {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "etat_sante")
-    private EtatSante etat_sante;
+    private EtatSante etatSante = EtatSante.SAIN;
 
     @Override
     public String toString() {
@@ -42,7 +42,7 @@ public class Patient {
                 ", nomPatient='" + nomPatient + '\'' +
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
-                ", etat_sante =" + etat_sante +
+                ", etat_sante =" + etatSante +
                 '}';
     }
 }

@@ -1,9 +1,6 @@
 package esiag.back.loaders;
 
-import esiag.back.models.medical.Maladie;
-import esiag.back.models.medical.MaladiePatient;
-import esiag.back.models.medical.NiveauCCMU;
-import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.*;
 import esiag.back.repositories.MaladiePatientRepository;
 import esiag.back.repositories.MaladieRepository;
 import esiag.back.repositories.PatientRepository;
@@ -55,7 +52,8 @@ public class MaladiePatientDataLoader implements CommandLineRunner {
                 mp1.setNiveauCCMU(NiveauCCMU.NIVEAU_2);
                 mp1.setDateDiagnostic(LocalDateTime.of(2026,1,8,10,30));
 
-
+                p1.setEtatSante(EtatSante.MALADE);
+                patientRepository.save(p1);
                 maladiePatientRepository.save(mp1);
 
                 System.out.println("Maladies affectées avec succès.");

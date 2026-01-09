@@ -11,17 +11,15 @@ import javax.persistence.*;
 public class FileAttente {
 
     @Id
-    @Column(name="id_patient")
-    private Long idPatient;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idFileAttente;
+
+    @ManyToOne
+    @JoinColumn(name = "id_patient")
+    private Patient patient;
 
     @Column(name = "rang")
     private int rang;
-
-    @Column(name = "nom")
-    private String nom_Patient;
-
-    @Column(name = "prenom")
-    private String prenom_Patient;
 
     @Column(name = "date_entree")
     private LocalDateTime date_entree;
@@ -29,11 +27,10 @@ public class FileAttente {
 
     @Override
     public String toString() {
-        return "DPI{" +
-                ", idPatient =" + idPatient +
+        return "FileAttente{" +
+                " id =" + idFileAttente +
+                ", patient=" + patient.getNomPatient() + " " + patient.getPrenomPatient() +
                 ", rang =" + rang +
-                ", nom =" + nom_Patient +
-                ", prenom =" + prenom_Patient +
                 ", date_entree =" + date_entree +
                 '}';
     }
