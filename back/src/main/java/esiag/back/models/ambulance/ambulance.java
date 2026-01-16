@@ -71,6 +71,12 @@ public class Ambulance {
     public Double getAmbulancelongitude() {
         return ambulancelongitude;
     }
+    public void setAmbulancelatitude(Double ambulancelatitude) {
+    this.ambulancelatitude = ambulancelatitude;
+    }
+    public void setAmbulancelongitude(Double ambulancelongitude) {
+    this.ambulancelongitude = ambulancelongitude;
+    }
 
 
     
