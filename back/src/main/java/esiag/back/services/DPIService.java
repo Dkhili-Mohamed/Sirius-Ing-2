@@ -19,6 +19,10 @@ public class DPIService {
         return optionalDPI.orElse(null);
     }
 
+    public List<DPI> findByPatientId(Long idPatient) {
+        return DPIRepository.findByPatientIdPatient(idPatient);
+    }
+
 
     public List<DPI> findAllDPIs(){
         return DPIRepository.findAll();

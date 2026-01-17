@@ -20,6 +20,10 @@ public class MaladiePatientService {
         return optionalMaladiePatient.orElse(null);
     }
 
+    public List<MaladiePatient> findByPatientId(Long idPatient) {
+        return MaladiePatientRepository.findByPatientIdPatient(idPatient);
+    }
+
 
     public List<MaladiePatient> findAllMaladiePatients(){
         return MaladiePatientRepository.findAll();

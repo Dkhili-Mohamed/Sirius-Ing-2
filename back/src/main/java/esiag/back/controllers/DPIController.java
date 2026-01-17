@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/DPI")
+@RequestMapping("/api/dpi")
 public class DPIController {
 
     @Autowired
@@ -25,6 +25,11 @@ public class DPIController {
     @GetMapping("/all")
     public ResponseEntity<List<DPI>> findAllDPI(){
         return new ResponseEntity<>(dpiService.findAllDPIs(), HttpStatus.OK);
+    }
+
+    @GetMapping("/patient/{idPatient}")
+    public List<DPI> getDpiByPatient(@PathVariable Long idPatient) {
+        return dpiService.findByPatientId(idPatient);
     }
 
     @PutMapping("/{id}")
@@ -52,4 +57,7 @@ public class DPIController {
         }
         return  new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+
+
 }

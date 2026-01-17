@@ -42,19 +42,36 @@ export default function Patient() {
                         <th scope="col">Prénom</th>
                         <th scope="col">Age</th>
                         <th scope="col">Etat de santé</th>
+                        <th scope="col">Bilan médical</th>
+
 
                     </tr>
                     </thead>
                     <tbody className="table-group-divider">
                     {
-                        patients.map( (patient, index) => (
-                            <tr key={index}>
+                        patients.map( (patient) => (
+                            <tr key={patient.idPatient}>
                                 <th scope="row">{patient.idPatient}</th>
                                 <td>{patient.nomPatient}</td>
                                 <td>{patient.prenomPatient}</td>
                                 <td>{patient.agePatient}</td>
                                 <td>{patient.etatSante}</td>
+
+                                <td>
+                                    <button className="btn btn-primary btn-sm mx-1"
+                                            onClick={() => window.location.href = `/api/dpi/patient/${patient.idPatient}`}
+                                    >
+                                        Voir DPI
+                                    </button>
+                                    <button className="btn btn-info btn-sm mx-1"
+                                            onClick={() => window.location.href = `/api/maladie-patient/patient/${patient.idPatient}`}
+                                    >
+                                        Voir Maladies
+                                    </button>
+                                </td>
+
                             </tr>
+
 
                         ))
                     }

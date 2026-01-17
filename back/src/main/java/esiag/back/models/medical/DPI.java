@@ -30,7 +30,8 @@ public class DPI {
     public String toString() {
         return "DPI{" +
                 "idDPI=" + idDPI +
-                ", patient=" + (patient != null ? patient.getNomPatient() + " " + patient.getPrenomPatient() : "null") +                ", antecedent =" + antecedent +
+                ", patient=" + (patient != null ? patient.getNomPatient() + " " + patient.getPrenomPatient() : "null") +
+                ", antecedent =" + antecedent +
                 ", traitement =" + traitement +
                 '}';
     }

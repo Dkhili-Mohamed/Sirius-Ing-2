@@ -17,3 +17,15 @@ export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
 
 export const PARCOURS_PATIENT = LOCAL_HOST + '/api/parcours/';
 export const ALL_PATIENTS = LOCAL_HOST + '/api/parcours/all';
+
+//Table DPI
+export const LOCAL_HOST_DPI = LOCAL_HOST + '/api/dpi/patient/';
+export const GET_DPI = LOCAL_HOST_DPI + '/all';
+export const UPDATE_DPI = LOCAL_HOST_DPI + 'update';
+
+//Table Maladie Patient
+export const LOCAL_HOST_MALADIE_PATIENT = LOCAL_HOST + '/api/maladie-patient/patient/';
+export const GET_MALADIE_PATIENT = LOCAL_HOST_MALADIE_PATIENT + '/all';
+export const UPDATE_MALADIE_PATIENT = LOCAL_HOST_MALADIE_PATIENT + 'update';
+
+

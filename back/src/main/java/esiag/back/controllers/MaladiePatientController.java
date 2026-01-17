@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/MaladiePatient")
+@RequestMapping("api/maladie-patient")
 public class MaladiePatientController {
 
     @Autowired
@@ -42,6 +42,12 @@ public class MaladiePatientController {
         maladiePatientService.saveMaladiePatient(maladiePatientExistante);
 
         return  new ResponseEntity<>(maladiePatientExistante, HttpStatus.OK);
+    }
+
+    @GetMapping("/patient/{idPatient}")
+    public ResponseEntity<List<MaladiePatient>> getMaladiesByPatient(@PathVariable Long idPatient) {
+        List<MaladiePatient> maladies = maladiePatientService.findByPatientId(idPatient);
+        return new ResponseEntity<>(maladies, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
