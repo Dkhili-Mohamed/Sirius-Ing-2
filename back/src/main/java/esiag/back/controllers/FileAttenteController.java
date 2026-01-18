@@ -17,22 +17,10 @@ public class FileAttenteController {
     private FileAttenteService fileAttenteService;
 
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Patient>> getFileAttente() {
-        List<Patient> liste = fileAttenteService.getPatientsTriees();
-        if (liste.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(liste, HttpStatus.OK);
+    @PostMapping("/ajouter/malades")
+    public ResponseEntity<String> ajouterPatientsMalades() {
+        fileAttenteService.ajouterPatientsMalades();
+        return ResponseEntity.ok("Traitement des patients malades effectué");
     }
 
-
-    @GetMapping("/next")
-    public ResponseEntity<Patient> getNextPatient() {
-        List<Patient> liste = fileAttenteService.getPatientsTriees();
-        if (liste.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        return new ResponseEntity<>(liste.get(0), HttpStatus.OK);
-    }
 }

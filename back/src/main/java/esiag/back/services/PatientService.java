@@ -32,4 +32,8 @@ public class PatientService {
         }
         return false;
     }
+
+    public Patient save(Patient patient) {
+        return patientRepository.save(patient);
+    }
 }

@@ -1,68 +1,57 @@
 package esiag.back.services;
 
 import esiag.back.models.medical.EtatSante;
+import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
-import esiag.back.models.medical.MaladiePatient;
-import esiag.back.models.medical.NiveauCCMU;
+import esiag.back.repositories.FileAttenteRepository;
 import esiag.back.repositories.PatientRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 @Service
+@Transactional
+@Slf4j
 public class FileAttenteService {
+
+    @Autowired
+    private FileAttenteRepository fileAttenteRepository;
 
     @Autowired
     private PatientRepository patientRepository;
 
-    public List<Patient> getPatientsTriees() {
-        List<Patient> allPatients = patientRepository.findAll();
-        List<Patient> malades = new ArrayList<>();
+    public void ajouterPatientsMalades() {
+        log.info("Recherche des patients malades a ajouter a la file d'attente");
 
-        for (Patient p : allPatients) {
-            if (p.getEtatSante() == EtatSante.MALADE) {
-                malades.add(p);
+        List<Patient> patientsMalades = patientRepository.findByEtatSante(EtatSante.MALADE);
+
+        if(patientsMalades.isEmpty()) {
+            log.info("Aucun patient malade");
+            return;
+        }
+
+        log.info("{} patients malades trouves", patientsMalades.size());
+
+        for (Patient patient : patientsMalades) {
+
+            if (!fileAttenteRepository.existsByPatient(patient)) {
+                FileAttente fileAttente = new FileAttente();
+                fileAttente.setPatient(patient);
+                fileAttente.setDate_entree(LocalDateTime.now());
+                fileAttenteRepository.save(fileAttente);
+                log.info("Patient ajoute à la file d'attente : [ID={}] {} {}", patient.getIdPatient(), patient.getPrenomPatient(), patient.getNomPatient());
+            } else {
+                log.info("Patient deja dans la file: [ID={}] {} {}", patient.getIdPatient(), patient.getPrenomPatient(), patient.getNomPatient());
             }
         }
 
-        Collections.sort(malades, new Comparator<Patient>() {
-            @Override
-            public int compare(Patient p1, Patient p2) {
-                NiveauCCMU n1 = NiveauCCMU.NIVEAU_1;
-                NiveauCCMU n2 = NiveauCCMU.NIVEAU_1;
 
-                for (MaladiePatient mp : p1.getMaladies()) {
-                    if (mp.getNiveauCCMU().ordinal() > n1.ordinal()) {
-                        n1 = mp.getNiveauCCMU();
-                    }
-                }
 
-                for (MaladiePatient mp : p2.getMaladies()) {
-                    if (mp.getNiveauCCMU().ordinal() > n2.ordinal()) {
-                        n2 = mp.getNiveauCCMU();
-                    }
-                }
-
-                if (n2.ordinal() != n1.ordinal()) {
-                    return Integer.compare(n2.ordinal(), n1.ordinal());
-                }
-
-                if (!p2.getAgePatient().equals(p1.getAgePatient())) {
-                    return Integer.compare(p2.getAgePatient(), p1.getAgePatient());
-                }
-
-                LocalDateTime d1 = p1.getMaladies().isEmpty() ? LocalDateTime.MIN : p1.getMaladies().get(0).getDateDiagnostic();
-                LocalDateTime d2 = p2.getMaladies().isEmpty() ? LocalDateTime.MIN : p2.getMaladies().get(0).getDateDiagnostic();
-
-                return d1.compareTo(d2);
-            }
-        });
-
-        return malades;
     }
 }

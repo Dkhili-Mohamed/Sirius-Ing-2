@@ -12,6 +12,7 @@ public class FileAttente {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_file_attente")
     private Long idFileAttente;
 
     @ManyToOne
@@ -28,9 +29,9 @@ public class FileAttente {
     @Override
     public String toString() {
         return "FileAttente{" +
-                " id =" + idFileAttente +
-                ", patient=" + patient.getNomPatient() + " " + patient.getPrenomPatient() +
+                " id_file_attente =" + idFileAttente +
                 ", rang =" + rang +
+                ", patient=" + patient.getNomPatient() + " " + patient.getPrenomPatient() +
                 ", date_entree =" + date_entree +
                 '}';
     }

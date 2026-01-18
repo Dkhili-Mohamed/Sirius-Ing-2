@@ -58,4 +58,10 @@ public class MaladiePatientController {
         }
         return  new ResponseEntity<>(id, HttpStatus.OK);
     }
+
+    @PostMapping("/ajouter")
+    public ResponseEntity<MaladiePatient> ajouterMaladiePatient(@RequestBody MaladiePatient maladiePatient) {
+        MaladiePatient resultat = maladiePatientService.ajouterMaladie(maladiePatient);
+        return new ResponseEntity<>(resultat, HttpStatus.OK);
+    }
 }
