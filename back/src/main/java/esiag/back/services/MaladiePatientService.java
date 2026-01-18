@@ -28,7 +28,6 @@ public class MaladiePatientService {
     private void verifierEtatPatient(Long idPatient) {
         Patient patient = patientService.findByIdPatient(idPatient);
         if (patient != null) {
-            boolean patientMalade = !MaladiePatientRepository.findByPatientIdPatient(idPatient).isEmpty();
             patient.setEtatSante(EtatSante.MALADE);
             patientService.save(patient);
         }
@@ -44,18 +43,18 @@ public class MaladiePatientService {
         List<MaladiePatient> maladies = MaladiePatientRepository.findByPatientIdPatient(idPatient);
 
         Patient patient = patientService.findByIdPatient(idPatient);
-        if (maladies.isEmpty()) {
-            patient.setEtatSante(EtatSante.SAIN);
-            patientService.save(patient);
-        } else {
-            patient.setEtatSante(EtatSante.MALADE);
-            patientService.save(patient);
-        }
-        patientService.save(patient);
 
-        return maladies;
+        if (patient != null) {
+            if (maladies.isEmpty()) {
+                patient.setEtatSante(EtatSante.SAIN);
+            } else {
+                patient.setEtatSante(EtatSante.MALADE);
+            }
+            patientService.save(patient);
+
+        }   return maladies;
+
     }
-
 
     public List<MaladiePatient> findAllMaladiePatients(){
         return MaladiePatientRepository.findAll();
@@ -84,6 +83,11 @@ public class MaladiePatientService {
             return true;
         }
         return false;
+    }
+
+
+    public MaladiePatient updateMaladie(MaladiePatient maladiePatient) {
+        return MaladiePatientRepository.save(maladiePatient);
     }
 
 }

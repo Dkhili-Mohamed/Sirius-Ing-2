@@ -1,7 +1,6 @@
 package esiag.back.controllers;
 
 import esiag.back.models.medical.MaladiePatient;
-import esiag.back.models.medical.MaladiePatient;
 import esiag.back.services.MaladiePatientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,18 +29,18 @@ public class MaladiePatientController {
 
     @PutMapping("/{id}")
     public ResponseEntity<MaladiePatient> updateMaladiePatient(@PathVariable Long id, @RequestBody MaladiePatient maladiePatientUpdates) {
-
         MaladiePatient maladiePatientExistante = maladiePatientService.findByIdMaladiePatient(id);
 
         if(maladiePatientExistante == null) {
+
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         maladiePatientExistante.setNiveauCCMU(maladiePatientUpdates.getNiveauCCMU());
 
-        maladiePatientService.saveMaladiePatient(maladiePatientExistante);
+        MaladiePatient updated = maladiePatientService.updateMaladie(maladiePatientExistante);
 
-        return  new ResponseEntity<>(maladiePatientExistante, HttpStatus.OK);
+        return new ResponseEntity<>(updated, HttpStatus.OK);
     }
 
     @GetMapping("/patient/{idPatient}")
