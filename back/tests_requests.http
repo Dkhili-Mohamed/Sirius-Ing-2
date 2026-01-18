@@ -1,5 +1,6 @@
 ### Variables
-@baseUrl = http://localhost:8081/test
+//@baseUrl = http://localhost:8081/test
+@baseUrl = http://localhost:8081/esiag_proto
 
 ### 1. Récupérer le chemin (findChemin)
 GET {{baseUrl}}/
@@ -31,3 +32,8 @@ Accept: application/json
 ### 6. Récupérer le statut du parcours pour un patient spécifique (findPatientStatutParcoursById)
 GET http://localhost:8081/api/parcours/1
 Accept: application/json
+
+####################################################
+
+### 1. Ajout des patients malades à la file d'attente
+POST http://localhost:8081/api/file-attente/ajouter/malades
