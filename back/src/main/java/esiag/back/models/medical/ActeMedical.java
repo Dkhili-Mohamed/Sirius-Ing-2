@@ -30,7 +30,7 @@ public class ActeMedical {
     private TypeActeMedical typeActeMedical;
 
     @ManyToOne
-    @JoinColumn(name = "id_salle", nullable = false)
+    @JoinColumn(name = "id_salle", nullable = true)
     private Salle salle;
 
     public ActeMedical() {}

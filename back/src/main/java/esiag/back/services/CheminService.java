@@ -3,14 +3,15 @@ package esiag.back.services;
 
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;
+import esiag.back.models.medical.Salle;
 import esiag.back.repositories.ConnexionRepository;
 import esiag.back.repositories.EspaceRepository;
+import esiag.back.repositories.SalleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 @Log4j2
@@ -21,6 +22,10 @@ public class CheminService {
     private ConnexionRepository connexionRepository;
     @Autowired
     private EspaceRepository espaceRepository;
+    @Autowired
+    private ActeMedicalService acteMedicalService;
+    @Autowired
+    private SalleService salleService;
 
 
     public CheminService(ConnexionRepository connexionRepository) {
@@ -77,9 +82,11 @@ public class CheminService {
 
             // On récupère le sommet courant
             Long sommetCourant = queue.poll();
+            log.info("Salle courante : "+sommetCourant);
 
             // On s'arrête si on a atteint l'espace d'arrivée
             if (sommetCourant == idArrive) {
+                log.info("Salle d'arrivée trouvée !!!!!!!!!!!");
                 break;
             }
 
@@ -87,6 +94,7 @@ public class CheminService {
                 if (!sommetsVisites.contains(voisin)) {
                     sommetsVisites.add(voisin);
                     arbreCouvrant.put(voisin, sommetCourant);
+                    log.info("Salle d'arrivée trouvée !!!!!!!!!!!");
                     if (voisin == idArrive) {
                         break;
                         // On s'arrête dès que le sommet visité est l'espace d'arrivé
@@ -121,6 +129,71 @@ public class CheminService {
         }
 
         return cheminEspace;
+    }
+
+
+    public List<Espace> nextActeMedical(Long idTypeActeMedical, Long idActeMedecal, Long idDepart){
+
+        //Mofification de l'état de l'acte médical courant à "TERMINE"
+        acteMedicalService.updatStatutActeMedicalToTermine();
+
+        // Modification de l'état de la salle associée à l'acte médical courant
+        Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
+        salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+        log.info("Capacité de la salle associée à l'acte médical {} mise à jour.", idDepart);
+        /*
+            Récupère la salle associée à un acte médical
+         */
+
+        List<Espace> plusCourtChemin = new ArrayList<>();
+        List<Salle> salles = salleService.findSallesByTypeActeMedical(idTypeActeMedical);
+        log.info("Salles récupérées {} pour l'acte médical {}.", salles, idTypeActeMedical);
+
+        List<List<Espace>> cheminsPossibles = new ArrayList<>();
+
+        if (salles.isEmpty()) {
+            throw new IllegalStateException("Aucune salle disponible pour l'acte médical " + idActeMedecal);
+        }else {
+            // Calcul des chemins vers chaque salle disponible
+
+            if(idDepart == null){
+                List<Espace> entree = espaceRepository.findByNumeroEspace("SA1");
+               
+                Optional<Espace> entreePrincipale = Optional.ofNullable(entree.get(0));
+                if (entreePrincipale.isPresent()) {
+                    idDepart = entreePrincipale.get().getIdEspace();
+                } else {
+                    throw new IllegalStateException("L'espace de départ est nul.");
+                }
+            }
+            for (Salle salle : salles) {
+                List<Espace> chemin = findChemin(idDepart, salle.getEspace().getIdEspace());
+                cheminsPossibles.add(chemin);
+            }
+        }
+
+        // Trouver le chemin le plus court parmi les chemins possibles
+
+        for (List<Espace> chemin : cheminsPossibles) {
+            if(chemin.size() < plusCourtChemin.size() || plusCourtChemin.isEmpty()){
+                plusCourtChemin = chemin;
+            }
+        }
+        log.info("Plus court chemin calculé : {}.", plusCourtChemin);
+
+        // Mofification de la capacité de la salle associée au prochain acte médical
+        Espace espaceProchainActe = plusCourtChemin.get(plusCourtChemin.size() - 1);
+        Salle salleProchainActe = salleService.findSallesByEspace(espaceProchainActe.getIdEspace()).get(0);
+
+        // Modification de l'état de l'acte médical courant
+        acteMedicalService.updateStatutActeMedicalToEncours(idActeMedecal, salleProchainActe.getIdSalle());
+        
+        // Mofification de la capacité de la salle associée au prochain acte médical
+        salleService.updateSalleIncreasePlaceDisponible(salleProchainActe.getIdSalle());
+        log.info("Capacité de la salle {} mise à jour pour le prochain acte médical.", salleProchainActe.getIdSalle());
+
+
+        return plusCourtChemin;
     }
 
 }
