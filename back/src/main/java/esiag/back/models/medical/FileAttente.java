@@ -15,15 +15,15 @@ public class FileAttente {
     @Column(name = "id_file_attente")
     private Long idFileAttente;
 
+    @Column(name = "date_entree", nullable = false)
+    private LocalDateTime dateEntree;
+
+    @Column(nullable = false)
+    private Integer rang;
+
     @ManyToOne
-    @JoinColumn(name = "id_patient")
+    @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
-
-    @Column(name = "rang")
-    private int rang;
-
-    @Column(name = "date_entree")
-    private LocalDateTime date_entree;
 
 
     @Override
@@ -32,7 +32,7 @@ public class FileAttente {
                 " id_file_attente =" + idFileAttente +
                 ", rang =" + rang +
                 ", patient=" + patient.getNomPatient() + " " + patient.getPrenomPatient() +
-                ", date_entree =" + date_entree +
+                ", date_entree =" + dateEntree +
                 '}';
     }
 }
