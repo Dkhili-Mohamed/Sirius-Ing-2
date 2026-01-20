@@ -25,7 +25,7 @@ public class SalleService {
 
         if (optionalSalle.isPresent()){
             Salle salle = optionalSalle.get();
-            log.info("Salle trouvée : {}", salle);
+            log.info("Salle trouvée : {}", salle.getNomSalle());
             if(salle.getPlaceDisponible() > 0) {
                 salle.setPlaceDisponible(salle.getPlaceDisponible()-1);
                 if(salle.getEtatSalle() == EtatSalle.INDISPONIBLE) {
@@ -33,7 +33,7 @@ public class SalleService {
                 } 
             }
             
-            log.info("Mise à jour de la salle (Decrease): {}", salle);
+            log.info("Mise à jour de la salle (Decrease): {}", salle.getNomSalle());
             salleRepository.saveAndFlush(salle);
             return true;
         }      
@@ -46,14 +46,14 @@ public class SalleService {
         Optional<Salle> optionalSalle = salleRepository.findById(idSalle);
         if(optionalSalle.isPresent()){
             Salle salle = optionalSalle.get();
-            log.info("Salle trouvée : {}", salle);
+            log.info("Salle trouvée : {}", salle.getNomSalle());
 
             salle.setPlaceDisponible(salle.getPlaceDisponible()+1);
             if(salle.getPlaceDisponible() == salle.getCapacite()) {
                 salle.setEtatSalle(EtatSalle.INDISPONIBLE);
             }
 
-            log.info("Mise à jour de la salle (Increase) : {}", salle);
+            log.info("Mise à jour de la salle (Increase) : {}", salle.getNomSalle());
             salleRepository.saveAndFlush(salle);
             return true;
         }

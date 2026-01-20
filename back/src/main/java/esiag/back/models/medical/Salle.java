@@ -25,6 +25,9 @@ public class Salle{
     @Column(name = "place_disponible")
     private int placeDisponible;
 
+    @Column(name = "nom")
+    private String nomSalle;
+
     @ManyToOne
     @JoinColumn(name = "id_espace", nullable = false)
     private Espace espace;
@@ -33,6 +36,7 @@ public class Salle{
     public String toString() {
         return "Salle{" +
                 "idSalle=" + idSalle +
+                ", nom=" + nomSalle +
                 ", capacite=" + capacite +
                 ", etatSalle=" + etatSalle +
                 ", placeDisponible=" + placeDisponible +
