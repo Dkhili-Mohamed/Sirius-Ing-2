@@ -2,28 +2,53 @@ package esiag.back.models.medical;
 
 import lombok.Data;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import java.util.*;
 
 @Entity
 @Data
 @Table(name = "patient")
 public class Patient {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_patient")
     private Long idPatient;
 
-    @Column(name = "nom", nullable = false)
+    @NotBlank(message = "Veuillez insérer un nom")
     private String nomPatient;
 
-    @Column(name = "prenom", nullable = false)
+    @NotBlank(message = "Veuillez insérer un prenom")
     private String prenomPatient;
 
-    @Column(name = "age", nullable = false)
-    private int agePatient;
+    @NotNull(message = "Veuillez insérer un age")
+    @Min(value = 0, message = "L'age doit être positif")
+    private Integer agePatient;
+
+    @Column(name = "score_urgence")
+    private Integer scoreUrgence;
+
+    @PrePersist
+    @PreUpdate
+    public void calculerEtMettreAJourScore() {
+        this.scoreUrgence = getScoreUrgence();
+    }
 
 
-    @Column(name = "symptomes")
-    private String symptomes;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(
+            name = "patient_symptomes",
+            joinColumns = @JoinColumn(name = "id_patient")
+    )
+    @Column(name = "symptome", nullable = false)
+    @Size(min = 1, message = "Veuillez insérer au moins un symptome")
+    private Set<String> symptomes = new HashSet<>();
+
+    public void addSymptome(String symptome) {
+        this.symptomes.add(symptome);
+    }
 
 
     @Transient
@@ -31,33 +56,35 @@ public class Patient {
         int score = 0;
 
         if (symptomes != null && !symptomes.isEmpty()) {
-            String[] symptomesArray = symptomes.split(",");
-            for (String symptome : symptomesArray) {
+            for (String symptome : symptomes) {
                 score += calculerPointsSymptome(symptome.trim().toLowerCase());
             }
         }
 
-
         score += calculerPointsAge();
-
         return score;
     }
 
 
     private int calculerPointsSymptome(String symptome) {
         switch (symptome) {
-            case "fievre":
+            case "fievre_elevee":
                 return 3;
+            case "douleur_intense":
+                return 4;
             case "douleur_thoracique":
             case "difficulte_respiratoire":
                 return 5;
+            case "perte_connaissance":
+                return 5;
+            case "hemorragie":
+                return 5;
+            case "douleur_moderee":
+                return 2;
             case "nausee":
                 return 1;
-            case "vomissements":
-            case "cephalee":
-                return 2;
-            case "douleur_abdominale":
-                return 3;
+            case "fatigue":
+                return 1;
             default:
                 return 0;
         }
@@ -82,6 +109,15 @@ public class Patient {
         return NiveauUrgence.NON_URGENT;
     }
 
+    public static List<Patient> trierParUrgence(List<Patient> patients) {
+        Collections.sort(patients, new Comparator<Patient>() {
+            @Override
+            public int compare(Patient p1, Patient p2) {
+                return Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
+            }
+        });
+        return patients;
+    }
 
     @Override
     public String toString() {
