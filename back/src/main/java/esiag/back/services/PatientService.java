@@ -1,5 +1,6 @@
 package esiag.back.services;
 
+import esiag.back.models.medical.EtatSante;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+
 
     public Patient findByIdPatient(Long idPatient) {
         Optional<Patient> optionalPatient = patientRepository.findById(idPatient);

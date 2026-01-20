@@ -1,9 +1,7 @@
 package esiag.back.services;
 
-import esiag.back.models.medical.DPI;
-import esiag.back.models.medical.EtatSante;
+
 import esiag.back.models.medical.MaladiePatient;
-import esiag.back.models.medical.Patient;
 import esiag.back.repositories.MaladiePatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,35 +23,12 @@ public class MaladiePatientService {
         return optionalMaladiePatient.orElse(null);
     }
 
-    private void verifierEtatPatient(Long idPatient) {
-        Patient patient = patientService.findByIdPatient(idPatient);
-        if (patient != null) {
-            patient.setEtatSante(EtatSante.MALADE);
-            patientService.save(patient);
-        }
-    }
-
     public MaladiePatient ajouterMaladie(MaladiePatient maladiePatient) {
-        MaladiePatient resultat = MaladiePatientRepository.save(maladiePatient);
-        verifierEtatPatient(maladiePatient.getPatient().getIdPatient());
-        return resultat;
+        return MaladiePatientRepository.save(maladiePatient);
     }
 
     public List<MaladiePatient> findByPatientId(Long idPatient) {
-        List<MaladiePatient> maladies = MaladiePatientRepository.findByPatientIdPatient(idPatient);
-
-        Patient patient = patientService.findByIdPatient(idPatient);
-
-        if (patient != null) {
-            if (maladies.isEmpty()) {
-                patient.setEtatSante(EtatSante.SAIN);
-            } else {
-                patient.setEtatSante(EtatSante.MALADE);
-            }
-            patientService.save(patient);
-
-        }   return maladies;
-
+        return MaladiePatientRepository.findByPatientIdPatient(idPatient);
     }
 
     public List<MaladiePatient> findAllMaladiePatients(){
@@ -61,30 +36,12 @@ public class MaladiePatientService {
     }
 
     public boolean deleteMaladiePatient(Long idMaladiePatient) {
-        Optional<MaladiePatient> maladie = MaladiePatientRepository.findById(idMaladiePatient);
-
-        if (maladie.isPresent()) {
-            Long patientId = maladie.get().getPatient().getIdPatient();
-
+        if (MaladiePatientRepository.existsById(idMaladiePatient)) {
             MaladiePatientRepository.deleteById(idMaladiePatient);
-
-            List<MaladiePatient> maladiesRestantes = MaladiePatientRepository.findByPatientIdPatient(patientId);
-            Patient patient = patientService.findByIdPatient(patientId);
-
-            if (patient != null) {
-                if (maladiesRestantes.isEmpty()) {
-                    patient.setEtatSante(EtatSante.SAIN);
-                } else {
-                    patient.setEtatSante(EtatSante.MALADE);
-                }
-                patientService.save(patient);
-            }
-
             return true;
         }
         return false;
     }
-
 
     public MaladiePatient updateMaladie(MaladiePatient maladiePatient) {
         return MaladiePatientRepository.save(maladiePatient);
