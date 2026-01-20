@@ -7,17 +7,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.services.GeocodingService;
 import esiag.back.services.ambulanceGeocodingService;
+import esiag.back.services.patientAGeocodingService;
 
 @RestController
 public class GeocodingController {
 
     private final GeocodingService geocodingService;
     private final ambulanceGeocodingService ambulanceGeocodingService;
+    private final patientAGeocodingService patientAGeocodingService;
 
     public GeocodingController(GeocodingService geocodingService,
+                               patientAGeocodingService patientAGeocodingService,
                                ambulanceGeocodingService ambulanceGeocodingService) {
         this.geocodingService = geocodingService;
         this.ambulanceGeocodingService = ambulanceGeocodingService;
+        this.patientAGeocodingService = patientAGeocodingService;
     }
 
     
@@ -30,6 +34,12 @@ public class GeocodingController {
             return "Adresse introuvable";
         }
     }
+    @PostMapping("/patientsA/geocode")
+    public String geocodeAllPatientsA() {
+        patientAGeocodingService.geocodeAllPatientsA(); 
+        return "Tous les patients ont été géocodés avec succès";
+    }
+
 
     
     @PostMapping("/ambulances/geocode")

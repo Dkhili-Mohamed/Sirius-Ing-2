@@ -49,5 +49,5 @@ public class GeocodingService {
             e.printStackTrace();
             return null;
         }
-    }  //j'ai fait la moitié du travail avec chatgbt 
+    }  
 }

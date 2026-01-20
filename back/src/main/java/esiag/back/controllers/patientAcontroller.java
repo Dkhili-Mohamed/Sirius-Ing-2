@@ -16,20 +16,20 @@ public class patientAcontroller {
     @Autowired
     private patientAservice patientAService;
 
-    // 🔹 Trouver un patientA par ID
+    
     @GetMapping("/{id}")
     public ResponseEntity<PatientA> findById(@PathVariable Long id) {
         PatientA patientA = patientAService.findByIdPatientA(id);
         return new ResponseEntity<>(patientA, HttpStatus.OK);
     }
 
-    // 🔹 Récupérer tous les patientsA
+    
     @GetMapping("/all")
     public ResponseEntity<List<PatientA>> findAllPatientA() {
         return new ResponseEntity<>(patientAService.findAllPatientsA(), HttpStatus.OK);
     }
 
-    // 🔹 Supprimer un patientA par ID
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deletePatientA(@PathVariable Long id) {
         boolean isRemoved = patientAService.deletePatientA(id);
