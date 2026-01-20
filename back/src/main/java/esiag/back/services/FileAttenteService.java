@@ -1,57 +1,70 @@
 package esiag.back.services;
 
-import esiag.back.models.medical.EtatSante;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.FileAttenteRepository;
 import esiag.back.repositories.PatientRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Optional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
-@Service
-@Transactional
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public class FileAttenteService {
 
-    @Autowired
-    private FileAttenteRepository fileAttenteRepository;
+    private final FileAttenteRepository fileAttenteRepository;
+    private final PatientRepository patientRepository;
 
-    @Autowired
-    private PatientRepository patientRepository;
+    public List<FileAttente> getFileAttenteTriee() {
+        log.info("Demarrage du tri de la file d'attente");
 
-    public void ajouterPatientsMalades() {
-        log.info("Recherche des patients malades a ajouter a la file d'attente");
+        List<Patient> patients = patientRepository.findAll();
+        log.info("Nombre de patients a trier : {}", patients.size());
 
-        List<Patient> patientsMalades = patientRepository.findByEtatSante(EtatSante.MALADE);
-
-        if(patientsMalades.isEmpty()) {
-            log.info("Aucun patient malade");
-            return;
+        for (Patient patient : patients) {
+            patient.calculerEtMettreAJourScore();
         }
+        patientRepository.saveAll(patients);
 
-        log.info("{} patients malades trouves", patientsMalades.size());
+        List<Patient> patientsTries = Patient.trierParUrgence(patients);
+        log.info("Tri termine. {} patients triés par niveau d'urgence", patientsTries.size());
 
-        for (Patient patient : patientsMalades) {
-
-            if (!fileAttenteRepository.existsByPatient(patient)) {
-                FileAttente fileAttente = new FileAttente();
-                fileAttente.setPatient(patient);
-                fileAttente.setDate_entree(LocalDateTime.now());
-                fileAttenteRepository.save(fileAttente);
-                log.info("Patient ajoute à la file d'attente : [ID={}] {} {}", patient.getIdPatient(), patient.getPrenomPatient(), patient.getNomPatient());
-            } else {
-                log.info("Patient deja dans la file: [ID={}] {} {}", patient.getIdPatient(), patient.getPrenomPatient(), patient.getNomPatient());
-            }
-        }
-
-
-
+        return mettreAJourFileAttente(patientsTries);
     }
+
+    @Transactional
+    public List<FileAttente> mettreAJourFileAttente(List<Patient> patients) {
+        log.info("Mise a jour de la file d'attente avec {} patients", patients.size());
+
+        try {
+            if (fileAttenteRepository.count() > 0) {
+                fileAttenteRepository.deleteAllInBatch();
+            }
+
+            List<FileAttente> fileAttente = new ArrayList<>();
+            LocalDateTime maintenant = LocalDateTime.now();
+
+            for (int position = 0; position < patients.size(); position++) {
+                FileAttente entree = new FileAttente();
+                entree.setPatient(patients.get(position));
+                entree.setDateEntree(maintenant.plusSeconds(position));
+                entree.setRang(position + 1);
+                fileAttente.add(entree);
+            }
+
+            return fileAttenteRepository.saveAll(fileAttente);
+
+        } catch (Exception e) {
+            log.error("Erreur lors de la mise à jour de la file d'attente", e);
+            throw new RuntimeException("Erreur lors de la mise à jour de la file d'attente", e);
+        }
+    }
+
 }
