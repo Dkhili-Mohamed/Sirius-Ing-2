@@ -54,7 +54,7 @@ public class ActeMedicalService {
 
             acteMedical.setStatut(StatutActeMedical.TERMINE);
 
-            log.info("Mise à jour de l'acte médical (Terminé) : {}", acteMedical);
+            log.info("Mise à jour de l'acte médical (Terminé) : {}", acteMedical.getIdActeMedical());
             acteMedicalRepository.saveAndFlush(acteMedical);
             return true;
         }
@@ -71,13 +71,21 @@ public class ActeMedicalService {
             ActeMedical acteMedical = optionalActeMedical.get();
             
             acteMedical.setStatut(StatutActeMedical.EN_COURS);
-            log.info("Mise à jour du premier acte médical (En cours) : {}", acteMedical);
+            log.info("Mise à jour du premier acte médical (En cours) : {}", acteMedical.getIdActeMedical());
             acteMedicalRepository.saveAndFlush(acteMedical);
             return true;
         }  
        
         return false; 
 
+    }
+
+    public List<ActeMedical> findActeMedicalsByOrdre(int ordre, Long idParcours){
+        return acteMedicalRepository.findActeMedicalsByOrdre(ordre, idParcours);
+    }
+
+    public List<ActeMedical> findAllActeMedicalsByParours(Long idParcours){
+        return acteMedicalRepository.findAllActeMedicalsByParours(idParcours);
     }
 
 }

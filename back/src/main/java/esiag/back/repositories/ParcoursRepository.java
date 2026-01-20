@@ -2,7 +2,8 @@ package esiag.back.repositories;
 
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
-import esiag.back.models.medical.ActeMedical;
+import esiag.back.models.medical.Parcours;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ParcoursRepository extends JpaRepository<ActeMedical,Long> {
+public interface ParcoursRepository extends JpaRepository<Parcours,Long> {
 
     @Query("""
         SELECT new esiag.back.models.dto.ParcoursPatient(

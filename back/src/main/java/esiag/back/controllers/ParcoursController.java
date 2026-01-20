@@ -52,15 +52,15 @@ public class ParcoursController {
         
     }
 
-    @GetMapping("chemin/{idTypeActeMedical}/{idActeMedical}/{idDepart}")
+    @GetMapping("chemin/{idParcours}/{ordre}/{idDepart}")
     public ResponseEntity<List<esiag.back.models.architecture.Espace>> findChemin(
-            @PathVariable Long idTypeActeMedical,
-            @PathVariable Long idActeMedical,
+            @PathVariable Long idParcours,
+            @PathVariable int ordre,
             @PathVariable Long idDepart) {
         return new ResponseEntity<>(
                 cheminService.nextActeMedical(
-                        idTypeActeMedical,
-                        idActeMedical,
+                        idParcours,
+                        ordre,
                         idDepart),
                 HttpStatus.OK);
     }
