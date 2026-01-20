@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,7 @@ public class PatientController {
         return new ResponseEntity<>(patientService.findByIdPatient(id), HttpStatus.OK);
     }
 
+
     @GetMapping("all")
     public ResponseEntity<List<Patient>> findAllPatient(){
         return new ResponseEntity<>(patientService.findAllPatients(), HttpStatus.OK);
@@ -34,5 +36,15 @@ public class PatientController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return  new ResponseEntity<>(id, HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
+        try {
+            Patient savedPatient = patientService.save(patient);
+            return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
