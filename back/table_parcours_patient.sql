@@ -103,13 +103,13 @@ CREATE TABLE parcours (
     CONSTRAINT fk_parcours_medecin FOREIGN KEY (id_medecin) REFERENCES medecin(id_medecin)
 );
 
-CREATE TABLE patientA (
-    idpatientA SERIAL PRIMARY KEY,
-    nompatientA VARCHAR(255) NOT NULL,
-    adressepatientA VARCHAR(255),
-    numeropatientA VARCHAR(50),
-    patientAlatitude DOUBLE PRECISION,        
-    patientAlongitude DOUBLE PRECISION
+CREATE TABLE patienta (
+    idpatienta SERIAL PRIMARY KEY,
+    nompatienta VARCHAR(255) NOT NULL,
+    adressepatienta VARCHAR(255),
+    numeropatienta VARCHAR(50),
+    patientalatitude DOUBLE PRECISION,        
+    patientalongitude DOUBLE PRECISION
 );
 CREATE TABLE ambulance (
     idambulance SERIAL PRIMARY KEY,        
@@ -120,6 +120,14 @@ CREATE TABLE ambulance (
     experienceambulance DOUBLE PRECISION,     
     ambulancelatitude DOUBLE PRECISION,        
     ambulancelongitude DOUBLE PRECISION
+);
+
+CREATE TABLE urgence (
+    idurgence BIGSERIAL PRIMARY KEY,
+    nomurgence VARCHAR(255),
+    adresseurgence VARCHAR(255),
+    urgencelatitude DOUBLE PRECISION,
+    urgencelongitude DOUBLE PRECISION
 );
 
 

@@ -17,11 +17,11 @@ public class urgence {
     private Long idurgence;
 
     @Column(name = "nomurgence")
-    private boolean nomurgence;
+    private String nomurgence;
 
     @Column(name = "adresseurgence")
     private String adresseurgence;
-     @Column(name = "urgenceAlatitude")
+     @Column(name = "urgencelatitude")
     private Double urgencelatitude;
 
     @Column(name = "urgencelongitude")
