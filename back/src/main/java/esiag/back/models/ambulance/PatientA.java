@@ -53,11 +53,24 @@ public class PatientA {
     public Double getPatientAlongitude() {
         return patientAlongitude; 
     }
+
+
     public void setPatientAlatitude(Double patientAlatitude) {
     this.patientAlatitude = patientAlatitude;
     }
     public void setPatientAlongitude(Double patientAlongitude) {
     this.patientAlongitude = patientAlongitude ;
+    }
+    public void setNompatientA(String nompatientA) {
+        this.nompatientA = nompatientA;
+    }
+
+    public void setAdressepatientA(String adressepatientA) {
+        this.adressepatientA = adressepatientA;
+    }
+
+    public void setNumeropatientA(String numeropatientA) {
+        this.numeropatientA = numeropatientA;
     }
 
 

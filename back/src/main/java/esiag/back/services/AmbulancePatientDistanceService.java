@@ -66,7 +66,7 @@ public class AmbulancePatientDistanceService {
                     ambulance.getAmbulancelongitude()
             );
 
-            System.out.println("La distance du patient à l'ambulance "
+            System.out.println("La distance entre le patient et l'ambulance "
                     + ambulance.getIdambulance()
                     + " = " + distance + " km");
         }

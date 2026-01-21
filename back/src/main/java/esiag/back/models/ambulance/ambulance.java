@@ -71,15 +71,35 @@ public class Ambulance {
     public Double getAmbulancelongitude() {
         return ambulancelongitude;
     }
+
+    //Les setters
     public void setAmbulancelatitude(Double ambulancelatitude) {
     this.ambulancelatitude = ambulancelatitude;
     }
     public void setAmbulancelongitude(Double ambulancelongitude) {
     this.ambulancelongitude = ambulancelongitude;
     }
+    public void setAdresseambulance(String adresseambulance) {
+        this.adresseambulance = adresseambulance;
+    }
+
+    public void setDisponibiliteambulance(Boolean disponibiliteambulance) {
+        this.disponibiliteambulance = disponibiliteambulance;
+    }
+
+    public void setVitessemoyambulance(Double vitessemoyambulance) {
+        this.vitessemoyambulance = vitessemoyambulance;
+    }
+
+    public void setEquipementambulance(Double equipementambulance) {
+        this.equipementambulance = equipementambulance;
+    }
+
+    public void setExperienceambulance(Double experienceambulance) {
+        this.experienceambulance = experienceambulance;
+    }
 
 
-    
     
 
     @Override

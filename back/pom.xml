@@ -56,22 +56,30 @@
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.32</version>
-      <scope>provided</scope>
+      <version>edge-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
-      <version>20230227</version>
+      <version>20231013</version>
     </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+
   </dependencies>
+
+
+<profiles>
+      <profile>
+        <id>raslene</id>
+        <properties>
+          <datasource.username>postgres</datasource.username>
+          <db.url>jdbc:postgresql://localhost:5432/esiag_proto</db.url>
+          <db.password>rrwtrrwt</db.password>
+        </properties>
+      </profile>
+</profiles>
+
+
     <build>
         <plugins>
             <plugin>
@@ -85,6 +93,14 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                <useDefaultDelimiters>true</useDefaultDelimiters>
+                </configuration>
             </plugin>
         </plugins>
     </build>
