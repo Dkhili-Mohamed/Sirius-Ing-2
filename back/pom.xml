@@ -76,6 +76,14 @@
           <db.password>toto</db.password>
         </properties>
       </profile>
+      <profile>
+        <id>prod</id>
+        <properties>
+          <datasource.username>toto</datasource.username>
+          <db.url>jdbc:postgresql://localhost:5432/clinicpro_db</db.url>
+          <db.password>toto</db.password>
+        </properties>
+      </profile>
     </profiles>
 
     <build>
