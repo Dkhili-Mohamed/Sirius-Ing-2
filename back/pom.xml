@@ -8,12 +8,12 @@
     <relativePath/> <!-- comentaire lookup parent from repository -->
   </parent>
   <groupId>esiag.back</groupId>
-  <artifactId>proto-back</artifactId>
+  <artifactId>back</artifactId>
   <version>1.0-SNAPSHOT</version>
 
 
-  <name>proto-back</name>
-  <description>Back side of the proto project</description>
+  <name>back</name>
+  <description>Back side of the ClinicPro project</description>
   <properties>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
@@ -67,7 +67,6 @@
 
   </dependencies>
 
-
 <profiles>
       <profile>
         <id>raslene</id>
@@ -77,8 +76,24 @@
           <db.password>rrwtrrwt</db.password>
         </properties>
       </profile>
-</profiles>
 
+      <profile>
+        <id>maxdev</id>
+        <properties>
+          <datasource.username>postgres</datasource.username>
+          <db.url>jdbc:postgresql://localhost:5432/test</db.url>
+          <db.password>toto</db.password>
+        </properties>
+      </profile>
+      <profile>
+        <id>prod</id>
+        <properties>
+          <datasource.username>toto</datasource.username>
+          <db.url>jdbc:postgresql://localhost:5432/clinicpro_db</db.url>
+          <db.password>toto</db.password>
+        </properties>
+      </profile>
+    </profiles>
 
     <build>
         <plugins>

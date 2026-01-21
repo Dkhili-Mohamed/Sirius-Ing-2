@@ -31,3 +31,10 @@ Accept: application/json
 ### 6. Récupérer le statut du parcours pour un patient spécifique (findPatientStatutParcoursById)
 GET http://localhost:8081/api/parcours/1
 Accept: application/json
+
+### 7. Commencer un parcours pour un patient (commencerParcours)
+
+
+### 8. Récupérer le chemin entre deux espaces (findCheminSalle)
+GET http://localhost:8081/api/parcours/chemin/5/10/3
+Accept: application/json

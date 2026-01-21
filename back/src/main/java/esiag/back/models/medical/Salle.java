@@ -18,15 +18,15 @@ public class Salle{
     @Column(name = "capacite")
     private int capacite;
 
-    @Column(name = "type_salle")
-    private String typeSalle;
-
     @Column(name = "etat_salle")
     @Enumerated(EnumType.STRING)
     private EtatSalle etatSalle;
 
     @Column(name = "place_disponible")
     private int placeDisponible;
+
+    @Column(name = "nom")
+    private String nomSalle;
 
     @ManyToOne
     @JoinColumn(name = "id_espace", nullable = false)
@@ -36,8 +36,8 @@ public class Salle{
     public String toString() {
         return "Salle{" +
                 "idSalle=" + idSalle +
+                ", nom=" + nomSalle +
                 ", capacite=" + capacite +
-                ", typeSalle='" + typeSalle + '\'' +
                 ", etatSalle=" + etatSalle +
                 ", placeDisponible=" + placeDisponible +
                 ", espace=" + espace +

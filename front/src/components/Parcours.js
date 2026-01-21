@@ -4,8 +4,8 @@ import '../styles/Sample.css';
 import { ALL_PATIENTS } from "../constants/back";   
 
 export default function Parcours() {
-  const [patientStatutParours, setPatientStatutParours] = useState([]);
-  const [loading, setLoading] = useState(false);    
+    const [patientStatutParours, setPatientStatutParours] = useState([]);
+    const [loading, setLoading] = useState(false);    
     const setParcoursPatientsData = async () => {   
         setLoading(true);
         axios.get(ALL_PATIENTS).then((response) => {
@@ -17,6 +17,7 @@ export default function Parcours() {
             alert("Error Ocurred while loading data:" + error);
         });
     }
+
 
     useEffect(() => {
         setParcoursPatientsData();
@@ -47,19 +48,21 @@ export default function Parcours() {
                 <td>{patientStatutParcours.nomParcours}</td>
                 <td>{patientStatutParcours.statutParcours}</td>
                 <td>
-                    {patientStatutParcours.statutParcours !== 'TERMINE' && (
-                        <button className="btn btn-primary btn-sm mx-1" 
-                            onClick={() => window.location.href = `/api/parcours/${patientStatutParcours.idPatient}`}
-                        >
-                        Voir le parcours
-                        </button>
-                    )}
+                    
+                    <button className="btn btn-primary btn-sm mx-1" 
+                        onClick={() => window.location.href = `/api/parcours/${patientStatutParcours.idPatient}`}
+                    >
+                    Voir le parcours
+                    </button>
+                    
                 </td>
                 </tr>
             ))}
             </tbody>
             </table>
         </div>
+
+
         </div>
     );
 };

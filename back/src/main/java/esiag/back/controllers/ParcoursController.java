@@ -12,7 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
+import esiag.back.models.medical.Parcours;
+import esiag.back.services.ActeMedicalService;
+import esiag.back.services.CheminService;
 import esiag.back.services.ParcoursService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+
 
 @RestController
 @RequestMapping("api/parcours")
@@ -20,6 +27,10 @@ public class ParcoursController {
     
     @Autowired
     private ParcoursService parcoursService;
+    @Autowired
+    private ActeMedicalService acteMedicalService;
+    @Autowired
+    private CheminService cheminService;
         
     
     @GetMapping("all")
@@ -31,6 +42,30 @@ public class ParcoursController {
     public ResponseEntity<List<ParcoursPatient>>  findActeMedicalById(@PathVariable Long idPatient) {
         return new ResponseEntity<>(parcoursService.findParcoursPatientById(idPatient), HttpStatus.OK);
     }
+
+    @PostMapping("commencer")
+    public ResponseEntity<ParcoursPatient> postMethodName(@RequestBody ParcoursPatient parcoursPatient) {
+        boolean isUpdated = acteMedicalService.updateStatutPremierActeMedical(parcoursPatient);
+        if(!isUpdated){ 
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(parcoursPatient, HttpStatus.OK);
+        
+    }
+
+    @GetMapping("chemin/{idParcours}/{ordre}/{idDepart}")
+    public ResponseEntity<List<esiag.back.models.architecture.Espace>> findChemin(
+            @PathVariable Long idParcours,
+            @PathVariable int ordre,
+            @PathVariable Long idDepart) {
+        return new ResponseEntity<>(
+                cheminService.nextActeMedical(
+                        idParcours,
+                        ordre,
+                        idDepart),
+                HttpStatus.OK);
+    }
+    
 
     
 }

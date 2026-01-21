@@ -71,7 +71,7 @@ CREATE TABLE type_acte_prerequis (
 );
 
 
-CREATE TABLE salle_type_acte (
+CREATE TABLE salle_type_acte_medical (
     id_salle_type_acte SERIAL PRIMARY KEY,
     id_salle INTEGER NOT NULL,
     id_type_acte_medical INTEGER NOT NULL,
