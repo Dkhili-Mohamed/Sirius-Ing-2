@@ -1,0 +1,17 @@
+package esiag.back.repositories;
+
+import esiag.back.models.ambulance.PatientA;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
+
+import esiag.back.models.ambulance.PatientA;
+
+@Repository
+public interface patientArepository extends JpaRepository<PatientA, Long> {
+
+    
+    @Query(value = "SELECT * FROM patientA AS p ORDER BY p.idpatientA DESC LIMIT 1", nativeQuery = true)
+    PatientA findLastPatientA();
+}

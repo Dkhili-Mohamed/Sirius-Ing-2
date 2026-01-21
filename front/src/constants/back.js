@@ -1,6 +1,7 @@
-//Table Sample
-//export const LOCAL_HOST = 'http://172.31.250.15:8081
- //commenté pour tester en local !
+// URLs pour Ambulance
+export const LOCAL_HOST_AMBULANCE = 'http://localhost:8081/api/ambulance/';
+export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE + 'all';
+export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 
 export const LOCAL_HOST = 'http://localhost:8081';
 export const LOCAL_HOST_SAMPLE = LOCAL_HOST + '/sample/';
