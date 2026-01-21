@@ -1,4 +1,4 @@
-/* package esiag.back.services;
+package esiag.back.services;
 
 
 import esiag.back.models.architecture.Connexion;
@@ -57,7 +57,7 @@ public class CheminService {
             La boucle s'arrête lorsqu'on visite l'espace d'arrivé.
 
          */
-        /* List<Long> chemin = new ArrayList<>();
+        List<Long> chemin = new ArrayList<>();
 
         Queue<Long> queue = new LinkedList<>();
         Set<Long> sommetsVisites = new HashSet<>();
@@ -93,7 +93,7 @@ public class CheminService {
         /*
             Reconstruction du chemin à partir de l'arbre couvrant construit
          */
-        /* Long sommet = idArrive;
+        Long sommet = idArrive;
 
         while (sommet != null) {
             chemin.add(sommet);
@@ -123,4 +123,4 @@ public class CheminService {
 
 
 
-}  */
+}
