@@ -1,6 +1,6 @@
 package esiag.back;
 
-import esiag.back.models.medical.FileAttente;  // Ajoutez cet import
+import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
 import esiag.back.services.FileAttenteService;
 import esiag.back.services.PatientService;
@@ -23,17 +23,19 @@ public class TestFileAttente implements CommandLineRunner {
 
         System.out.println("\nListe de tous les patients :");
         for (Patient patient : patientService.findAllPatients()) {
-            System.out.println("- " + patient.getPrenomPatient() + " " +
+            System.out.println("- [Arrivé(e) le : " + patient.getDateArrivee() + "] " + patient.getPrenomPatient() + " " +
                     patient.getNomPatient() + " " + patient.getAgePatient() + " ans" +
-                    " (Urgence: " + patient.getScoreUrgence() + ")");
+                    " (Score: " + patient.getScoreUrgence() + 
+                    " - Niveau: " + patient.getNiveauUrgence() + ")");
         }
 
         System.out.println("\nFile d'attente triée par urgence :");
         for (FileAttente fileAttente : fileAttenteService.getFileAttenteTriee()) {
             Patient patient = fileAttente.getPatient();
-            System.out.println("- " + patient.getPrenomPatient() + " " +
+            System.out.println("- [Arrivé(e) le : " + patient.getDateArrivee() + "] " + patient.getPrenomPatient() + " " +
                     patient.getNomPatient() + " " + patient.getAgePatient() + " ans" +
-                    " (Urgence: " + patient.getScoreUrgence() + ")");
+                    " (Score: " + patient.getScoreUrgence() + 
+                    " - Niveau: " + patient.getNiveauUrgence() + ")");
         }
 
         System.out.println("=== FIN DU TEST ===");

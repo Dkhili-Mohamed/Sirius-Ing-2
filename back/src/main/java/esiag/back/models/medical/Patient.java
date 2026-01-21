@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Data
 @Table(name = "patient")
@@ -30,10 +32,16 @@ public class Patient {
     @Column(name = "score_urgence")
     private Integer scoreUrgence;
 
+    @Column(name = "date_arrivee")
+    private LocalDateTime dateArrivee;
+
     @PrePersist
     @PreUpdate
     public void calculerEtMettreAJourScore() {
         this.scoreUrgence = getScoreUrgence();
+        if (this.dateArrivee == null) {
+            this.dateArrivee = LocalDateTime.now();
+        }
     }
 
 
@@ -113,11 +121,21 @@ public class Patient {
         Collections.sort(patients, new Comparator<Patient>() {
             @Override
             public int compare(Patient p1, Patient p2) {
-                return Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
-            }
+                int niveauCompare = p2.getNiveauUrgence().compareTo(p1.getNiveauUrgence());
+                if (niveauCompare != 0) {
+                    return niveauCompare;
+                }
+
+                int scoreCompare = Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
+                if (scoreCompare != 0) {
+                    return scoreCompare;
+                }
+
+                return p1.getDateArrivee().compareTo(p2.getDateArrivee());           }
         });
         return patients;
     }
+
 
     @Override
     public String toString() {
