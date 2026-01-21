@@ -33,7 +33,7 @@ public class ActeMedicalService {
             
             acteMedical.setStatut(StatutActeMedical.EN_COURS);
             acteMedical.setSalle(salle);
-            log.info("Mise à jour de l'acte médical (En cours) : {}", acteMedical);
+            log.info("Mise à jour de l'acte médical (En cours) : {}", acteMedical.getIdActeMedical());
             acteMedicalRepository.saveAndFlush(acteMedical);
             return true;
         }  

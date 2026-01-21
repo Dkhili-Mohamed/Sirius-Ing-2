@@ -1,4 +1,4 @@
-package esiag.back;
+/*package esiag.back;
 
 import java.util.List;
 
@@ -75,3 +75,4 @@ public class TestSuivreParcoursPatient implements CommandLineRunner {
         }
     }
 }
+*/

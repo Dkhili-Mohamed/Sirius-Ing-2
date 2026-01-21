@@ -189,12 +189,15 @@ public class CheminService {
 
         List<Salle> salles = salleService
                 .findSallesByTypeActeMedical(prochainActeMedical.getTypeActeMedical().getIdTypeActeMedical());
+        
+     
 
         List<List<Espace>> cheminsPossibles = new ArrayList<>();
 
         if (salles.isEmpty()) {
-            throw new IllegalStateException(
-                    "Aucune salle disponible pour l'acte médical " + prochainActeMedical.getIdActeMedical());
+            return new ArrayList<>(); 
+            // throw new IllegalStateException(
+                  //  "Aucune salle disponible pour l'acte médical " + prochainActeMedical.getIdActeMedical());
         } else {
             // Calcul des chemins vers chaque salle disponible
 
