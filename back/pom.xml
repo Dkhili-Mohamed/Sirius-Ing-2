@@ -67,7 +67,7 @@
 
   </dependencies>
 
-<profiles>
+    <profiles>
       <profile>
         <id>raslene</id>
         <properties>

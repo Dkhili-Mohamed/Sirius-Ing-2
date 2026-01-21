@@ -12,7 +12,7 @@ public class DPI {
     @Id
     @Column(name="id_dpi")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idDPI;
+    private Long idDPI;
 
     @ManyToOne
     @JoinColumn(name = "id_patient")

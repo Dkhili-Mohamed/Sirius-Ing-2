@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Sample.css'; 
+import '../styles/Table.css'; 
 import { GET_AMBULANCES } from "../constants/back";
 
 export default function Ambulance() {   

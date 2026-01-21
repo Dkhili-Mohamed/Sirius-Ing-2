@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Sample.css';
+import '../styles/Table.css';
 import { PARCOURS_PATIENT, CHEMIN} from "../constants/back";
 import { useParams } from 'react-router-dom';
 
