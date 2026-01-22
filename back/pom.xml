@@ -63,8 +63,6 @@
       <artifactId>json</artifactId>
       <version>20231013</version>
     </dependency>
-
-
   </dependencies>
 
     <profiles>
@@ -95,6 +93,16 @@
       </profile>
     </profiles>
 
+  <profiles>
+    <profile>
+      <id>shaindev</id>
+      <properties>
+        <datasource.username>postgres</datasource.username>
+        <db.url>jdbc:postgresql://localhost:5432/esiag_proto</db.url>
+        <db.password>admin</db.password>
+      </properties>
+    </profile>
+  </profiles>
     <build>
         <plugins>
             <plugin>

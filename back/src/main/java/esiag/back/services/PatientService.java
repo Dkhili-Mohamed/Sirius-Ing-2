@@ -14,6 +14,7 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+
     public Patient findByIdPatient(Long idPatient) {
         Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
         return optionalPatient.orElse(null);
@@ -24,12 +25,17 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public boolean deletePatient(Long idPatient) {
-        Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
-        if (optionalPatient.isPresent()) {
-            optionalPatient.ifPresent(patient -> patientRepository.delete(patient));
-            return true;
-        }
-        return false;
+    //Sera peut-être utilisé ultérieurement
+//    public boolean deletePatient(Long idPatient) {
+//        Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
+//        if (optionalPatient.isPresent()) {
+//            optionalPatient.ifPresent(patient -> patientRepository.delete(patient));
+//            return true;
+//        }
+//        return false;
+//    }
+
+    public Patient save(Patient patient) {
+        return patientRepository.save(patient);
     }
 }
