@@ -111,8 +111,9 @@ public class MockService {
 
             ambulancerepository.save(ambulance);
 
-            System.out.println("Ambulances créées  " );
+
         }
+        System.out.println("Ambulances créées  " );
 
     }
     // générer des numéros
