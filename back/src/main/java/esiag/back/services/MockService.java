@@ -1,14 +1,16 @@
 package esiag.back.services;
 
+import java.util.List;
+import java.util.Random;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.stereotype.Service;
+
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.models.ambulance.PatientA;
 import esiag.back.repositories.ambulancerepository;
 import esiag.back.repositories.patientArepository;
-import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.Random;
 
 @Service
 public class MockService {
@@ -111,8 +113,9 @@ public class MockService {
 
             ambulancerepository.save(ambulance);
 
-            System.out.println("Ambulances créées  " );
+            
         }
+        System.out.println("Ambulances créées  " );
 
     }
     // générer des numéros
