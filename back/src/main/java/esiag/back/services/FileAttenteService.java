@@ -28,10 +28,6 @@ public class FileAttenteService {
         List<Patient> patients = patientRepository.findAll();
         log.info("Nombre de patients a trier : {}", patients.size());
 
-        for (Patient patient : patients) {
-            patient.calculerEtMettreAJourScore();
-        }
-        patientRepository.saveAll(patients);
 
         List<Patient> patientsTries = Patient.trierParUrgence(patients);
         log.info("Tri termine. {} patients triés par niveau d'urgence", patientsTries.size());

@@ -1,6 +1,5 @@
 package esiag.back.services;
 
-import esiag.back.models.medical.EtatSante;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,14 +25,15 @@ public class PatientService {
         return patientRepository.findAll();
     }
 
-    public boolean deletePatient(Long idPatient) {
-        Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
-        if (optionalPatient.isPresent()) {
-            optionalPatient.ifPresent(patient -> patientRepository.delete(patient));
-            return true;
-        }
-        return false;
-    }
+    //Sera peut-être utilisé ultérieurement
+//    public boolean deletePatient(Long idPatient) {
+//        Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
+//        if (optionalPatient.isPresent()) {
+//            optionalPatient.ifPresent(patient -> patientRepository.delete(patient));
+//            return true;
+//        }
+//        return false;
+//    }
 
     public Patient save(Patient patient) {
         return patientRepository.save(patient);

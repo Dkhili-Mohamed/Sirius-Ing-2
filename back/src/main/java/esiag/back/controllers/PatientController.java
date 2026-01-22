@@ -2,6 +2,8 @@ package esiag.back.controllers;
 
 import esiag.back.models.medical.Patient;
 import esiag.back.services.PatientService;
+import esiag.back.models.medical.FileAttente;
+import esiag.back.services.FileAttenteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,9 @@ public class PatientController {
     @Autowired
     private PatientService patientService;
 
+    @Autowired
+    private FileAttenteService fileAttenteService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Long id){
 
@@ -29,14 +34,15 @@ public class PatientController {
         return new ResponseEntity<>(patientService.findAllPatients(), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Long> deleteMapping(@PathVariable Long id){
-        boolean isRemoved = patientService.deletePatient(id);
-        if(!isRemoved){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return  new ResponseEntity<>(id, HttpStatus.OK);
-    }
+    //Sera peut-être utilisé ultérieurement
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<Long> deleteMapping(@PathVariable Long id){
+//        boolean isRemoved = patientService.deletePatient(id);
+//        if(!isRemoved){
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        }
+//        return  new ResponseEntity<>(id, HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
@@ -47,4 +53,15 @@ public class PatientController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("file-attente")
+    public ResponseEntity<List<FileAttente>> getFileAttente(){
+        try {
+            List<FileAttente> fileAttente = fileAttenteService.getFileAttenteTriee();
+            return new ResponseEntity<>(fileAttente, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

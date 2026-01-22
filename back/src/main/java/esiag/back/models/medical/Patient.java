@@ -35,15 +35,26 @@ public class Patient {
     @Column(name = "date_arrivee")
     private LocalDateTime dateArrivee;
 
-    @PrePersist
-    @PreUpdate
-    public void calculerEtMettreAJourScore() {
-        this.scoreUrgence = getScoreUrgence();
-        if (this.dateArrivee == null) {
-            this.dateArrivee = LocalDateTime.now();
-        }
+    @Transient
+    private List<String> patient_symptomes;
+
+
+@PrePersist
+public void copierSymptomesEtDate() {
+    System.out.println("patient_symptomes reçu: " + patient_symptomes);
+
+    if (patient_symptomes != null && !patient_symptomes.isEmpty()) {
+
+        this.symptomes.clear();
+        this.symptomes.addAll(patient_symptomes);
+    } else {
+        System.out.println("patient_symptomes est null ou vide !");
     }
 
+    if (this.dateArrivee == null) {
+        this.dateArrivee = LocalDateTime.now();
+    }
+}
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(
@@ -77,22 +88,52 @@ public class Patient {
     private int calculerPointsSymptome(String symptome) {
         switch (symptome) {
             case "fievre_elevee":
+            case "fievreElevee":
                 return 3;
             case "douleur_intense":
+            case "douleurIntense":
                 return 4;
             case "douleur_thoracique":
+            case "douleurThoracique":
+                return 5;
             case "difficulte_respiratoire":
+            case "difficultesRespiratoires":
                 return 5;
             case "perte_connaissance":
+            case "perteConnaissance":
                 return 5;
             case "hemorragie":
+            case "saignementAbondant":
                 return 5;
             case "douleur_moderee":
+            case "douleurModeree":
                 return 2;
             case "nausee":
+            case "vomissementsPersistants":
                 return 1;
             case "fatigue":
+            case "fatigueExtreme":
                 return 1;
+            case "confusion":
+                return 2;
+            case "frissons":
+                return 1;
+            case "touxSevere":
+                return 2;
+            case "malaiseGeneral":
+                return 1;
+            case "vertigesIntenses":
+                return 2;
+            case "mauxTeteSeveres":
+                return 1;
+            case "visionTroublee":
+                return 2;
+            case "difficultesParole":
+                return 3;
+            case "faiblesseBrasJambes":
+                return 2;
+            case "engourdissementFace":
+                return 3;
             default:
                 return 0;
         }
