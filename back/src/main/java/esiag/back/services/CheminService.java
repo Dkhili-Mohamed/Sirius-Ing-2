@@ -170,14 +170,17 @@ public class CheminService {
             return null;
         }
 
-        // Mofification de l'état de l'acte médical courant à "TERMINE"
-        acteMedicalService.updatStatutActeMedicalToTermine();
-        log.info("Update statut acte_medical to TERMINE");
+        if(ordre != 0){
+            // Mofification de l'état de l'acte médical courant à "TERMINE"
+            acteMedicalService.updatStatutActeMedicalToTermine();
+            log.info("Update statut acte_medical to TERMINE");
 
-        // Modification de l'état de la salle associée à l'acte médical courant
-        Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
-        salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
-        log.info("Libérer salle : " + salleActeCourant.getIdSalle());
+            // Modification de l'état de la salle associée à l'acte médical courant
+            Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
+            salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+            log.info("Libérer salle : " + salleActeCourant.getIdSalle());
+        }
+       
         /*
          * Récupère la salle associée à un acte médical
          */
