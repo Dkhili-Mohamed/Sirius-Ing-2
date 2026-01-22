@@ -21,20 +21,17 @@ public class TestFileAttente implements CommandLineRunner {
     public void run(String... args) {
         System.out.println("=== DÉBUT DU TEST FILE D'ATTENTE ===");
 
-        System.out.println("\nListe de tous les patients :");
+        System.out.println("1. Patients non triés :");
         for (Patient patient : patientService.findAllPatients()) {
-            System.out.println("- [Arrivé(e) le : " + patient.getDateArrivee() + "] " + patient.getPrenomPatient() + " " +
-                    patient.getNomPatient() + " " + patient.getAgePatient() + " ans" +
-                    " (Score: " + patient.getScoreUrgence() + 
-                    " - Niveau: " + patient.getNiveauUrgence() + ")");
+            System.out.println("- " + patient.getPrenomPatient() + " " + patient.getNomPatient());
         }
 
-        System.out.println("\nFile d'attente triée par urgence :");
+        System.out.println("2. File d'attente triée par urgence :");
         for (FileAttente fileAttente : fileAttenteService.getFileAttenteTriee()) {
             Patient patient = fileAttente.getPatient();
-            System.out.println("- [Arrivé(e) le : " + patient.getDateArrivee() + "] " + patient.getPrenomPatient() + " " +
-                    patient.getNomPatient() + " " + patient.getAgePatient() + " ans" +
-                    " (Score: " + patient.getScoreUrgence() + 
+            System.out.println("- [Position " + fileAttente.getRang() + "] " +
+                    patient.getPrenomPatient() + " " + patient.getNomPatient() +
+                    " (Score: " + patient.getScoreUrgence() +
                     " - Niveau: " + patient.getNiveauUrgence() + ")");
         }
 
