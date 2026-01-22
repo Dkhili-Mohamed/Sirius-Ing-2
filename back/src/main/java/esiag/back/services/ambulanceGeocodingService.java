@@ -1,12 +1,17 @@
 package esiag.back.services;
 
-import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulancerepository;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import esiag.back.models.ambulance.Ambulance;
+import esiag.back.repositories.ambulancerepository;
 
+@DependsOn("mockService")
 @Service
 public class ambulanceGeocodingService {
 
@@ -19,6 +24,7 @@ public class ambulanceGeocodingService {
         this.geocodingService = geocodingService;
     }
 
+    @PostConstruct
     @Transactional
     public void geocodeAllAmbulances() {
 

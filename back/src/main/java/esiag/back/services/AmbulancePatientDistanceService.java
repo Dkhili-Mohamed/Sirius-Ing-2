@@ -1,13 +1,18 @@
 package esiag.back.services;
 
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+
+import org.springframework.context.annotation.DependsOn;
+import org.springframework.stereotype.Service;
+
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.models.ambulance.PatientA;
 import esiag.back.repositories.ambulancerepository;
 import esiag.back.repositories.patientArepository;
-import org.springframework.stereotype.Service;
 
-import java.util.List;
-
+@DependsOn("patientAGeocodingService")
 @Service
 public class AmbulancePatientDistanceService {
 
@@ -22,7 +27,8 @@ public class AmbulancePatientDistanceService {
         this.patientArepository = patientArepository;
         this.distanceService = distanceService;
     }
-
+    
+    @PostConstruct
     public void calculerDistances() {
 
         PatientA patient = patientArepository.findAll()
