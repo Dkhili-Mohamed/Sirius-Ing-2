@@ -49,7 +49,7 @@ export default function ParcoursPatient() {
       setDepartChemin({
         idParcours: parcours.idParcours, 
         ordre : 0,
-        idDepart : 6
+        idDepart : 42
       });
     }else{
       alert("Le parcours est en cours.")
