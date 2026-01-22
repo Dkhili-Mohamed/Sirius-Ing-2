@@ -16,13 +16,13 @@ public class Patient {
     @Column(name = "id_patient")
     private Long idPatient;
 
-    @Column(name = "nom")
+    @Column(name = "nom_patient")
     private String nomPatient;
 
-    @Column(name = "prenom")
+    @Column(name = "prenom_patient")
     private String prenomPatient;
 
-    @Column(name = "age")
+    @Column(name = "age_patient")
     private Integer agePatient;
 
     @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
