@@ -35,5 +35,6 @@ Accept: application/json
 
 ####################################################
 
-### 1. Ajout des patients malades à la file d'attente
-POST http://localhost:8081/api/file-attente/ajouter/malades
+### Voir la file d'attente
+GET http://localhost:8081/api/file-attente
+
