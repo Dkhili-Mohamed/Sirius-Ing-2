@@ -37,36 +37,25 @@ export default function Patient() {
                 <table className="table table-sm table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th scope="col">Id</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Age</th>
-                        <th scope="col">Etat de santé</th>
                         <th scope="col">Bilan médical</th>
-
-
                     </tr>
                     </thead>
                     <tbody className="table-group-divider">
                     {
                         patients.map( (patient) => (
                             <tr key={patient.idPatient}>
-                                <th scope="row">{patient.idPatient}</th>
                                 <td>{patient.nomPatient}</td>
                                 <td>{patient.prenomPatient}</td>
                                 <td>{patient.agePatient}</td>
-                                <td>{patient.etatSante}</td>
 
                                 <td>
-                                    <button className="btn btn-primary btn-sm mx-1"
-                                            onClick={() => window.location.href = `/api/dpi/patient/${patient.idPatient}`}
+                                    <button className="btn btn-success btn-sm mx-1"
+                                            onClick={() => window.location.href = `/api/patient-symptomes/patient/${patient.idPatient}`}
                                     >
-                                        Voir DPI
-                                    </button>
-                                    <button className="btn btn-info btn-sm mx-1"
-                                            onClick={() => window.location.href = `/api/maladie-patient/patient/${patient.idPatient}`}
-                                    >
-                                        Voir Maladies
+                                        Symptômes
                                     </button>
                                 </td>
 
