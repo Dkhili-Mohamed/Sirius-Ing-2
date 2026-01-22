@@ -1,12 +1,12 @@
 // URLs pour Ambulance
-export const LOCAL_HOST_AMBULANCE = 'http://172.31.249.73:8081/api/ambulance/';
+export const LOCAL_HOST_AMBULANCE = 'http://172.31.252.190:8081/api/ambulance/';
 export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE + 'all';
 export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 
-export const LOCAL_HOST = 'http://172.31.249.73:8081';
+//export const LOCAL_HOST = 'http://172.31.249.73:8081';
 
 //Table Patients +
-//export const LOCAL_HOST = 'http://localhost:8081';
+export const LOCAL_HOST = 'http://172.31.252.190:8081';
 export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/api/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
 export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
