@@ -12,7 +12,7 @@ import java.util.List;
 
 import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
 
-@CrossOrigin(origins = "http://172.31.253.74:3000")
+@CrossOrigin(origins = "http://172.31.249.73:3000")
 @RestController
 @RequestMapping("api/ambulance")
 public class ambulancecontroller {
