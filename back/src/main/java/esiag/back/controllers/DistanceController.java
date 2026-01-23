@@ -1,8 +1,9 @@
 package esiag.back.controllers;
 
-import esiag.back.services.AmbulancePatientDistanceService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import esiag.back.services.AmbulancePatientDistanceService;
 
 @RestController
 public class DistanceController {

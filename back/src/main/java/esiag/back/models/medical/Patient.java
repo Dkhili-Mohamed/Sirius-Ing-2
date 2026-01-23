@@ -20,16 +20,20 @@ public class Patient {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_patient")
     private Long idPatient;
 
     @NotBlank(message = "Veuillez insérer un nom")
+    @Column(name ="nom_patient")
     private String nomPatient;
 
     @NotBlank(message = "Veuillez insérer un prenom")
+    @Column(name = "prenom_patient")
     private String prenomPatient;
 
     @NotNull(message = "Veuillez insérer un age")
     @Min(value = 0, message = "L'age doit être positif")
+    @Column(name = "age_patient")
     private Integer agePatient;
 
     @Column(name = "score_urgence")
@@ -161,27 +165,9 @@ public void copierSymptomesEtDate() {
         return NiveauUrgence.NON_URGENT;
     }
 
-//    public static List<Patient> trierParUrgence(List<Patient> patients) {
-//        Collections.sort(patients, new Comparator<Patient>() {
-//            @Override
-//            public int compare(Patient p1, Patient p2) {
-//                int niveauCompare = p2.getNiveauUrgence().compareTo(p1.getNiveauUrgence());
-//                if (niveauCompare != 0) {
-//                    return niveauCompare;
-//                }
-//
-//                int scoreCompare = Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
-//                if (scoreCompare != 0) {
-//                    return scoreCompare;
-//                }
-//
-//                return p1.getDateArrivee().compareTo(p2.getDateArrivee());           }
-//        });
-//        return patients;
-//    }
-
     public static List<Patient> trierParUrgence(List<Patient> patients) {
-        if (patients == null) return new ArrayList<>();
+        if (patients == null)
+            return new ArrayList<>();
 
         Collections.sort(patients, new Comparator<Patient>() {
             @Override
@@ -203,9 +189,12 @@ public void copierSymptomesEtDate() {
                 LocalDateTime d1 = p1.getDateArrivee();
                 LocalDateTime d2 = p2.getDateArrivee();
 
-                if (d1 == null && d2 == null) return 0;
-                if (d1 == null) return 1;
-                if (d2 == null) return -1;
+                if (d1 == null && d2 == null)
+                    return 0;
+                if (d1 == null)
+                    return 1;
+                if (d2 == null)
+                    return -1;
 
                 return d1.compareTo(d2);
             }

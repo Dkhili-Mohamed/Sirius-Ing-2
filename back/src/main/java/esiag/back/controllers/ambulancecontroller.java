@@ -1,18 +1,23 @@
 package esiag.back.controllers;
 
-import esiag.back.models.ambulance.Ambulance;
-import esiag.back.services.ambulanceservice;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import esiag.back.models.ambulance.Ambulance;
+import esiag.back.services.ambulanceservice;
 
-import org.aspectj.internal.lang.annotation.ajcDeclareAnnotation;
-
-@CrossOrigin(origins = "http://172.31.252.190:3000")
+@CrossOrigin(origins = "http://172.31.249.109:3000")
 @RestController
 @RequestMapping("api/ambulance")
 public class ambulancecontroller {
