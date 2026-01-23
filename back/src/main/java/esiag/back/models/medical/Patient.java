@@ -77,19 +77,19 @@ public void copierSymptomesEtDate() {
     }
 
 
-//    @Transient
-//    public int getScoreUrgence() {
-//        int score = 0;
-//
-//        if (symptomes != null && !symptomes.isEmpty()) {
-//            for (String symptome : symptomes) {
-//                score += calculerPointsSymptome(symptome.trim().toLowerCase());
-//            }
-//        }
-//
-//        score += calculerPointsAge();
-//        return score;
-//    }
+    @Transient
+    public int getScoreUrgence() {
+        int score = 0;
+
+        if (symptomes != null && !symptomes.isEmpty()) {
+            for (String symptome : symptomes) {
+                score += calculerPointsSymptome(symptome.trim().toLowerCase());
+            }
+        }
+
+        score += calculerPointsAge();
+        return score;
+    }
 
 
     private int calculerPointsSymptome(String symptome) {
