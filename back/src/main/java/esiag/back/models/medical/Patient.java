@@ -3,6 +3,7 @@ package esiag.back.models.medical;
 
 import lombok.Data;
 
+import java.util.Comparator;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -72,19 +73,19 @@ public void copierSymptomesEtDate() {
     }
 
 
-    @Transient
-    public int getScoreUrgence() {
-        int score = 0;
-
-        if (symptomes != null && !symptomes.isEmpty()) {
-            for (String symptome : symptomes) {
-                score += calculerPointsSymptome(symptome.trim().toLowerCase());
-            }
-        }
-
-        score += calculerPointsAge();
-        return score;
-    }
+//    @Transient
+//    public int getScoreUrgence() {
+//        int score = 0;
+//
+//        if (symptomes != null && !symptomes.isEmpty()) {
+//            for (String symptome : symptomes) {
+//                score += calculerPointsSymptome(symptome.trim().toLowerCase());
+//            }
+//        }
+//
+//        score += calculerPointsAge();
+//        return score;
+//    }
 
 
     private int calculerPointsSymptome(String symptome) {
@@ -160,22 +161,56 @@ public void copierSymptomesEtDate() {
         return NiveauUrgence.NON_URGENT;
     }
 
+//    public static List<Patient> trierParUrgence(List<Patient> patients) {
+//        Collections.sort(patients, new Comparator<Patient>() {
+//            @Override
+//            public int compare(Patient p1, Patient p2) {
+//                int niveauCompare = p2.getNiveauUrgence().compareTo(p1.getNiveauUrgence());
+//                if (niveauCompare != 0) {
+//                    return niveauCompare;
+//                }
+//
+//                int scoreCompare = Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
+//                if (scoreCompare != 0) {
+//                    return scoreCompare;
+//                }
+//
+//                return p1.getDateArrivee().compareTo(p2.getDateArrivee());           }
+//        });
+//        return patients;
+//    }
+
     public static List<Patient> trierParUrgence(List<Patient> patients) {
+        if (patients == null) return new ArrayList<>();
+
         Collections.sort(patients, new Comparator<Patient>() {
             @Override
             public int compare(Patient p1, Patient p2) {
-                int niveauCompare = p2.getNiveauUrgence().compareTo(p1.getNiveauUrgence());
-                if (niveauCompare != 0) {
-                    return niveauCompare;
+                int n1 = (p1.getNiveauUrgence() != null) ? p1.getNiveauUrgence().ordinal() : -1;
+                int n2 = (p2.getNiveauUrgence() != null) ? p2.getNiveauUrgence().ordinal() : -1;
+
+                if (n1 != n2) {
+                    return Integer.compare(n2, n1);
                 }
 
-                int scoreCompare = Integer.compare(p2.getScoreUrgence(), p1.getScoreUrgence());
-                if (scoreCompare != 0) {
-                    return scoreCompare;
+                int s1 = p1.getScoreUrgence();
+                int s2 = p2.getScoreUrgence();
+
+                if (s1 != s2) {
+                    return Integer.compare(s2, s1);
                 }
 
-                return p1.getDateArrivee().compareTo(p2.getDateArrivee());           }
+                LocalDateTime d1 = p1.getDateArrivee();
+                LocalDateTime d2 = p2.getDateArrivee();
+
+                if (d1 == null && d2 == null) return 0;
+                if (d1 == null) return 1;
+                if (d2 == null) return -1;
+
+                return d1.compareTo(d2);
+            }
         });
+
         return patients;
     }
 
