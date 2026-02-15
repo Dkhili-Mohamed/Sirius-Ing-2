@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import axios from "axios";
 import { patientService } from '../services/patientService';
+import { LOCAL_HOST_PATIENT } from '../constants/back';
 import PatientModal from './PatientModal';
 
 const FileAttente = () => {
@@ -12,8 +14,9 @@ const FileAttente = () => {
 
     const chargerFileAttente = async () => {
         try {
-            const data = await patientService.getFileAttente();
-            setPatients(data);
+            //const data = await patientService.getFileAttente();
+            const response = await axios.get(LOCAL_HOST_PATIENT + 'file-attente-dto')
+            setPatients(response.data);
         } catch (error) {
             console.error('Erreur:', error);
         }
