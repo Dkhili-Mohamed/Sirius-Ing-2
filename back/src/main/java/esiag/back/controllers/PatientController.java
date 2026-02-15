@@ -1,5 +1,6 @@
 package esiag.back.controllers;
 
+import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.Patient;
 import esiag.back.services.PatientService;
 import esiag.back.models.medical.FileAttente;
@@ -62,6 +63,12 @@ public class PatientController {
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping("file-attente-dto")
+    public ResponseEntity<List<FileAttenteDTO>> getFileAttenteDTO() {
+        List<FileAttenteDTO> fileAttente = fileAttenteService.getFileAttenteAvecScores();
+        return ResponseEntity.ok(fileAttente);
     }
 
 }
