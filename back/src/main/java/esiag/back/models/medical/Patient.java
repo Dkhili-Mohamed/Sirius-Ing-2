@@ -3,7 +3,6 @@ package esiag.back.models.medical;
 
 import lombok.Data;
 
-import java.util.Comparator;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -35,6 +34,9 @@ public class Patient {
     @Min(value = 0, message = "L'age doit être positif")
     @Column(name = "age_patient")
     private Integer agePatient;
+
+    @Column(name="email_patient")
+    private String email;
 
     @Column(name = "date_arrivee")
     private LocalDateTime dateArrivee;
@@ -82,6 +84,7 @@ public void copierSymptomesEtDate() {
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
                 ", symptomes='" + symptomes + '\'' +
+                ", email= " + email +
                 '}';
     }
 }

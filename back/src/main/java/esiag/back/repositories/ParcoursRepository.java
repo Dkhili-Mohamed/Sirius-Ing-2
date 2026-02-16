@@ -37,6 +37,7 @@ public interface ParcoursRepository extends JpaRepository<Parcours,Long> {
             WHERE sui.patient.idPatient = :idPatient
         )
         ORDER BY a.ordre ASC
+        AND a.statut != 'TERMINE'
     """)
     List<ParcoursPatient> getParcoursByPatientId(@Param("idPatient") Long idPatient);
 
@@ -45,4 +46,31 @@ public interface ParcoursRepository extends JpaRepository<Parcours,Long> {
        "JOIN s.parcours pa " +
        "JOIN s.patient p")
     List<PatientStatutParcours> findAllPatientStatutParcours();
+
+    @Query("""
+                SELECT new esiag.back.models.dto.ParcoursPatient(
+                    a.idActeMedical,
+                    p.idParcours,
+                    t.idTypeActeMedical,
+                    e.idEspace,
+                    s.idSalle,
+                    a.ordre,
+                    t.libelle,
+                    a.statut,
+                    e.numeroEspace
+                )
+                FROM ActeMedical AS a
+                JOIN a.parcours AS p
+                JOIN a.typeActeMedical AS t
+                LEFT JOIN a.salle AS s
+                LEFT JOIN s.espace AS e
+                WHERE p.idParcours IN (
+                    SELECT sui.parcours.idParcours
+                    FROM Suivre sui
+                    WHERE sui.patient.idPatient = :idPatient
+                )
+                AND a.statut = 'TERMINE'
+                ORDER BY a.ordre ASC
+            """)
+    List<ParcoursPatient> getHistoriqueParcoursByPatientId(@Param("idPatient") Long idPatient);
 }

@@ -1,10 +1,13 @@
 package esiag.back.controllers;
 
 import esiag.back.models.dto.FileAttenteDTO;
+import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.medical.Patient;
 import esiag.back.services.PatientService;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.services.FileAttenteService;
+import esiag.back.services.ParcoursService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +22,9 @@ public class PatientController {
 
     @Autowired
     private PatientService patientService;
+
+    @Autowired
+    private ParcoursService parcoursService;
 
     @Autowired
     private FileAttenteService fileAttenteService;
@@ -69,6 +75,24 @@ public class PatientController {
     public ResponseEntity<List<FileAttenteDTO>> getFileAttenteDTO() {
         List<FileAttenteDTO> fileAttente = fileAttenteService.getFileAttenteAvecScores();
         return ResponseEntity.ok(fileAttente);
+    }
+
+    @GetMapping("/{email}/parcours")
+    public ResponseEntity<List<ParcoursPatient>> getParcoursPatientByEmail(@PathVariable String email) {
+        List<ParcoursPatient> parcoursPatients = patientService.getParcoursPatientsByEmail(email);
+        if (parcoursPatients == null || parcoursPatients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(parcoursPatients, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/parcours/historique")
+    public ResponseEntity<List<ParcoursPatient>> getHistoriqueParcoursPatients(@PathVariable Long id) {
+        List<ParcoursPatient> parcoursPatients = parcoursService.findHistoriqueParcoursPatients(id);
+        if (parcoursPatients == null || parcoursPatients.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(parcoursPatients, HttpStatus.OK);   
     }
 
 }

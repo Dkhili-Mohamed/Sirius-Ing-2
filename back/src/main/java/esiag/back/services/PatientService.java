@@ -1,5 +1,6 @@
 package esiag.back.services;
 
+import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.medical.NiveauUrgence;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.PatientRepository;
@@ -16,6 +17,8 @@ public class PatientService {
     @Autowired
     private PatientRepository patientRepository;
 
+    @Autowired
+    private ParcoursService parcoursService;
 
     public Patient findByIdPatient(Long idPatient) {
         Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
@@ -168,5 +171,26 @@ public class PatientService {
 
         return patients;
     }
+
+
+    public List<ParcoursPatient> getParcoursPatientsByEmail(String email) {
+
+        List<ParcoursPatient> parcoursPatients = new ArrayList<>();
+        Optional<Patient> optionalPatient = patientRepository.findByEmail(email);
+
+        if(optionalPatient.isPresent()){
+
+
+            Patient patient = optionalPatient.get();
+
+            parcoursPatients = parcoursService.findParcoursPatientById(patient.getIdPatient());
+
+
+        }
+        return parcoursPatients;
+
+    }
+
+    
 
 }

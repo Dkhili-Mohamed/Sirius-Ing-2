@@ -29,6 +29,10 @@ public class ParcoursService {
         return parcoursRepository.getParcoursByPatientId(idPatient);
     }
 
+    public List<ParcoursPatient> findHistoriqueParcoursPatients(Long idPatient){
+        return parcoursRepository.getHistoriqueParcoursByPatientId(idPatient);
+    }
+
     public List<ActeMedical> findAllParcoursPatient(){
         return acteMedicalRepository.findAll();
     }
