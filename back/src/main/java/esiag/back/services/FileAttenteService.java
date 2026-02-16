@@ -1,5 +1,6 @@
 package esiag.back.services;
 
+import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.FileAttenteRepository;
@@ -21,6 +22,7 @@ public class FileAttenteService {
 
     private final FileAttenteRepository fileAttenteRepository;
     private final PatientRepository patientRepository;
+    private final PatientService patientService;
 
     public List<FileAttente> getFileAttenteTriee() {
         log.info("Demarrage du tri de la file d'attente");
@@ -30,22 +32,32 @@ public class FileAttenteService {
         log.info("Nombre de patients a trier : {}", patients.size());
 
         log.info("-- 2. Lancement de l'algorithme de tri par niveau d'urgence --");
-        List<Patient> patientsTries = Patient.trierParUrgence(patients);
+        List<Patient> patientsTries = patientService.trierParUrgence(patients);
+
+
         log.info("Tri termine. {} patients tries par niveau d'urgence", patientsTries.size());
 
         log.info("- Transfert des {} patients tries vers la mise a jour -", patientsTries.size());
         log.info("Premier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(0).getNomPatient() + " " + patientsTries.get(0).getPrenomPatient(),
-                patientsTries.get(0).getScoreUrgence(),
-                patientsTries.get(0).getNiveauUrgence());
-        log.info("-> Dernier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(patientsTries.size()-1).getNomPatient() + " " + patientsTries.get(patientsTries.size()-1).getPrenomPatient(),
-                patientsTries.get(patientsTries.size()-1).getScoreUrgence(),
-                patientsTries.get(patientsTries.size()-1).getNiveauUrgence());
+                patientsTries.get(0).getNomPatient() + " " + patientsTries.get(0).getPrenomPatient());
 
+        log.info("-> Dernier patient trie: {} (Score: {} - Niveau: {})",
+                patientsTries.get(patientsTries.size()-1).getNomPatient() + " " + patientsTries.get(patientsTries.size()-1).getPrenomPatient());
 
 
         return mettreAJourFileAttente(patientsTries);
+    }
+
+    public List<FileAttenteDTO> getFileAttenteAvecScores() {
+        List<FileAttente> fileAttente = getFileAttenteTriee();
+        List<FileAttenteDTO> result = new ArrayList<>();
+
+        for (FileAttente fa : fileAttente) {
+            FileAttenteDTO dto = new FileAttenteDTO(fa, patientService);
+            result.add(dto);
+        }
+
+        return result;
     }
 
     @Transactional
@@ -74,8 +86,8 @@ public class FileAttenteService {
                 log.info("   Position {}: {} - Score: {} - Niveau: {}",
                         position + 1,
                         p.getNomPatient() + " " + p.getPrenomPatient(),
-                        p.getScoreUrgence(),
-                        p.getNiveauUrgence());
+                        patientService.calculerScoreUrgence(p),
+                        patientService.getNiveauUrgence(p));
             }
 
 
@@ -86,6 +98,7 @@ public class FileAttenteService {
             log.error("Erreur lors de la mise a jour de la file d'attente", e);
             throw new RuntimeException("Erreur lors de la mise a jour de la file d'attente", e);
         }
+
     }
 
 }
