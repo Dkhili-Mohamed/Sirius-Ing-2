@@ -98,6 +98,9 @@ public class PatientService {
 
 
     private int calculerPointsAge(Integer agePatient) {
+        if (agePatient == null) {
+            return 0; 
+        }
         if (agePatient == 1) return 4;
         if (agePatient <= 5) return 3;
         if (agePatient <= 12) return 2;

@@ -22,7 +22,7 @@ public class FileAttente {
     private Integer rang;
 
     @ManyToOne
-    @JoinColumn(name = "patient_id", nullable = false)
+    @JoinColumn(name = "id_patient", nullable = false)
     private Patient patient;
 
 

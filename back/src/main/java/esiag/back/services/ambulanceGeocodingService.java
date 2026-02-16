@@ -32,20 +32,27 @@ public class ambulanceGeocodingService {
 
         for (Ambulance ambulance : ambulances) {
 
-            
-            if (ambulance.getAdresseambulance() != null &&
-                ambulance.getAmbulancelatitude() == null &&
-                ambulance.getAmbulancelongitude() == null) {
+        
 
-                double[] coords = geocodingService.getCoordinates(
-                        ambulance.getAdresseambulance()
-                );
+            try {
 
-                if (coords != null) {
-                    ambulance.setAmbulancelatitude(coords[0]);
-                    ambulance.setAmbulancelongitude(coords[1]);
-                    ambulancerepository.save(ambulance);
+                if (ambulance.getAdresseambulance() != null &&
+                        ambulance.getAmbulancelatitude() == null &&
+                        ambulance.getAmbulancelongitude() == null) {
+
+                    double[] coords = geocodingService.getCoordinates(
+                            ambulance.getAdresseambulance());
+
+                    if (coords != null) {
+                        ambulance.setAmbulancelatitude(coords[0]);
+                        ambulance.setAmbulancelongitude(coords[1]);
+                        ambulancerepository.save(ambulance);
+                    }
                 }
+                
+                Thread.sleep(1100);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
     }
