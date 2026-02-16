@@ -73,7 +73,7 @@
         <id>raslene</id>
         <properties>
           <datasource.username>postgres</datasource.username>
-          <db.url>jdbc:postgresql://localhost:5432/esiag_proto</db.url>
+          <db.url>jdbc:postgresql://localhost:5432/esiag_proto2</db.url>
           <db.password>rrwtrrwt</db.password>
         </properties>
       </profile>

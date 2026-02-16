@@ -62,11 +62,17 @@ export default function Ambulance() {
               <th scope="col">Id</th>
               <th scope="col">Adresse</th>
               <th scope="col">Disponibilité</th>
-              <th scope="col">Vitesse Moyenne</th>
+              <th scope="col">Vitesse Moyenne(km/H)</th>
               <th scope="col">Equipement</th>
               <th scope="col">Expérience</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
+              <th scope="col">Distance(Km)</th>
+              <th scope="col">Temps Trajet(H) </th>
+              <th scope="col">Note Trajet</th>
+              <th scope="col">Note Globale</th>
+
+              
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -80,6 +86,14 @@ export default function Ambulance() {
                 <td>{ambulance.experienceambulance}</td>
                 <td>{ambulance.ambulancelatitude}</td>
                 <td>{ambulance.ambulancelongitude}</td>
+                <td>{ambulance.ambulancedistance}</td>
+                <td>{ambulance.tempstrajet}</td>
+                <td>{ambulance.notetrajet}</td>
+                <td>{ambulance.noteglobale}</td>
+
+
+
+
               </tr>
             ))}
           </tbody>

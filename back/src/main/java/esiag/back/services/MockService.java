@@ -99,7 +99,7 @@ public class MockService {
         System.out.println("Patient créé  " );
 
         
-        for (int i = 0; i < 20; i++) {
+        for (int i = 0; i < 10.; i++) {
             Ambulance ambulance = new Ambulance();
 
             ambulance.setAdresseambulance(adresses.get(random.nextInt(adresses.size())));

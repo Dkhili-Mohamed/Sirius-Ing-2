@@ -119,7 +119,11 @@ CREATE TABLE ambulance (
     equipementambulance DOUBLE PRECISION,    
     experienceambulance DOUBLE PRECISION,     
     ambulancelatitude DOUBLE PRECISION,        
-    ambulancelongitude DOUBLE PRECISION
+    ambulancelongitude DOUBLE PRECISION,
+    tempstrajet DOUBLE PRECISION,
+    notetrajet DOUBLE PRECISION,
+    noteglobale DOUBLE PRECISION
+
 );
 
 

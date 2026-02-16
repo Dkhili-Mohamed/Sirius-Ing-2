@@ -1,12 +1,13 @@
 package esiag.back.services;
 
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.models.ambulance.PatientA;
 import esiag.back.repositories.ambulancerepository;
 import esiag.back.repositories.patientArepository;
-import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class AmbulancePatientDistanceService {
@@ -65,6 +66,11 @@ public class AmbulancePatientDistanceService {
                     ambulance.getAmbulancelatitude(),
                     ambulance.getAmbulancelongitude()
             );
+
+            // Enregistrer la distance dans l'ambulance
+            ambulance.setAmbulancedistance(distance);
+            ambulancerepository.save(ambulance);
+
 
             System.out.println("La distance entre le patient et l'ambulance "
                     + ambulance.getIdambulance()

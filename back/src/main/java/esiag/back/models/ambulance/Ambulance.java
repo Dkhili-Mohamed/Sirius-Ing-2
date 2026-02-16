@@ -40,6 +40,22 @@ public class Ambulance {
     @Column(name = "ambulancelongitude")
     private Double ambulancelongitude;
 
+    @Column(name = "ambulancedistance")
+    private Double ambulancedistance;
+
+    @Column(name = "tempstrajet")
+    private Double tempstrajet;
+
+    @Column(name = "notetrajet")
+    private Double notetrajet;
+
+    @Column(name = "noteglobale")
+    private Double noteglobale;
+
+
+
+
+
     public Long getIdambulance() {
         return idambulance;
     }
@@ -71,6 +87,18 @@ public class Ambulance {
     public Double getAmbulancelongitude() {
         return ambulancelongitude;
     }
+    public Double getAmbulancedistance() {
+        return ambulancedistance;
+    }
+    public Double getTempstrajet() {
+        return tempstrajet;
+    }
+    public Double getNotetrajet() {
+        return notetrajet;
+    }
+    public Double getNoteglobale() {
+        return noteglobale;
+    }
 
     //Les setters
     public void setAmbulancelatitude(Double ambulancelatitude) {
@@ -99,6 +127,21 @@ public class Ambulance {
         this.experienceambulance = experienceambulance;
     }
 
+    public void setAmbulancedistance(Double ambulancedistance) {
+        this.ambulancedistance = ambulancedistance;
+    }
+
+    public void setTempstrajet(Double tempstrajet) {
+        this.tempstrajet = tempstrajet;
+    }
+
+    public void setNotetrajet(Double notetrajet) {
+        this.notetrajet = notetrajet;
+    }
+    public void setNoteglobale(Double noteglobale) {
+        this.noteglobale = noteglobale;
+    }
+
 
     
 
@@ -113,6 +156,9 @@ public class Ambulance {
                 ", experienceAmbulance=" + experienceambulance +
                 ", ambulancelatitude=" + ambulancelatitude +
                 ", ambulancelongitude=" + ambulancelongitude +
+                ", tempstrajet=" + tempstrajet +
+                ", notetrajet=" + notetrajet +
+                ", notetrajet=" + noteglobale +
                 '}';
     }
 }
