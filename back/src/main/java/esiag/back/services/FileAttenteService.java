@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,20 +33,20 @@ public class FileAttenteService {
         log.info("Nombre de patients a trier : {}", patients.size());
 
         log.info("-- 2. Lancement de l'algorithme de tri par niveau d'urgence --");
-        List<Patient> patientsTries = patientService.trierParUrgence(patients);
+        List<FileAttente> fileAttenteRecuperee = patientService.trierParUrgence(fileAttenteRepository.findAll());
+        List<FileAttente> fileAttenteTriee = patientService.trierParUrgence(fileAttenteRecuperee);
+
+        log.info("Tri termine. {} patients tries par niveau d'urgence", fileAttenteTriee.size());
+
+        log.info("- Transfert des {} patients tries pour la mise a jour -", fileAttenteTriee.size());
+        log.info("Premier patient trie: {}",
+                fileAttenteTriee.get(0).getPatient());
+
+        log.info("-> Dernier patient trie: {}",
+                fileAttenteTriee.get(fileAttenteTriee.size()-1).getPatient());
 
 
-        log.info("Tri termine. {} patients tries par niveau d'urgence", patientsTries.size());
-
-        log.info("- Transfert des {} patients tries vers la mise a jour -", patientsTries.size());
-        log.info("Premier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(0).getNomPatient() + " " + patientsTries.get(0).getPrenomPatient());
-
-        log.info("-> Dernier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(patientsTries.size()-1).getNomPatient() + " " + patientsTries.get(patientsTries.size()-1).getPrenomPatient());
-
-
-        return mettreAJourFileAttente(patientsTries);
+        return mettreAJourFileAttente(fileAttenteTriee);
     }
 
     public List<FileAttenteDTO> getFileAttenteAvecScores() {
@@ -61,8 +62,8 @@ public class FileAttenteService {
     }
 
     @Transactional
-    public List<FileAttente> mettreAJourFileAttente(List<Patient> patients) {
-        log.info("-- 3. Mise a jour de la file d'attente avec {} patients tries --", patients.size());
+    public List<FileAttente> mettreAJourFileAttente(List<FileAttente> fileAttenteMAJ) {
+        log.info("-- 3. Mise a jour de la file d'attente avec {} patients tries --", fileAttenteMAJ.size());
 
         try {
             if (fileAttenteRepository.count() > 0) {
@@ -74,23 +75,14 @@ public class FileAttenteService {
             List<FileAttente> fileAttente = new ArrayList<>();
             LocalDateTime maintenant = LocalDateTime.now();
 
-            for (int position = 0; position < patients.size(); position++) {
+            for (int position = 0; position < fileAttenteMAJ.size(); position++) {
+                FileAttente fileAttenteTriee = fileAttenteMAJ.get(position);
                 FileAttente entree = new FileAttente();
-                entree.setPatient(patients.get(position));
-                entree.setDateEntree(maintenant.plusSeconds(position));
+                entree.setPatient(fileAttenteTriee.getPatient());
+                entree.setDateEntree(fileAttenteTriee.getDateEntree());
                 entree.setRang(position + 1);
                 fileAttente.add(entree);
-
-
-                Patient p = patients.get(position);
-                log.info("   Position {}: {} - Score: {} - Niveau: {}",
-                        position + 1,
-                        p.getNomPatient() + " " + p.getPrenomPatient(),
-                        patientService.calculerScoreUrgence(p),
-                        patientService.getNiveauUrgence(p));
             }
-
-
 
             return fileAttenteRepository.saveAll(fileAttente);
 

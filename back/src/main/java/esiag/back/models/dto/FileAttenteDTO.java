@@ -18,6 +18,7 @@ public class FileAttenteDTO {
         this.idFileAttente = fileAttente.getIdFileAttente();
         this.rang = fileAttente.getRang();
         this.dateEntree = fileAttente.getDateEntree();
+        this.patient = new PatientDTO(fileAttente.getPatient(), patientService);
 
         if (fileAttente.getPatient() != null) {
             this.patient = new esiag.back.models.dto.PatientDTO(fileAttente.getPatient(), patientService);
