@@ -3,15 +3,12 @@ package esiag.back.models.medical;
 
 import lombok.Data;
 
-import java.util.Comparator;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Data
@@ -35,16 +32,16 @@ public class Patient {
     @Min(value = 0, message = "L'age doit être positif")
     @Column(name = "age_patient")
     private Integer agePatient;
-
-    @Column(name = "date_arrivee")
-    private LocalDateTime dateArrivee;
+//
+//    @Column(name = "date_arrivee")
+//    private LocalDateTime dateArrivee;
 
     @Transient
     private List<String> patient_symptomes;
 
 
 @PrePersist
-public void copierSymptomesEtDate() {
+public void copierSymptomes() {
     System.out.println("patient_symptomes reçu: " + patient_symptomes);
 
     if (patient_symptomes != null && !patient_symptomes.isEmpty()) {
@@ -55,9 +52,9 @@ public void copierSymptomesEtDate() {
         System.out.println("patient_symptomes est null ou vide !");
     }
 
-    if (this.dateArrivee == null) {
-        this.dateArrivee = LocalDateTime.now();
-    }
+//    if (this.dateArrivee == null) {
+//        this.dateArrivee = LocalDateTime.now();
+//    }
 }
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -81,7 +78,8 @@ public void copierSymptomesEtDate() {
                 ", nomPatient='" + nomPatient + '\'' +
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
-                ", symptomes='" + symptomes + '\'' +
+//               ", symptomes='" + symptomes + '\'' +
+//                ", date_arrivee='" + dateArrivee+
                 '}';
     }
 }
