@@ -1,6 +1,5 @@
 package esiag.back.models.architecture;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
@@ -15,23 +14,27 @@ public class Espace {
     @Column(name = "id_espace")
     private Long idEspace;
 
-    @Column(name = "numero_espace")
-    private String numeroEspace;
+    // @Column(name = "numero_espace")
+    // private String numeroEspace;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "type_espace")
-    private TypeEspace typeEspace;
+    // @Enumerated(EnumType.STRING)
+    // @Column(name = "type_espace")
+    // private TypeEspace typeEspace;
 
     @ManyToOne
     @JoinColumn(name = "id_etage", nullable = false)
     private Etage etage;
 
+    @Column
+    private float latitude;
+
+    @Column
+    private float longitude;
+
     @Override
     public String toString() {
-        return "Espace{" +
-                "idEspace=" + idEspace +
-                ", numeroEspace='" + numeroEspace + '\'' +
-                ", typeEspace=" + typeEspace +
-                '}';
+        return "Espace [idEspace=" + idEspace + ", etage=" + etage + ", latitude=" + latitude + ", longitude="
+                + longitude + "]";
     }
+
 }

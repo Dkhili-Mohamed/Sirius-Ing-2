@@ -3,7 +3,6 @@ package esiag.back.models.medical;
 
 import lombok.Data;
 
-import java.util.Comparator;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;

@@ -3,17 +3,13 @@ package esiag.back.services;
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;
 import esiag.back.models.medical.ActeMedical;
-import esiag.back.models.medical.Parcours;
 import esiag.back.models.medical.Salle;
 import esiag.back.repositories.ConnexionRepository;
 import esiag.back.repositories.EspaceRepository;
-import esiag.back.repositories.ParcoursRepository;
-import esiag.back.repositories.SalleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.StackWalker.Option;
 import java.util.*;
 
 @Log4j2
@@ -28,8 +24,6 @@ public class CheminService {
     private ActeMedicalService acteMedicalService;
     @Autowired
     private SalleService salleService;
-    @Autowired
-    private ParcoursRepository parcoursRepository;
     @Autowired
     private ParcoursService parcoursService;
 
@@ -163,7 +157,7 @@ public class CheminService {
             log.info("Update statut parcours to TERMINE : " +idParcours);
 
             Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
-            salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+            salleService.updateSalleDecreasePlaceOccupee(salleActeCourant.getIdSalle());
             log.info("Libérer salle : " +salleActeCourant.getIdSalle());
 
             log.info("PARCOURS TERMINE");
@@ -177,7 +171,7 @@ public class CheminService {
 
             // Modification de l'état de la salle associée à l'acte médical courant
             Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
-            salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+            salleService.updateSalleDecreasePlaceOccupee(salleActeCourant.getIdSalle());
             log.info("Libérer salle : " + salleActeCourant.getIdSalle());
         }
        
@@ -229,7 +223,7 @@ public class CheminService {
         }
         log.info("Plus court chemin : ");
         for(Espace espace : plusCourtChemin){
-            log.info(espace.getNumeroEspace());
+            log.info(espace.getIdEspace());
         }
 
         // Mofification de la capacité de la salle associée au prochain acte médical
@@ -242,7 +236,7 @@ public class CheminService {
         log.info("Update statut acte_medical to EN_COURS : "+prochainActeMedical.getIdActeMedical());
 
         // Mofification de la capacité de la salle associée au prochain acte médical
-        salleService.updateSalleIncreasePlaceDisponible(salleProchainActe.getIdSalle());
+        salleService.updateSalleIncreasePlaceOccupee(salleProchainActe.getIdSalle());
         log.info("Capacité de la salle {} mise à jour pour le prochain acte médical.",
                 salleProchainActe.getIdSalle());
 

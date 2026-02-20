@@ -19,15 +19,15 @@ public class SalleService {
     private SalleRepository salleRepository;
 
 
-    public boolean updateSalleDecreasePlaceDisponible(Long idSalle) {
+    public boolean updateSalleDecreasePlaceOccupee(Long idSalle) {
         
         Optional<Salle> optionalSalle = salleRepository.findById(idSalle);
 
         if (optionalSalle.isPresent()){
             Salle salle = optionalSalle.get();
             log.info("Salle trouvée : {}", salle.getNomSalle());
-            if(salle.getPlaceDisponible() > 0) {
-                salle.setPlaceDisponible(salle.getPlaceDisponible()-1);
+            if(salle.getPlaceOccupee() > 0) {
+                salle.setPlaceOccupee(salle.getPlaceOccupee()-1);
                 if(salle.getEtatSalle() == EtatSalle.INDISPONIBLE) {
                     salle.setEtatSalle(EtatSalle.DISPONIBLE);
                 } 
@@ -41,15 +41,15 @@ public class SalleService {
         return false; 
     }
 
-    public boolean updateSalleIncreasePlaceDisponible(Long idSalle) {
+    public boolean updateSalleIncreasePlaceOccupee(Long idSalle) {
 
         Optional<Salle> optionalSalle = salleRepository.findById(idSalle);
         if(optionalSalle.isPresent()){
             Salle salle = optionalSalle.get();
             log.info("Salle trouvée : {}", salle.getNomSalle());
 
-            salle.setPlaceDisponible(salle.getPlaceDisponible()+1);
-            if(salle.getPlaceDisponible() == salle.getCapacite()) {
+            salle.setPlaceOccupee(salle.getPlaceOccupee()+1);
+            if(salle.getPlaceOccupee() == salle.getCapacite()) {
                 salle.setEtatSalle(EtatSalle.INDISPONIBLE);
             }
 
