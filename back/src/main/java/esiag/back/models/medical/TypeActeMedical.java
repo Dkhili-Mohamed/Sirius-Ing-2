@@ -3,7 +3,6 @@ package esiag.back.models.medical;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalTime;
 
 @Entity

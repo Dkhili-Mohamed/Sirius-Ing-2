@@ -3,7 +3,6 @@ package esiag.back.services;
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
 import esiag.back.models.medical.ActeMedical;
-import esiag.back.models.medical.Patient;
 import esiag.back.models.medical.StatutActeMedical;
 import esiag.back.models.medical.Parcours;
 import esiag.back.repositories.ActeMedicalRepository;

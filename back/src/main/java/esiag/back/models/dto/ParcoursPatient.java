@@ -1,7 +1,6 @@
 package esiag.back.models.dto;
 
 import esiag.back.models.medical.StatutActeMedical;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
