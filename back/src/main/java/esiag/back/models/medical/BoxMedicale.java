@@ -3,6 +3,8 @@ package esiag.back.models.medical;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Entity
 @Data
@@ -18,12 +20,20 @@ public class BoxMedicale {
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
+    @JoinColumn(name = "heure_entree")
+    private LocalDateTime heureEntree;
+
+    @JoinColumn(name = "temps_estime")
+    private LocalTime tempsEstime;
+
 
     @Override
     public String toString() {
         return "BoxMedicale{" +
                 " id_box_medicale =" + idBoxMedicale +
                 ", patient=" + patient.getNomPatient() + " " + patient.getPrenomPatient() +
+                ", heure_entree=" + heureEntree +
+                ", temps_estime=" + tempsEstime +
                 '}';
     }
 }
