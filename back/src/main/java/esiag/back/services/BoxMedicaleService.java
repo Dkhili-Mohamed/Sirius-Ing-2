@@ -2,6 +2,8 @@ package esiag.back.services;
 
 import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.FileAttente;
+import esiag.back.models.medical.NiveauUrgence;
+import esiag.back.models.medical.Patient;
 import esiag.back.repositories.BoxMedicaleRepository;
 import esiag.back.repositories.FileAttenteRepository;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 
@@ -47,6 +51,12 @@ public class BoxMedicaleService {
             BoxMedicale boxMedicale = new BoxMedicale();
             boxMedicale.setPatient(premierPatient.getPatient());
 
+            log.info("Mise à jour des informations du patient {} {} dans la box", premierPatient.getPatient().getPrenomPatient(), premierPatient.getPatient().getNomPatient() );
+            NiveauUrgence niveauUrgence = patientService.getNiveauUrgence(premierPatient.getPatient());
+            int tempsSecondes = niveauUrgence.getTemps();
+
+            boxMedicale.setTempsEstime(LocalTime.ofSecondOfDay(tempsSecondes));
+            boxMedicale.setHeureEntree(LocalDateTime.now());
 
             log.info("Patient {} {} inséré dans la box avec succès",premierPatient.getPatient().getPrenomPatient(), premierPatient.getPatient().getNomPatient());
             BoxMedicale boxMedicaleSauvee = boxMedicaleRepository.save(boxMedicale);
@@ -66,14 +76,12 @@ public class BoxMedicaleService {
     public List<BoxMedicale> getAllBoxMedicales() {
         return boxMedicaleRepository.findAll();
     }
-
+//
 //    @Transactional
 //    public List<BoxMedicale> getBoxMedicaleLibre(){
 //    }
-//
-//    @Transactional
-//    public List<BoxMedicale> libererBox(){
-//    }
+
+
 
 
 }

@@ -1,22 +1,44 @@
 package esiag.back.models.dto;
 
 import esiag.back.models.medical.BoxMedicale;
-import esiag.back.models.medical.FileAttente;
 import esiag.back.services.PatientService;
 import lombok.Data;
 
-import java.util.Timer;
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 public class BoxMedicaleDTO {
     private Long idBoxMedicale;
     private esiag.back.models.dto.PatientDTO patient;
-    private Timer tempsAttenteEstime;
+    private LocalDateTime heureEntree;
+    private LocalTime tempsEstime;
 
 
-    public BoxMedicaleDTO(BoxMedicale boxMedicale, PatientService patientService, FileAttente fileAttente) {
+    public BoxMedicaleDTO(BoxMedicale boxMedicale, PatientService patientService) {
         this.idBoxMedicale = boxMedicale.getIdBoxMedicale();
-        this.patient = new PatientDTO(fileAttente.getPatient(), patientService);
+        this.patient = new PatientDTO(boxMedicale.getPatient(), patientService);
+        this.heureEntree = boxMedicale.getHeureEntree();
+        this.tempsEstime = boxMedicale.getTempsEstime();
+    }
+
+    public int tempsRestant() {
+        if(heureEntree == null || tempsEstime == null) {
+            return 0;
+        }
+
+        Duration tempsEcoule = Duration.between(heureEntree, LocalDateTime.now());
+        int tempsEcouleMinutes = tempsEstime.getHour() * 60 + tempsEstime.getMinute();
+
+        int tempsEstimeMinutes = (int) tempsEcoule.toMinutes();
+
+
+        int tempsRestant = tempsEstimeMinutes - tempsEcouleMinutes;
+
+        return Math.max(0, tempsRestant);
+
 
     }
+
 }

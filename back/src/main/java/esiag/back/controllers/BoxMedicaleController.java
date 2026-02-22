@@ -26,9 +26,9 @@ public class BoxMedicaleController {
                 return ResponseEntity.badRequest().build();
             }
 
-            List<BoxMedicale> boxMedicales = boxMedicaleService.getAllBoxMedicales(); {
-                return ResponseEntity.ok(boxMedicales);
-            }
+            List<BoxMedicale> boxMedicales = boxMedicaleService.getAllBoxMedicales();
+            return ResponseEntity.ok(boxMedicales);
+
 
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
