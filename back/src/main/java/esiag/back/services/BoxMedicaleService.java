@@ -47,9 +47,16 @@ public class BoxMedicaleService {
                 return null;
             }
 
+            if(boxMedicaleRepository.count() >= 3) {
+                log.info("Plus de place dans les box");
+                return null;
+            }
+
+
             log.info("Insertion du premier patient ({} {}) dans la box",premierPatient.getPatient().getPrenomPatient(), premierPatient.getPatient().getNomPatient());
             BoxMedicale boxMedicale = new BoxMedicale();
             boxMedicale.setPatient(premierPatient.getPatient());
+
 
             log.info("Mise à jour des informations du patient {} {} dans la box", premierPatient.getPatient().getPrenomPatient(), premierPatient.getPatient().getNomPatient() );
             NiveauUrgence niveauUrgence = patientService.getNiveauUrgence(premierPatient.getPatient());
