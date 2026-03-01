@@ -1,8 +1,11 @@
 package esiag.back.services;
 
+import esiag.back.models.dto.BoxMedicaleDTO;
 import esiag.back.models.dto.FileAttenteDTO;
+import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
+import esiag.back.repositories.BoxMedicaleRepository;
 import esiag.back.repositories.FileAttenteRepository;
 import esiag.back.repositories.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.io.File;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +26,13 @@ import java.util.List;
 public class FileAttenteService {
 
     private final FileAttenteRepository fileAttenteRepository;
+    private final BoxMedicaleService boxMedicaleService;
     private final PatientRepository patientRepository;
     private final PatientService patientService;
+    private final BoxMedicaleRepository boxMedicaleRepository;
 
+
+    @Transactional
     public List<FileAttente> getFileAttenteTriee() {
         log.info("Demarrage du tri de la file d'attente");
 
@@ -49,17 +57,74 @@ public class FileAttenteService {
         return mettreAJourFileAttente(fileAttenteTriee);
     }
 
+    @Transactional
     public List<FileAttenteDTO> getFileAttenteAvecScores() {
         List<FileAttente> fileAttente = getFileAttenteTriee();
         List<FileAttenteDTO> result = new ArrayList<>();
 
         for (FileAttente fa : fileAttente) {
-            FileAttenteDTO dto = new FileAttenteDTO(fa, patientService);
+            FileAttenteDTO dto = new FileAttenteDTO(fa, patientService, 0);
             result.add(dto);
         }
 
         return result;
     }
+
+    @Transactional
+    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
+
+        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
+        if (boxMedicales.isEmpty()) {
+            log.info("Pas de patient dans les box");
+
+            return new ArrayList<>();
+        }
+
+
+
+        List<FileAttente> fileAttentes = getFileAttenteTriee();
+        if(fileAttentes.isEmpty()) {
+            log.info("Pas de patient dans la file d'attente");
+
+
+            return  new ArrayList<>();
+        }
+
+        List<FileAttenteDTO> fileAttenteDTOS = new ArrayList<>();
+
+        int temps_attente = 0;
+        int temps_attente_total = 0;
+        for  (int i=0; i<fileAttentes.size(); i++) {
+
+            int temps_minimum = Integer.MAX_VALUE;
+
+
+            for (BoxMedicale bm : boxMedicales) {
+                BoxMedicaleDTO boxMedicaleDTO = new BoxMedicaleDTO(bm, patientService);
+                int tempsRestant = boxMedicaleDTO.tempsRestant();
+                if (tempsRestant < temps_minimum) {
+                    temps_minimum = tempsRestant;
+                }
+            }
+
+
+
+            Patient patient = fileAttentes.get(i).getPatient();
+           temps_attente = temps_minimum + patientService.getNiveauUrgence(patient).getTemps();
+           temps_attente_total = temps_attente_total + temps_attente;
+            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente);
+            fileAttenteDTOS.add(fileAttenteDTO);
+
+        }
+
+
+
+
+
+        return fileAttenteDTOS;
+
+    }
+
 
     @Transactional
     public List<FileAttente> mettreAJourFileAttente(List<FileAttente> fileAttenteMAJ) {
