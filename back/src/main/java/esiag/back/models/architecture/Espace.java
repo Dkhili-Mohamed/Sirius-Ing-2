@@ -14,8 +14,8 @@ public class Espace {
     @Column(name = "id_espace")
     private Long idEspace;
 
-    // @Column(name = "numero_espace")
-    // private String numeroEspace;
+    @Column(name = "numero_espace")
+    private String numeroEspace;
 
     // @Enumerated(EnumType.STRING)
     // @Column(name = "type_espace")
@@ -26,15 +26,17 @@ public class Espace {
     private Etage etage;
 
     @Column
-    private float latitude;
+    private int x;
 
     @Column
-    private float longitude;
+    private int y;
 
     @Override
     public String toString() {
-        return "Espace [idEspace=" + idEspace + ", etage=" + etage + ", latitude=" + latitude + ", longitude="
-                + longitude + "]";
+        return "Espace [idEspace=" + idEspace + ", numeroEspace=" + numeroEspace + ", etage=" + etage + ", x=" + x
+                + ", y=" + y + "]";
     }
+
+    
 
 }

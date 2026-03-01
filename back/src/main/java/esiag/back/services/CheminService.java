@@ -2,6 +2,7 @@ package esiag.back.services;
 
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;
+import esiag.back.models.dto.Chemin;
 import esiag.back.models.medical.ActeMedical;
 import esiag.back.models.medical.Salle;
 import esiag.back.repositories.ConnexionRepository;
@@ -130,11 +131,11 @@ public class CheminService {
                             "Espace introuvable pour l'id " + id));
             cheminEspace.add(espace);
         }
-    
+        
         return cheminEspace;
     }
 
-    public List<Espace> nextActeMedical(Long idParcours, int ordre, Long idDepart) {
+    public Chemin nextActeMedical(Long idParcours, int ordre, Long idDepart) {
 
         if (ordre == 0) {
 
@@ -192,7 +193,7 @@ public class CheminService {
         List<List<Espace>> cheminsPossibles = new ArrayList<>();
 
         if (salles.isEmpty()) {
-            return new ArrayList<>(); 
+            return new Chemin(); 
             // throw new IllegalStateException(
                   //  "Aucune salle disponible pour l'acte médical " + prochainActeMedical.getIdActeMedical());
         } else {
@@ -240,7 +241,17 @@ public class CheminService {
         log.info("Capacité de la salle {} mise à jour pour le prochain acte médical.",
                 salleProchainActe.getIdSalle());
 
-        return plusCourtChemin;
+        return cheminEnCoordonnees(plusCourtChemin);
 
     }
+
+    public Chemin cheminEnCoordonnees(List<Espace> cheminEspace) {
+        Chemin chemin = new Chemin(); 
+        
+        for (Espace espace : cheminEspace) {
+            chemin.setCoordonneesChemin(chemin.getCoordonneesChemin() + espace.getX() + " " + espace.getY() + " ");
+        }
+
+        return chemin;
+    }    
 }
