@@ -11,6 +11,7 @@ import java.time.LocalTime;
 @Data
 public class BoxMedicaleDTO {
     private Long idBoxMedicale;
+    private int disponibilite;
     private esiag.back.models.dto.PatientDTO patient;
     private LocalDateTime heureEntree;
     private LocalTime tempsEstime;
@@ -18,6 +19,7 @@ public class BoxMedicaleDTO {
 
     public BoxMedicaleDTO(BoxMedicale boxMedicale, PatientService patientService) {
         this.idBoxMedicale = boxMedicale.getIdBoxMedicale();
+        this.disponibilite = boxMedicale.getDisponibilite();
         this.patient = new PatientDTO(boxMedicale.getPatient(), patientService);
         this.heureEntree = boxMedicale.getHeureEntree();
         this.tempsEstime = boxMedicale.getTempsEstime();
