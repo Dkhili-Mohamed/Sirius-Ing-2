@@ -251,7 +251,7 @@ public class CheminService {
         for (Espace espace : cheminEspace) {
             chemin.setCoordonneesChemin(chemin.getCoordonneesChemin() + espace.getX() + " " + espace.getY() + " ");
         }
-
+        log.info("Chemin en coordonnées : " + chemin.getCoordonneesChemin());
         return chemin;
     }    
 }

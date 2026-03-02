@@ -3,6 +3,7 @@ import axios from "axios";
 import '../styles/Table.css';
 import { PARCOURS_PATIENT, CHEMIN} from "../constants/back";
 import { useParams } from 'react-router-dom';
+import planHopital from '../assets/plan_hopital_test.jpg';
 
 
 export default function ParcoursPatient() {
@@ -49,7 +50,7 @@ export default function ParcoursPatient() {
       setDepartChemin({
         idParcours: parcours.idParcours, 
         ordre : 0,
-        idDepart : 42
+        idDepart : 8
       });
     }else{
       alert("Le parcours est en cours.")
@@ -160,19 +161,46 @@ function Chemin({ idParcours, ordre, idDepart }) {
   
   return (
     <div>
-      <h5 className="text-primary">Itinéraire conseillé</h5>
       <div className="d-flex justify-content-center align-items-center flex-wrap">
-        {chemin.map((etape, index) => (
-          <React.Fragment key={etape.idSalle || index}>
-            <div className="p-2 m-2 border rounded shadow-sm bg-white">
-              <strong>{etape.numeroEspace}</strong> <br />
-              <small className="text-muted">{etape.typeEspace}</small>
-            </div>
-            {index < chemin.length - 1 && <span className="h6">ensuite</span>}
-          </React.Fragment>
-        ))}
+       <svg
+        id="monPlan"
+        width="600"
+        height="400"
+        viewBox="0 0 600 400"
+        style={{ display: 'block' }}>
+          <defs>
+  
+            <marker
+              id="fleche"
+              markerWidth="4"
+              markerHeight="3"
+              refX="0"
+              refY="1.5"
+              orient="auto"
+            >
+              <polygon points="0 0, 4 1.5, 0 3" fill="red" />
+            </marker>
+          </defs>
+          <image
+            href={planHopital}
+            x="0"
+            y="0"
+            height="400"
+            width="600"
+            preserveAspectRatio="none"
+          />
+
+          <polyline
+            id="trajet"
+            points={chemin.coordonneesChemin}
+            stroke="red"
+            fill="none"
+            strokeWidth="4"
+            markerEnd="url(#fleche)"
+          />
+        </svg> 
       </div>
-    </div>
+    </div>  
   );
 }
 

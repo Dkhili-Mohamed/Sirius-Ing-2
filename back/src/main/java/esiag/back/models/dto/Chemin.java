@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 public class Chemin {
 
 
-    private String coordonneesChemin;
+    private String coordonneesChemin = "";
 
     public Chemin(String coordonneesChemin) {
         this.coordonneesChemin = coordonneesChemin;

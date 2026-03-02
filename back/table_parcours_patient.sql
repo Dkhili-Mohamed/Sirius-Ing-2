@@ -29,7 +29,8 @@ CREATE TABLE etage (
 CREATE TABLE espace (
     id_espace SERIAL PRIMARY KEY,
     numero_espace VARCHAR(20) NOT NULL,
-    type_espace type_espace_enum NOT NULL,
+    x INTEGER NOT NULL,
+    y INTEGER NOT NULL,
     id_etage INTEGER NOT NULL,
     CONSTRAINT fk_espace_etage FOREIGN KEY (id_etage) REFERENCES etage(id_etage)
 );
