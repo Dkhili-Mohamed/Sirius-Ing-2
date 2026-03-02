@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import esiag.back.models.dto.Chemin;
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
 import esiag.back.services.ActeMedicalService;
@@ -53,7 +54,7 @@ public class ParcoursController {
     }
 
     @GetMapping("chemin/{idParcours}/{ordre}/{idDepart}")
-    public ResponseEntity<List<esiag.back.models.architecture.Espace>> findChemin(
+    public ResponseEntity<Chemin> findChemin(
             @PathVariable Long idParcours,
             @PathVariable int ordre,
             @PathVariable Long idDepart) {
