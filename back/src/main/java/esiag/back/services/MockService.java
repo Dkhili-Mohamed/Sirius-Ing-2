@@ -105,8 +105,8 @@ public class MockService {
             ambulance.setAdresseambulance(adresses.get(random.nextInt(adresses.size())));
             ambulance.setDisponibiliteambulance(random.nextBoolean());
             ambulance.setVitessemoyambulance(40.0 + random.nextInt(61));
-            ambulance.setEquipementambulance(1.0 + random.nextInt(10));
-            ambulance.setExperienceambulance(1.0 + random.nextInt(10));
+            ambulance.setEquipementambulance(1.0 + random.nextInt(5));
+            ambulance.setExperienceambulance(1.0 + random.nextInt(5));
 
             ambulancerepository.save(ambulance);
 

@@ -68,11 +68,11 @@ export default function Ambulance() {
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
               <th scope="col">Distance(Km)</th>
-              <th scope="col">Temps Trajet(H) </th>
-              <th scope="col">Note Trajet</th>
-              <th scope="col">Note Globale</th>
+              <th scope="col">Temps Trajet </th>
+              <th scope="col">Score Trajet</th>
+              <th scope="col">Score Global</th>
 
-              
+            
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -87,7 +87,7 @@ export default function Ambulance() {
                 <td>{ambulance.ambulancelatitude}</td>
                 <td>{ambulance.ambulancelongitude}</td>
                 <td>{ambulance.ambulancedistance}</td>
-                <td>{ambulance.tempstrajet}</td>
+                <td>{ambulance.tempstrajetminutes}</td>
                 <td>{ambulance.notetrajet}</td>
                 <td>{ambulance.noteglobale}</td>
 

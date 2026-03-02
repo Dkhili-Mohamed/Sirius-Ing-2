@@ -52,6 +52,9 @@ public class Ambulance {
     @Column(name = "noteglobale")
     private Double noteglobale;
 
+    @Column(name = "tempstrajetminutes")
+    private String tempstrajetminutes;
+
 
 
 
@@ -99,6 +102,9 @@ public class Ambulance {
     public Double getNoteglobale() {
         return noteglobale;
     }
+    public String getTempstrajetminutes() {
+        return tempstrajetminutes;
+    }
 
     //Les setters
     public void setAmbulancelatitude(Double ambulancelatitude) {
@@ -141,6 +147,9 @@ public class Ambulance {
     public void setNoteglobale(Double noteglobale) {
         this.noteglobale = noteglobale;
     }
+    public void setTempstrajetminutes(String tempstrajetminutes) {
+        this.tempstrajetminutes = tempstrajetminutes;
+    }
 
 
     
@@ -159,6 +168,7 @@ public class Ambulance {
                 ", tempstrajet=" + tempstrajet +
                 ", notetrajet=" + notetrajet +
                 ", notetrajet=" + noteglobale +
+                ", tempstrajetminutes=" + tempstrajetminutes +
                 '}';
     }
 }
