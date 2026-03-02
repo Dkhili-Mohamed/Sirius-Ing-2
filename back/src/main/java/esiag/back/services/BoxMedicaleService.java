@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
@@ -62,8 +63,14 @@ public class BoxMedicaleService {
             NiveauUrgence niveauUrgence = patientService.getNiveauUrgence(premierPatient.getPatient());
             int tempsSecondes = niveauUrgence.getTemps();
 
+            LocalDateTime maintenant = LocalDateTime.now();
+
             boxMedicale.setTempsEstime(LocalTime.ofSecondOfDay(tempsSecondes));
-            boxMedicale.setHeureEntree(LocalDateTime.now());
+            boxMedicale.setHeureEntree(maintenant);
+            LocalDateTime libreA = maintenant.plusSeconds(tempsSecondes);
+            boxMedicale.setLibreA(libreA);
+            boxMedicale.setTempsRestant(tempsRestant(boxMedicale));
+
 
             log.info("Patient {} {} inséré dans la box avec succès",premierPatient.getPatient().getPrenomPatient(), premierPatient.getPatient().getNomPatient());
             BoxMedicale boxMedicaleSauvee = boxMedicaleRepository.save(boxMedicale);
@@ -75,6 +82,21 @@ public class BoxMedicaleService {
             log.info("Erreur lors de l'insertion du patient dans la box");
             return null;
         }
+
+
+    }
+
+    @Transactional
+    public int tempsRestant(BoxMedicale boxMedicale) {
+        if(boxMedicale.getLibreA() == null) {
+            return 0;
+        }
+
+        Duration duree = Duration.between(LocalDateTime.now(), boxMedicale.getLibreA());
+
+
+
+        return Math.max(0, (int) duree.toSeconds());
 
 
     }

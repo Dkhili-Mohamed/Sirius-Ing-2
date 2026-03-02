@@ -84,14 +84,6 @@ public class FileAttenteService {
         List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
 
 
-
-        log.info("Attribution du statut des box a disponible par defaut");
-        for (BoxMedicale bm : boxMedicales) {
-            bm.setDisponibilite(bm.getTempsRestant());
-
-        }
-
-
         List<FileAttenteDTO> fileAttenteDTOS = new ArrayList<>();
 
         int temps_attente = 0;
@@ -104,20 +96,19 @@ public class FileAttenteService {
 
 
             for (BoxMedicale bm : boxMedicales) {
-                if (bm.getDisponibilite() < temps_minimum_attente) {
-                    temps_minimum_attente = bm.getDisponibilite();
-                    boxOccupee = bm;
+                int temps_restant = boxMedicaleService.tempsRestant(bm);
+                if (temps_restant < temps_minimum_attente && temps_restant > 0) {
+                    temps_minimum_attente = temps_restant;
                 }
             }
 
 
 
+            if(temps_minimum_attente == Integer.MAX_VALUE) {
+                temps_attente = 0;
 
-            if(boxOccupee != null) {
-                temps_attente = boxOccupee.getDisponibilite();
-                temps_consultation = patientService.getNiveauUrgence(patient).getTemps();
-                boxOccupee.setDisponibilite(temps_attente + temps_consultation);
-
+            }else {
+                temps_attente = temps_minimum_attente;
             }
 
 
