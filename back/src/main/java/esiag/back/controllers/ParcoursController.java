@@ -53,7 +53,7 @@ public class ParcoursController {
         
     }
 
-    @GetMapping("chemin/{idParcours}/{ordre}/{idDepart}")
+    @PostMapping("chemin/{idParcours}/{ordre}/{idDepart}")
     public ResponseEntity<Chemin> findChemin(
             @PathVariable Long idParcours,
             @PathVariable int ordre,
@@ -65,7 +65,5 @@ public class ParcoursController {
                         idDepart),
                 HttpStatus.OK);
     }
-    
-
     
 }

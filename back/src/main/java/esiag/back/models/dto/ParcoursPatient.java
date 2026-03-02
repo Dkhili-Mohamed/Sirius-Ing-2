@@ -17,12 +17,12 @@ public class ParcoursPatient {
     private int ordre;
     private String libelle;
     private StatutActeMedical statut;
-    private String numeroEspace;
+    private String nomSalle;
 
     // Constructeur manuel pour correspondre exactement à la requête JPQL
     public ParcoursPatient(Long idActeMedical, Long idParcours, Long idTypeActeMedical, Long idEspace,
                            Long idSalle, int ordre, String libelle,
-                           StatutActeMedical statut, String numeroEspace) {
+                           StatutActeMedical statut, String nomSalle) {
         this.idActeMedical = idActeMedical;
         this.idParcours = idParcours;
         this.idTypeActeMedical = idTypeActeMedical;
@@ -31,6 +31,6 @@ public class ParcoursPatient {
         this.ordre = ordre;
         this.libelle = libelle;
         this.statut = statut;
-        this.numeroEspace = numeroEspace;
+        this.nomSalle = nomSalle;
     }
 }

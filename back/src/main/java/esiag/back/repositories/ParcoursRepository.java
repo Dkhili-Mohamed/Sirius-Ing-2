@@ -24,7 +24,7 @@ public interface ParcoursRepository extends JpaRepository<Parcours,Long> {
             a.ordre,
             t.libelle,
             a.statut,
-            e.numeroEspace
+            s.nomSalle
         )
         FROM ActeMedical AS a
         JOIN a.parcours AS p
