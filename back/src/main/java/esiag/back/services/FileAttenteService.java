@@ -72,17 +72,8 @@ public class FileAttenteService {
 
     @Transactional
     public List<FileAttenteDTO> calculerTempsAttenteEstime() {
-
-        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
-        if (boxMedicales.isEmpty()) {
-            log.info("Pas de patient dans les box");
-
-            return new ArrayList<>();
-        }
-
-
-
         List<FileAttente> fileAttentes = getFileAttenteTriee();
+
         if(fileAttentes.isEmpty()) {
             log.info("Pas de patient dans la file d'attente");
 
@@ -90,34 +81,51 @@ public class FileAttenteService {
             return  new ArrayList<>();
         }
 
+        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
+
+
+
+        log.info("Attribution du statut des box a disponible par defaut");
+        for (BoxMedicale bm : boxMedicales) {
+            bm.setDisponibilite(bm.getTempsRestant());
+
+        }
+
+
         List<FileAttenteDTO> fileAttenteDTOS = new ArrayList<>();
 
         int temps_attente = 0;
-        int temps_attente_total = 0;
+        int temps_consultation = 0;
         for  (int i=0; i<fileAttentes.size(); i++) {
 
-            int temps_minimum = Integer.MAX_VALUE;
+            Patient patient = fileAttentes.get(i).getPatient();
+            BoxMedicale boxOccupee = null;
+            int temps_minimum_attente = Integer.MAX_VALUE;
 
 
             for (BoxMedicale bm : boxMedicales) {
-                BoxMedicaleDTO boxMedicaleDTO = new BoxMedicaleDTO(bm, patientService);
-                int tempsRestant = boxMedicaleDTO.tempsRestant();
-                if (tempsRestant < temps_minimum) {
-                    temps_minimum = tempsRestant;
+                if (bm.getDisponibilite() < temps_minimum_attente) {
+                    temps_minimum_attente = bm.getDisponibilite();
+                    boxOccupee = bm;
                 }
             }
 
 
 
-            Patient patient = fileAttentes.get(i).getPatient();
-           temps_attente = temps_minimum + patientService.getNiveauUrgence(patient).getTemps();
-           temps_attente_total = temps_attente_total + temps_attente;
+
+            if(boxOccupee != null) {
+                temps_attente = boxOccupee.getDisponibilite();
+                temps_consultation = patientService.getNiveauUrgence(patient).getTemps();
+                boxOccupee.setDisponibilite(temps_attente + temps_consultation);
+
+            }
+
+
+
             FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente);
             fileAttenteDTOS.add(fileAttenteDTO);
 
         }
-
-
 
 
 
