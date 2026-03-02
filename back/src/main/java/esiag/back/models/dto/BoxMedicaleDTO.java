@@ -29,14 +29,13 @@ public class BoxMedicaleDTO {
         if(heureEntree == null || tempsEstime == null) {
             return 0;
         }
+        int dureeTotaleMinutes =  tempsEstime.getHour() * 60 + tempsEstime.getMinute();
 
         Duration tempsEcoule = Duration.between(heureEntree, LocalDateTime.now());
-        int tempsEcouleMinutes = tempsEstime.getHour() * 60 + tempsEstime.getMinute();
-
-        int tempsEstimeMinutes = (int) tempsEcoule.toMinutes();
+        int tempsEcouleMinutes = (int) tempsEcoule.toMinutes();
 
 
-        int tempsRestant = tempsEstimeMinutes - tempsEcouleMinutes;
+        int tempsRestant = dureeTotaleMinutes - tempsEcouleMinutes;
 
         return Math.max(0, tempsRestant);
 
