@@ -14,22 +14,12 @@ public class SuivreService {
     @Autowired
     private SuiverRepository suiverRepository;
 
-    public boolean insertSuivre(Long idPatient, Long idParcours) {
+    public Suivre insertSuivre(Suivre suivre) {
 
-        Suivre suivre = new Suivre();
-        if (idPatient != null && idParcours != null) {
-
-            suivre.getPatient().setIdPatient(idPatient);
-            suivre.getParcours().setIdParcours(idParcours);
-
-            suiverRepository.saveAndFlush(suivre);
-
-            log.info("Insertion nouvelle ligne suivre : idPatient={}, idParcours={}", idPatient, idParcours);
-
-            return true;
-        }
-
-        return true;
+        log.info("Insertion nouvelle ligne suivre : idPatient={}, idParcours={}", 
+                suivre.getPatient().getIdPatient(), suivre.getParcours().getIdParcours());
+        return suiverRepository.save(suivre);
+        
     }
 
     

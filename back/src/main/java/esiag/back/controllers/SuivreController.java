@@ -5,10 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import esiag.back.models.medical.Suivre;
 import esiag.back.services.SuivreService;
 
 @RestController
@@ -19,15 +21,16 @@ public class SuivreController {
     private SuivreService suivreService;
 
 
-    @PostMapping("insert/{idPatient}/{idParcours}")
-    public ResponseEntity<Boolean> insertSuivre(@PathVariable Long idPatient, @PathVariable Long idParcours) {
+    @PostMapping("insert")
+    public ResponseEntity<Suivre> insertSuivre(@RequestBody Suivre suivre) {
 
-        boolean inserer = suivreService.insertSuivre(idPatient, idParcours);
+        Suivre savedSuivre = suivreService.insertSuivre(suivre);
         
-        if (!inserer) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (savedSuivre != null) {
+            return new ResponseEntity<>(savedSuivre, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }

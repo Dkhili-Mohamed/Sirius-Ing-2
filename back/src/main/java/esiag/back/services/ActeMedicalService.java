@@ -84,23 +84,10 @@ public class ActeMedicalService {
         return acteMedicalRepository.findAllActeMedicalsByParours(idParcours);
     }
 
-    public boolean insertActeMedical(Long idTypeActeMedical, Long idParcours, int ordre) {
+    public ActeMedical insertActeMedical(ActeMedical acteMedical){
 
-        ActeMedical acteMedical = new ActeMedical();
-        
-        if (idTypeActeMedical != null && idParcours != null && ordre > 0) {
+        return acteMedicalRepository.save(acteMedical);
 
-            acteMedical.getTypeActeMedical().setIdTypeActeMedical(idTypeActeMedical);
-            acteMedical.getParcours().setIdParcours(idParcours);
-            acteMedical.setOrdre(ordre);
-            acteMedicalRepository.saveAndFlush(acteMedical);
-
-            log.info("Insertion de l'acte médical : TypeActeMedical={}, Parcours={}, Ordre={}", 
-                    idTypeActeMedical, idParcours, ordre);
-            return true;
-        } 
-    
-        return false;
     }
 
 }

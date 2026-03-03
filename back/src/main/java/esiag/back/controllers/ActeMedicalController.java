@@ -5,9 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import esiag.back.models.medical.ActeMedical;
 import esiag.back.services.ActeMedicalService;
 
 @RestController
@@ -17,17 +19,17 @@ public class ActeMedicalController {
     @Autowired
     private ActeMedicalService acteMedicalService;
 
-    @PostMapping("insert/{idTypeActeMedical}/{idParcours}/{ordre}")
-    public ResponseEntity<Boolean> insertActeMedical(@PathVariable Long idTypeActeMedical,
-            @PathVariable Long idParcours,
-            @PathVariable int ordre) {
+    @PostMapping("insert")
+    public ResponseEntity<ActeMedical> insertActeMedical(@RequestBody ActeMedical acteMedical) {
         
-        boolean inserer = acteMedicalService.insertActeMedical(idTypeActeMedical, idParcours, ordre);
+        ActeMedical inserer = acteMedicalService.insertActeMedical(acteMedical);
         
-        if (!inserer) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (inserer != null) {
+            
+            return new ResponseEntity<>(inserer, HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(true, HttpStatus.OK);
     }
 
 }
