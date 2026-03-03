@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.repositories.ambulancerepository;
 
-@DependsOn("CalculTempsTrajetService")
+@DependsOn("calculTempsTrajetService")
 @Service
 public class CalculNoteTrajetService {
 
