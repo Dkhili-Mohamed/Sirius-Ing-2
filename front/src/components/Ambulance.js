@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
+
 import { GET_AMBULANCES } from "../constants/back";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -61,11 +62,17 @@ export default function Ambulance() {
               <th scope="col">Id</th>
               <th scope="col">Adresse</th>
               <th scope="col">Disponibilité</th>
-              <th scope="col">Vitesse Moyenne</th>
+              <th scope="col">Vitesse Moyenne(km/H)</th>
               <th scope="col">Equipement</th>
               <th scope="col">Expérience</th>
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
+              <th scope="col">Distance(Km)</th>
+              <th scope="col">Temps Trajet </th>
+              <th scope="col">Score Trajet</th>
+              <th scope="col">Score Global</th>
+
+            
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -79,6 +86,14 @@ export default function Ambulance() {
                 <td>{ambulance.experienceambulance}</td>
                 <td>{ambulance.ambulancelatitude}</td>
                 <td>{ambulance.ambulancelongitude}</td>
+                <td>{ambulance.ambulancedistance}</td>
+                <td>{ambulance.tempstrajetminutes}</td>
+                <td>{ambulance.notetrajet}</td>
+                <td>{ambulance.noteglobale}</td>
+
+
+
+
               </tr>
             ))}
           </tbody>
