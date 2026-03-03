@@ -31,8 +31,8 @@ public class TestFileAttente implements CommandLineRunner {
             Patient patient = fileAttente.getPatient();
             System.out.println("- [Position " + fileAttente.getRang() + "] " +
                     patient.getPrenomPatient() + " " + patient.getNomPatient() +
-                    " (Score: " + patient.getScoreUrgence() +
-                    " - Niveau: " + patient.getNiveauUrgence() + ")");
+                    " (Score: " + patientService.calculerScoreUrgence(patient) +
+                    " - Niveau: " + patientService.getNiveauUrgence(patient) + ")");
         }
 
         System.out.println("=== FIN DU TEST ===");
