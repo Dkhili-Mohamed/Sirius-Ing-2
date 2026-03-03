@@ -50,4 +50,5 @@ public class TypeActeMedicalService {
         return typeActeMedicalsPatient;  
     }
 
+
 }
