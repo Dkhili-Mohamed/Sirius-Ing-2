@@ -1,29 +1,27 @@
 package esiag.back.models.medical;
 
 import lombok.Getter;
+import java.util.Random;
 
 @Getter
 public enum NiveauUrgence {
-    NON_URGENT(3,0), INTERMEDIAIRE(2,30), URGENT(1,30);
+    NON_URGENT(120,300), INTERMEDIAIRE(90,150), URGENT(60,90);
 
-    private final int minutes;
-    private final int secondes;
+    private final int minSecondes;
+    private final int maxSecondes;
+    private final Random tempsConsultationAleatoire = new Random();
 
-     NiveauUrgence(int minutes, int secondes) {
-        this.minutes = minutes;
-        this.secondes = secondes;
+     NiveauUrgence(int minSecondes, int maxSecondes) {
+        this.minSecondes = minSecondes;
+        this.maxSecondes = maxSecondes;
     }
 
-    public int getTemps() {
-         return minutes*60 + secondes;
+    public int getTempsAleatoire(){
+        return tempsConsultationAleatoire.nextInt(maxSecondes-minSecondes+1) + minSecondes;
     }
 
-    public int getMinutes(){
-         return minutes;
-    }
-
-    public int getSecondes(){
-        return secondes;
+    public int getTempsMoyen(){
+         return (minSecondes + maxSecondes) / 2;
     }
 
 }
