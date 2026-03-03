@@ -35,7 +35,7 @@ public class CalculTempsTrajetService {
                 continue;
             }
 
-            if (ambulance.getVitessemoyambulance() == null ) {
+            if (ambulance.getVitessemoyambulance() == null || ambulance.getVitessemoyambulance() == 0 ) {
 
                 System.out.println("Vitesse invalide pour ambulance "
                         + ambulance.getIdambulance());
