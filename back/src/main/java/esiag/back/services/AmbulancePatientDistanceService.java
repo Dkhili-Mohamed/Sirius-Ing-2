@@ -72,6 +72,10 @@ public class AmbulancePatientDistanceService {
                     ambulance.getAmbulancelongitude()
             );
 
+            // Enregistrer la distance dans l'ambulance
+            ambulance.setAmbulancedistance(distance);
+            ambulancerepository.save(ambulance);
+
             System.out.println("La distance entre le patient et l'ambulance "
                     + ambulance.getIdambulance()
                     + " = " + distance + " km");
