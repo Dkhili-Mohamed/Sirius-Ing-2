@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import esiag.back.models.dto.Chemin;
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
+import esiag.back.models.medical.Parcours;
 import esiag.back.services.ActeMedicalService;
 import esiag.back.services.CheminService;
 import esiag.back.services.ParcoursService;
@@ -64,6 +65,19 @@ public class ParcoursController {
                         ordre,
                         idDepart),
                 HttpStatus.OK);
+    }
+
+    @PostMapping("insert")
+    public ResponseEntity<Parcours> insertParcours(@RequestBody Parcours parcours) {
+        Parcours inserer = parcoursService.insertParcours(parcours);
+        
+        if (inserer != null) {
+
+            return new ResponseEntity<>(inserer, HttpStatus.CREATED);
+        } else {
+        
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     
 }
