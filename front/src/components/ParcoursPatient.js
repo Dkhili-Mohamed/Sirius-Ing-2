@@ -1,27 +1,28 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../styles/Table.css';
+import "../styles/Table.css";
 import { PARCOURS_PATIENT, CHEMIN} from "../constants/back";
-import { useParams } from 'react-router-dom';
-
+import { useParams } from "react-router-dom";
+import planHopital from "../assets/plan_hopital_test.png";
 
 export default function ParcoursPatient() {
   const { idPatient } = useParams();
   const [parcoursPatient, setParcoursPatient] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const setParoursPatientData = async (idPatient) => {    
+  const setParoursPatientData = async (idPatient) => {
     setLoading(true);
-    axios.get(PARCOURS_PATIENT + idPatient)
+    axios
+      .get(PARCOURS_PATIENT + idPatient)
       .then((response) => {
         setParcoursPatient(response.data);
         setLoading(false);
       })
-      .catch(error => {
+      .catch((error) => {
         setLoading(false);
         console.error("Error:", error);
       });
-  }
+  };
 
   useEffect(() => {
     if (idPatient) {
@@ -29,54 +30,61 @@ export default function ParcoursPatient() {
     }
   }, [idPatient]);
 
-  const [departChemin, setDepartChemin] = useState(null);
+  const [chemin, setChemin] = useState(null);
 
-  const clickTermine = (parcours) => {
-    setDepartChemin({
-      idParcours: parcours.idParcours,
-      ordre: parcours.ordre,
-      idDepart: parcours.idEspace
-    });
-    
-    setTimeout(() => {
-      setParoursPatientData(idPatient);
-    }, 100);
+  const clickTermine = async (parcours) => {
+    const reponce = await axios.post(
+      `${CHEMIN}/${parcours.idParcours}/${parcours.ordre}/${parcours.idEspace}`,
+    );
 
+    setChemin(reponce.data);
+
+    await setParoursPatientData(idPatient);
   };
 
-  const commencer = (parcours) => {
-    if (parcours && parcours.statut === 'EN_ATTENTE'){
-      setDepartChemin({
-        idParcours: parcours.idParcours, 
-        ordre : 0,
-        idDepart : 42
-      });
-    }else{
-      alert("Le parcours est en cours.")
-    }
-    setTimeout(() => {
-      setParoursPatientData(idPatient);
-    }, 500);
-    
-  }
 
-  if (!idPatient) 
-    return (<div className="container text-center mt-5">Veuillez sélectionner un patient</div>);
-  
-  if (loading) 
-    return (<div className="container text-center mt-5">Chargement du parcours...</div>);
+  const commencer = async (parcours) => {
+    if (parcours && parcours.statut === "EN_ATTENTE") {
+      const reponce = await axios.post(`${CHEMIN}/${parcours.idParcours}/0/8`);
+
+      setChemin(reponce.data);
+
+      await setParoursPatientData(idPatient);
+    } else {
+      alert("Le parcours est en cours.");
+    }
+  };
+
+  if (!idPatient)
+    return (
+      <div className="container text-center mt-5">
+        Veuillez sélectionner un patient
+      </div>
+    );
+
+  if (loading)
+    return (
+      <div className="container text-center mt-5">
+        Chargement du parcours...
+      </div>
+    );
 
   if (parcoursPatient.length === 0)
-    return (<div className="container text-center mt-5">Aucun acte médical trouvé pour ce patient</div>);
+    return (
+      <div className="container text-center mt-5">
+        Aucun acte médical trouvé pour ce patient
+      </div>
+    );
 
   return (
     <div className="container text-center">
-
       <div>
-        <button className="btn btn-primary"
+        <button
+          className="btn btn-primary"
           onClick={() => commencer(parcoursPatient[0])}
-        >Commencer parcours</button>
-
+        >
+          Commencer parcours
+        </button>
       </div>
       <h4 className="my-4">Parcours du Patient n°{idPatient}</h4>
       <div className="table-responsive">
@@ -86,7 +94,7 @@ export default function ParcoursPatient() {
               <th scope="col">Ordre</th>
               <th scope="col">Libellé</th>
               <th scope="col">Statut</th>
-              <th scope="col">Espace n°</th>
+              <th scope="col">Nom Salle</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
@@ -96,16 +104,21 @@ export default function ParcoursPatient() {
                 <td>{parcours.ordre}</td>
                 <td>{parcours.libelle}</td>
                 <td>
-                  <span className={`badge ${parcours.statut === 'EN_ATTENTE' ? 'bg-warning' : 'bg-success'}`}>
+                  <span
+                    className={`badge ${parcours.statut === "EN_ATTENTE" ? "bg-warning" : "bg-success"}`}
+                  >
                     {parcours.statut}
                   </span>
                 </td>
-                <td>{parcours.numeroEspace}</td>
+                <td>{parcours.nomSalle}</td>
                 <td>
-                  {parcours.statut === 'EN_COURS' && (
-                    <button 
-                      className="btn btn-sm btn-outline-success mx-1" 
-                      onClick={() => clickTermine(parcours)}>Terminé</button>
+                  {parcours.statut === "EN_COURS" && (
+                    <button
+                      className="btn btn-sm btn-outline-success mx-1"
+                      onClick={() => clickTermine(parcours)}
+                    >
+                      Terminé
+                    </button> 
                   )}
                 </td>
               </tr>
@@ -114,69 +127,72 @@ export default function ParcoursPatient() {
         </table>
       </div>
 
-      
-      {departChemin && (
+      {chemin && (
         <div className="mt-5 p-4 border rounded bg-light">
-          <Chemin idParcours={departChemin.idParcours} 
-              ordre={departChemin.ordre} 
-              idDepart={departChemin.idDepart} />
-          <button className="btn btn-sm btn-secondary mt-2" onClick={() => setDepartChemin(null)}>
+          <div>
+            <div className="d-flex justify-content-center align-items-center flex-wrap">
+              <svg
+                id="monPlan"
+                width="600"
+                height="400"
+                viewBox="0 0 600 400"
+                style={{ display: "block" }}
+              >
+                <defs>
+                  <marker
+                    id="fleche"
+                    markerWidth="4"
+                    markerHeight="3"
+                    refX="0"
+                    refY="1.5"
+                    orient="auto"
+                  >
+                    <polygon points="0 0, 4 1.5, 0 3" fill="green" />
+                  </marker>
+                </defs>
+                <image
+                  href={planHopital}
+                  x="0"
+                  y="0"
+                  height="400"
+                  width="600"
+                  preserveAspectRatio="none"
+                />
+
+                <polyline
+                  id="trajet"
+                  points={chemin.coordonneesChemin}
+                  stroke="red"
+                  fill="none"
+                  strokeWidth="4"
+                  markerEnd="url(#fleche)"
+                />
+
+                <circle
+                  cx={chemin.debut.split(" ")[0]}
+                  cy={chemin.debut.split(" ")[1]}
+                  r="5"
+                  fill="blue"
+                ></circle>
+              </svg>
+            </div>
+          </div>
+          <button
+            className="btn btn-sm btn-secondary mt-2"
+            onClick={() => setChemin(null)}
+          >
             Fermer le chemin
           </button>
         </div>
       )}
-    </div>
-  );  
-};
+      {chemin && !chemin.salleDisponible && (
+        <div className="salleIndisponible" role="alert">
+          <p>Aucune salle disponible pour le prochain acte médical !</p>
+          <p>Veillez patientez !</p>
 
-function Chemin({ idParcours, ordre, idDepart }) {
-  const [chemin, setChemin] = useState([]);
-
-  const setCheminData = async(idParcours, ordre, idDepart) => {
-    // On s'assure que les trois IDs sont présents avant de lancer l'appel
-    if (idDepart && idParcours) {
-      
-      axios.get(`${CHEMIN}/${idParcours}/${ordre}/${idDepart}`)
-      .then((response) => {
-        setChemin(response.data);
-      })
-      .catch(error => {
-        console.error("Erreur lors de la récupération du chemin :", error);
-      });
-    }
-  }
-
-  useEffect(() => {
-    if(idDepart && idParcours){
-      setCheminData(idParcours, ordre, idDepart)
-    }
-  }, [idParcours, ordre, idDepart]);
-
-  if(!chemin)
-    return (<div className="container text-center" >Parcours Terminé.</div>)
-
-  if (chemin.length === 0)
-    return (<div className="container text-center" >Aucune salle disponible, Veillez patienter.</div>)
-  
-  return (
-    <div>
-      <h5 className="text-primary">Itinéraire conseillé</h5>
-      <div className="d-flex justify-content-center align-items-center flex-wrap">
-        {chemin.map((etape, index) => (
-          <React.Fragment key={etape.idSalle || index}>
-            <div className="p-2 m-2 border rounded shadow-sm bg-white">
-              <strong>{etape.numeroEspace}</strong> <br />
-              <small className="text-muted">{etape.typeEspace}</small>
-            </div>
-            {index < chemin.length - 1 && <span className="h6">ensuite</span>}
-          </React.Fragment>
-        ))}
-      </div>
+        </div>
+      ) }
     </div>
   );
 }
-
-
-
-
 

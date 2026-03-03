@@ -2,18 +2,16 @@ package esiag.back.services;
 
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;
+import esiag.back.models.dto.Chemin;
 import esiag.back.models.medical.ActeMedical;
-import esiag.back.models.medical.Parcours;
 import esiag.back.models.medical.Salle;
 import esiag.back.repositories.ConnexionRepository;
 import esiag.back.repositories.EspaceRepository;
-import esiag.back.repositories.ParcoursRepository;
-import esiag.back.repositories.SalleRepository;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.StackWalker.Option;
 import java.util.*;
 
 @Log4j2
@@ -28,8 +26,6 @@ public class CheminService {
     private ActeMedicalService acteMedicalService;
     @Autowired
     private SalleService salleService;
-    @Autowired
-    private ParcoursRepository parcoursRepository;
     @Autowired
     private ParcoursService parcoursService;
 
@@ -136,11 +132,12 @@ public class CheminService {
                             "Espace introuvable pour l'id " + id));
             cheminEspace.add(espace);
         }
-    
+        
         return cheminEspace;
     }
 
-    public List<Espace> nextActeMedical(Long idParcours, int ordre, Long idDepart) {
+    @Transactional
+    public Chemin nextActeMedical(Long idParcours, int ordre, Long idDepart) {
 
         if (ordre == 0) {
 
@@ -163,7 +160,7 @@ public class CheminService {
             log.info("Update statut parcours to TERMINE : " +idParcours);
 
             Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
-            salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+            salleService.updateSalleDecreasePlaceOccupee(salleActeCourant.getIdSalle());
             log.info("Libérer salle : " +salleActeCourant.getIdSalle());
 
             log.info("PARCOURS TERMINE");
@@ -177,7 +174,7 @@ public class CheminService {
 
             // Modification de l'état de la salle associée à l'acte médical courant
             Salle salleActeCourant = salleService.findSallesByEspace(idDepart).get(0);
-            salleService.updateSalleDecreasePlaceDisponible(salleActeCourant.getIdSalle());
+            salleService.updateSalleDecreasePlaceOccupee(salleActeCourant.getIdSalle());
             log.info("Libérer salle : " + salleActeCourant.getIdSalle());
         }
        
@@ -185,22 +182,47 @@ public class CheminService {
          * Récupère la salle associée à un acte médical
          */
 
+        return rechercheSalleDisponible(idParcours, ordreSuivant, idDepart);
+
+    }
+
+    public Chemin cheminEnCoordonnees(List<Espace> cheminEspace) {
+        Chemin chemin = new Chemin();
+        chemin.setDebut(cheminEspace.get(0).getX() +" "+ cheminEspace.get(0).getY());
+        String numeroEspaceChemin = "";
+
+        for (Espace espace : cheminEspace) {
+            chemin.setCoordonneesChemin(chemin.getCoordonneesChemin() + espace.getX() + " " + espace.getY() + " ");
+            numeroEspaceChemin += espace.getNumeroEspace() + " ";
+        }
+        log.info("Chemin en coordonnées : " + chemin.getCoordonneesChemin());
+        log.info("Chemin en numéro d'espace : " + numeroEspaceChemin);
+        return chemin;
+    }
+    
+    public Chemin rechercheSalleDisponible(Long idParcours, int ordre, Long idDepart){
+
+        /*
+         * Récupère la salle associée à un acte médical
+         */
+
         List<Espace> plusCourtChemin = new ArrayList<>();
 
-        ActeMedical prochainActeMedical = acteMedicalService.findActeMedicalsByOrdre(ordreSuivant, idParcours)
+        ActeMedical prochainActeMedical = acteMedicalService.findActeMedicalsByOrdre(ordre, idParcours)
                 .get(0);
 
         List<Salle> salles = salleService
                 .findSallesByTypeActeMedical(prochainActeMedical.getTypeActeMedical().getIdTypeActeMedical());
-        
-     
 
         List<List<Espace>> cheminsPossibles = new ArrayList<>();
 
         if (salles.isEmpty()) {
-            return new ArrayList<>(); 
+            Chemin chemin = new Chemin();
+            chemin.setSalleDisponible(false);
+            return chemin;
             // throw new IllegalStateException(
-                  //  "Aucune salle disponible pour l'acte médical " + prochainActeMedical.getIdActeMedical());
+            // "Aucune salle disponible pour l'acte médical " +
+            // prochainActeMedical.getIdActeMedical());
         } else {
             // Calcul des chemins vers chaque salle disponible
 
@@ -228,25 +250,23 @@ public class CheminService {
             }
         }
         log.info("Plus court chemin : ");
-        for(Espace espace : plusCourtChemin){
-            log.info(espace.getNumeroEspace());
+        for (Espace espace : plusCourtChemin) {
+            log.info(espace.getIdEspace());
         }
 
         // Mofification de la capacité de la salle associée au prochain acte médical
         Espace espaceProchainActe = plusCourtChemin.get(plusCourtChemin.size() - 1);
         Salle salleProchainActe = salleService.findSallesByEspace(espaceProchainActe.getIdEspace()).get(0);
 
-        // Modification de l'état de l'acte médical courant
-        acteMedicalService.updateStatutActeMedicalToEncours(prochainActeMedical.getIdActeMedical(),
-                salleProchainActe.getIdSalle());
-        log.info("Update statut acte_medical to EN_COURS : "+prochainActeMedical.getIdActeMedical());
-
         // Mofification de la capacité de la salle associée au prochain acte médical
-        salleService.updateSalleIncreasePlaceDisponible(salleProchainActe.getIdSalle());
+        salleService.updateSalleIncreasePlaceOccupee(salleProchainActe.getIdSalle());
         log.info("Capacité de la salle {} mise à jour pour le prochain acte médical.",
                 salleProchainActe.getIdSalle());
+        
+        acteMedicalService.updateStatutActeMedicalToEncours(prochainActeMedical.getIdActeMedical(),
+                salleProchainActe.getIdSalle());
+        log.info("Update statut acte_medical to EN_COURS : " + prochainActeMedical.getIdActeMedical());
 
-        return plusCourtChemin;
-
+        return cheminEnCoordonnees(plusCourtChemin);
     }
 }
