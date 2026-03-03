@@ -5,6 +5,7 @@ import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.StatutBox;
 import esiag.back.repositories.BoxMedicaleRepository;
 import esiag.back.repositories.FileAttenteRepository;
 import esiag.back.repositories.PatientRepository;
@@ -86,39 +87,38 @@ public class FileAttenteService {
 
         List<FileAttenteDTO> fileAttenteDTOS = new ArrayList<>();
 
-        int temps_attente = 0;
-        int temps_consultation = 0;
-        for  (int i=0; i<fileAttentes.size(); i++) {
 
-            Patient patient = fileAttentes.get(i).getPatient();
-            BoxMedicale boxOccupee = null;
-            int temps_minimum_attente = Integer.MAX_VALUE;
+        int temps_minimum_attente = Integer.MAX_VALUE;
+        for (BoxMedicale bm : boxMedicales) {
+            if(bm.getStatutBox() == StatutBox.OCCUPEE) {
 
-
-            for (BoxMedicale bm : boxMedicales) {
-                int temps_restant = boxMedicaleService.tempsRestant(bm);
-                if (temps_restant < temps_minimum_attente && temps_restant > 0) {
+                int temps_restant = bm.getTempsRestant();
+                if (temps_restant < temps_minimum_attente) {
                     temps_minimum_attente = temps_restant;
                 }
+
+            }else if (bm.getStatutBox() == StatutBox.LIBRE) {
+                temps_minimum_attente = 0;
             }
 
-
-
-            if(temps_minimum_attente == Integer.MAX_VALUE) {
-                temps_attente = 0;
-
-            }else {
-                temps_attente = temps_minimum_attente;
-            }
-
-
-
-            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente);
-            fileAttenteDTOS.add(fileAttenteDTO);
 
         }
 
 
+        int temps_attente_estime = temps_minimum_attente;
+        for  (int i=0; i<fileAttentes.size(); i++) {
+
+            Patient patient = fileAttentes.get(i).getPatient();
+            int temps_consultation_estime = patientService.getNiveauUrgence(patient).getTempsMoyen();
+
+
+            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente_estime);
+            fileAttenteDTOS.add(fileAttenteDTO);
+
+            temps_attente_estime = temps_attente_estime + temps_consultation_estime;
+
+
+        }
 
         return fileAttenteDTOS;
 
