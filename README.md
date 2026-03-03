@@ -5,7 +5,8 @@
 US :
     --> SOUPGUI Maxime : 
         - Visualiser le chemin vers la salle du prochain exament : Terminé
-        - Visualiser son parcours (Patient) : En cours
+        - Visualiser son parcours (Patient) : Terminé
+        - Afficher le chemin du trajet sur le plan de l'hopital : Terminé
     --> AGATHINE Shaina :
         - Accéder à la liste des patients : En cours
     --> DKHILI Mohamed Raslene :
