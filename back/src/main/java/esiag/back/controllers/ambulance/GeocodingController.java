@@ -1,4 +1,4 @@
-package esiag.back.controllers;
+package esiag.back.controllers.ambulance;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

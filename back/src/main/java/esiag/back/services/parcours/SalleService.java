@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import esiag.back.models.medical.EtatSalle;
 import esiag.back.models.medical.Salle;
-import esiag.back.repositories.SalleRepository;
+import esiag.back.repositories.parcours.SalleRepository;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2

@@ -1,4 +1,4 @@
-package esiag.back.repositories;
+package esiag.back.repositories.parcours;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

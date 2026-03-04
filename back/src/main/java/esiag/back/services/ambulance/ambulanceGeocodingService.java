@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulancerepository;
+import esiag.back.repositories.ambulance.ambulancerepository;
 
 @DependsOn("mockService")
 @Service

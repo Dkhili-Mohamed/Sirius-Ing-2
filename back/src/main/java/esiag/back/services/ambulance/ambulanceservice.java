@@ -1,7 +1,8 @@
 package esiag.back.services.ambulance;
 
 import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulancerepository;
+import esiag.back.repositories.ambulance.ambulancerepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -10,7 +10,7 @@ import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.medical.ActeMedical;
 import esiag.back.models.medical.Salle;
 import esiag.back.models.medical.StatutActeMedical;
-import esiag.back.repositories.ActeMedicalRepository;
+import esiag.back.repositories.parcours.ActeMedicalRepository;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2

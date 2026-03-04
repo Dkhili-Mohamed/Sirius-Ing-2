@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import esiag.back.models.medical.Symptome;
 import esiag.back.models.medical.TypeActeMedical;
-import esiag.back.repositories.TypeActeMedicalRepository;
+import esiag.back.repositories.parcours.TypeActeMedicalRepository;
 import esiag.back.services.fileattente.SymptomeService;
 import lombok.extern.log4j.Log4j2;
 

@@ -1,4 +1,4 @@
-package esiag.back.controllers;
+package esiag.back.controllers.ambulance;
 
 import java.util.List;
 

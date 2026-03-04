@@ -1,4 +1,4 @@
-package esiag.back.repositories;
+package esiag.back.repositories.fileattente;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package esiag.back.repositories;
+package esiag.back.repositories.ambulance;
 
 import esiag.back.models.ambulance.PatientA;
 

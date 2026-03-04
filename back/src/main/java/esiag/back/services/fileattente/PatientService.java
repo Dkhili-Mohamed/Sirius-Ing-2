@@ -2,7 +2,8 @@ package esiag.back.services.fileattente;
 
 import esiag.back.models.medical.NiveauUrgence;
 import esiag.back.models.medical.Patient;
-import esiag.back.repositories.PatientRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esiag.back.models.medical.Suivre;
-import esiag.back.repositories.SuiverRepository;
+import esiag.back.repositories.parcours.SuiverRepository;
 import lombok.extern.log4j.Log4j2;
 
 @Service

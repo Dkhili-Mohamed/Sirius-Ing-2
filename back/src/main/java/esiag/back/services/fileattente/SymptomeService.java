@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import esiag.back.models.medical.Symptome;
-import esiag.back.repositories.SymptomeRepository;
+import esiag.back.repositories.fileattente.SymptomeRepository;
 import lombok.extern.log4j.Log4j2;
 
 @Service

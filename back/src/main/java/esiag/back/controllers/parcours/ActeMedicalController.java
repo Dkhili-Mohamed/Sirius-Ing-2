@@ -1,4 +1,4 @@
-package esiag.back.controllers;
+package esiag.back.controllers.parcours;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

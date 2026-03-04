@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulancerepository;
+import esiag.back.repositories.ambulance.ambulancerepository;
 
 @Service
 public class MeilleureAmbulanceService {

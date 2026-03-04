@@ -1,4 +1,4 @@
-package esiag.back.repositories;
+package esiag.back.repositories.fileattente;
 
 import esiag.back.models.medical.DPI;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,4 +1,4 @@
-package esiag.back.controllers;
+package esiag.back.controllers.ambulance;
 
 import esiag.back.models.ambulance.PatientA;
 import esiag.back.services.ambulance.patientAservice;

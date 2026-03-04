@@ -1,4 +1,4 @@
-package esiag.back.controllers;
+package esiag.back.controllers.fileattente;
 
 import esiag.back.models.medical.FileAttente;
 import esiag.back.services.fileattente.FileAttenteService;
