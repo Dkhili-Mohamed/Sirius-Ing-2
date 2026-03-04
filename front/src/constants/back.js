@@ -6,7 +6,7 @@ export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 //export const LOCAL_HOST = 'http://172.31.249.73:8081';
 
 //Table Patients +
-export const LOCAL_HOST = 'http://172.31.252.47:8081';
+export const LOCAL_HOST = 'http://localhost:8081';
 export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/api/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
 export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
@@ -20,6 +20,7 @@ export const TYPE_ACTE_MEDICAL = LOCAL_HOST + '/api/type-acte-medical/';
 export const INSERT_ACTE_MEDICAL = LOCAL_HOST + '/api/acte-medical/insert';
 export const INSERT_PARCOURS = LOCAL_HOST + '/api/parcours/insert';
 export const INSERT_SUIVRE = LOCAL_HOST + '/api/suivre/insert';
+export const SYMPTOME_PATIENT = LOCAL_HOST + '/api/symptome/';
 
 
 

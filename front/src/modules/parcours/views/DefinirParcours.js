@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL } from '../../../constants/back';
+import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL, SYMPTOME_PATIENT } from '../../../constants/back';
 
 
 export default function DefinirParcours() {
@@ -83,6 +83,9 @@ export default function DefinirParcours() {
     return(
 
         <div>
+            <div>
+                <SymptomePatient idPatient={idPatient}/>
+            </div>
             <h1>Définir le parcours du patient</h1>
             <form onSubmit={insererParcours}>
                 <label>Nom parcours</label>
@@ -105,7 +108,44 @@ export default function DefinirParcours() {
                 <button type="submit">Définir parcours</button>
 
             </form>
+
+            
+
         </div>
             
+    );
+}
+
+function SymptomePatient({idPatient}){
+
+    const[symptome, setSymptome] = useState([]);
+
+    const setSymptomeData = async (idPatient) => {
+        axios.get(SYMPTOME_PATIENT + idPatient).then((response) => {
+
+            setSymptome(response.data);
+        }).catch(erreur => {
+
+            alert("Erreur lors du chargement des symptomes" + erreur);
+        });
+    };
+
+    useEffect(() => {
+        if (idPatient) {
+            setSymptomeData(idPatient);
+        }
+    }, [idPatient]);
+
+    return(
+        <div>
+            <h2>Symptômes du patient</h2>
+            {symptome && symptome.map((symptome) => (
+
+                <div>
+                    <p>{symptome.libelle}</p>
+
+                </div>
+            ))}
+        </div>
     );
 }
