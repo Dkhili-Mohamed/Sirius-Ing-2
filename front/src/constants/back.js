@@ -16,6 +16,10 @@ export const PARCOURS_PATIENT = LOCAL_HOST + '/api/parcours/';
 export const ALL_PATIENTS = LOCAL_HOST + '/api/parcours/all';
 export const CHEMIN_SALLE = LOCAL_HOST + '/api/chemin/';
 export const CHEMIN = LOCAL_HOST + '/api/parcours/chemin';
+export const TYPE_ACTE_MEDICAL = LOCAL_HOST + '/api/type-acte-medical/';
+export const INSERT_ACTE_MEDICAL = LOCAL_HOST + '/api/acte-medical/insert';
+export const INSERT_PARCOURS = LOCAL_HOST + '/api/parcours/insert';
+export const INSERT_SUIVRE = LOCAL_HOST + '/api/suivre/insert';
 
 
 

@@ -16,6 +16,9 @@ export default function Navbar() {
             <li className="nav-item">
                 <Link className="nav-link" to="/api/parcours/all">Parcours</Link>
             </li>
+            <li className="nav-item">
+                <Link className="nav-link" to="/api/type-acte-medical/:idPatient">DéfinirParours</Link>
+            </li>
         </ul>
     );
 };
