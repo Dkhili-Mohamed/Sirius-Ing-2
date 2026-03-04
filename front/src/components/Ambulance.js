@@ -1,11 +1,10 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 import '../styles/Sample.css'; 
-import { GET_AMBULANCES } from "../constants/back";
+import { GET_AMBULANCES, LOCAL_HOST_AMBULANCE } from "../constants/back";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -16,9 +15,12 @@ L.Icon.Default.mergeOptions({
 
 export default function Ambulance() {   
   const [ambulances, setAmbulances] = useState([]);
+  const [idMeilleure, setIdMeilleure] = useState(null);  // ✅ nouvel état
   const mapRef = useRef(null);
 
-  // Récupérer la liste des ambulances depuis le backend
+  const GET_MEILLEURE_AMBULANCE = LOCAL_HOST_AMBULANCE + "meilleure"; // endpoint pour la meilleure ambulance
+
+  // Récupérer toutes les ambulances
   const setAmbulanceData = async () => {
     try {
       const response = await axios.get(GET_AMBULANCES);
@@ -28,9 +30,20 @@ export default function Ambulance() {
     }
   }
 
+  // Récupérer la meilleure ambulance
+  const fetchMeilleureAmbulance = async () => {
+    try {
+      const response = await axios.get(GET_MEILLEURE_AMBULANCE);
+      setIdMeilleure(response.data);
+    } catch (error) {
+      console.log("Erreur lors de la récupération de la meilleure ambulance ", error);
+    }
+  }
+
   // Charger les données au démarrage
   useEffect(() => {
     setAmbulanceData();
+    fetchMeilleureAmbulance();
   }, []);
 
   // Ajuster automatiquement la carte 
@@ -46,13 +59,19 @@ export default function Ambulance() {
     }
   }, [ambulances]);
 
-  
   if (ambulances.length === 0)
      return (<div className="container text-center">Aucune ambulance</div>);
 
   return (
     <div className="container text-center">
       <h4 className="mx-2">Liste des ambulances</h4>
+
+      {/* Affichage de la meilleure ambulance */}
+      {idMeilleure && (
+        <div className="alert alert-success mt-2">
+           L'ambulance la plus adaptée est l'ambulance {idMeilleure}
+        </div>
+      )}
 
       {/* Tableau des ambulances */}
       <div className="row">
@@ -71,8 +90,6 @@ export default function Ambulance() {
               <th scope="col">Temps Trajet </th>
               <th scope="col">Score Trajet</th>
               <th scope="col">Score Global</th>
-
-            
             </tr>
           </thead>
           <tbody className="table-group-divider">
@@ -90,10 +107,6 @@ export default function Ambulance() {
                 <td>{ambulance.tempstrajetminutes}</td>
                 <td>{ambulance.notetrajet}</td>
                 <td>{ambulance.noteglobale}</td>
-
-
-
-
               </tr>
             ))}
           </tbody>
