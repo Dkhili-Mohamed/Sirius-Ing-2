@@ -75,6 +75,8 @@ export default function DefinirParcours() {
 
             await axios.post(INSERT_ACTE_MEDICAL, acteMedical);
         }
+
+        window.location.href = "/api/patient/all";
         
     };
     
