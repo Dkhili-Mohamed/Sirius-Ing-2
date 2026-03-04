@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Ambulance from "./Ambulance";
+import Ambulance from "./modules/ambulance/views/Ambulance";
 import Navbar from "./Navbar";
-import Patient from "./Patient";
-import ParcoursPatient from "./ParcoursPatient";
-import Parcours from "./Parcours";
-import FileAttente from "./FileAttente";
-import PatientSymptomes from "./PatientSymptomes";
-import DefinirParcours from "./DefinirParcours";
+import Patient from "./modules/fileattente/views/Patient";
+import ParcoursPatient from "./modules/parcours/views/ParcoursPatient";
+import Parcours from "./modules/parcours/views/Parcours";
+import FileAttente from "./modules/fileattente/components/FileAttente";
+import PatientSymptomes from "./modules/fileattente/views/PatientSymptomes";
+import DefinirParcours from "./modules/parcours/views/DefinirParcours";
 
 export default function Router () {
     return (

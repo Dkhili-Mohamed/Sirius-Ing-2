@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/Table.css";
-import { PARCOURS_PATIENT, CHEMIN} from "../constants/back";
+import '../../../styles/Table.css';
+import { PARCOURS_PATIENT, CHEMIN} from "../../../constants/back";
 import { useParams } from "react-router-dom";
-import planHopital from "../assets/plan_hopital_test.png";
+import planHopital from "../../../assets/plan_hopital_test.png";
 
 export default function ParcoursPatient() {
   const { idPatient } = useParams();

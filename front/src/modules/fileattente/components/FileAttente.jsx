@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import { patientService } from '../services/patientService';
-import { LOCAL_HOST_PATIENT } from '../constants/back';
+import { patientService } from './patientService';
+import { LOCAL_HOST_PATIENT } from '../../../constants/back';
 import PatientModal from './PatientModal';
 
 const FileAttente = () => {

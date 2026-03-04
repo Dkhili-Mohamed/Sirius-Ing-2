@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOCAL_HOST_PATIENT, GET_PATIENTS, GET_FILE_ATTENTE } from '../constants/back';
+import { LOCAL_HOST_PATIENT, GET_PATIENTS, GET_FILE_ATTENTE } from '../../../constants/back';
 
 export const patientService = {
     getAllPatients: async () => {

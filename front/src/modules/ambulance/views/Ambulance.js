@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
 
-import { GET_AMBULANCES, LOCAL_HOST_AMBULANCE } from "../constants/back";
+import { GET_AMBULANCES, LOCAL_HOST_AMBULANCE } from "../../../constants/back";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';

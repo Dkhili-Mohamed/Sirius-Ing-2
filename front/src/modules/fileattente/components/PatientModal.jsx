@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { patientService } from '../services/patientService';
+import { patientService } from './patientService';
 
 const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
     const [nom, setNom] = useState('');

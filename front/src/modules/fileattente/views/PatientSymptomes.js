@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Table.css';
-import { LOCAL_HOST_PATIENT } from "../constants/back";
+import '../../../styles/Table.css';
+import { LOCAL_HOST_PATIENT } from "../../../constants/back";
 import { useParams } from 'react-router-dom';
 
 export default function PatientSymptomes() {

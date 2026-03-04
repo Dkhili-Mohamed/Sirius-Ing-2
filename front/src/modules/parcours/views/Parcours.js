@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Table.css';
-import { ALL_PATIENTS } from "../constants/back";   
+import '../../../styles/Table.css';
+import { ALL_PATIENTS } from "../../../constants/back";   
 
 export default function Parcours() {
     const [patientStatutParours, setPatientStatutParours] = useState([]);

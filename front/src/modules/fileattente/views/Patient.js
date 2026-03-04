@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Table.css';
-import {GET_PATIENTS, LOCAL_HOST_PATIENT, UPDATE_PATIENT} from "../constants/back";
+import '../../../styles/Table.css';
+import {GET_PATIENTS, LOCAL_HOST_PATIENT, UPDATE_PATIENT} from "../../../constants/back";
 
 export default function Patient() {
     const [patients, setPatients] = useState([]);
