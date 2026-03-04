@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.models.medical.ActeMedical;
-import esiag.back.services.ActeMedicalService;
+import esiag.back.services.parcours.ActeMedicalService;
 
 @RestController
 @RequestMapping("api/acte-medical")

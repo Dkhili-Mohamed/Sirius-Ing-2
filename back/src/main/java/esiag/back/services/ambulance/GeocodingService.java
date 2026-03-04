@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.ambulance;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

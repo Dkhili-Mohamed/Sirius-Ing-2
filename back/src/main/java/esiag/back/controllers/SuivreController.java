@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.models.medical.Suivre;
-import esiag.back.services.SuivreService;
+import esiag.back.services.parcours.SuivreService;
 
 @RestController
 @RequestMapping("api/suivre")

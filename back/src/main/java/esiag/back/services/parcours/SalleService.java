@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.parcours;
 
 import java.util.List;
 import java.util.Optional;

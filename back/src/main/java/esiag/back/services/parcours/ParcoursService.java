@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.parcours;
 
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;

@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import esiag.back.services.GeocodingService;
-import esiag.back.services.ambulanceGeocodingService;
-import esiag.back.services.patientAGeocodingService;
+import esiag.back.services.ambulance.GeocodingService;
+import esiag.back.services.ambulance.ambulanceGeocodingService;
+import esiag.back.services.ambulance.patientAGeocodingService;
 
 @RestController
 public class GeocodingController {

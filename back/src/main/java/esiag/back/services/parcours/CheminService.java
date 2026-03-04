@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.parcours;
 
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;

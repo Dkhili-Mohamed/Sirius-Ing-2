@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.fileattente;
 
 import esiag.back.models.medical.NiveauUrgence;
 import esiag.back.models.medical.Patient;

@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.parcours;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

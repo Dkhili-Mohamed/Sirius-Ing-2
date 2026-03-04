@@ -14,9 +14,10 @@ import esiag.back.models.dto.Chemin;
 import esiag.back.models.dto.ParcoursPatient;
 import esiag.back.models.dto.PatientStatutParcours;
 import esiag.back.models.medical.Parcours;
-import esiag.back.services.ActeMedicalService;
-import esiag.back.services.CheminService;
-import esiag.back.services.ParcoursService;
+import esiag.back.services.parcours.ActeMedicalService;
+import esiag.back.services.parcours.CheminService;
+import esiag.back.services.parcours.ParcoursService;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 

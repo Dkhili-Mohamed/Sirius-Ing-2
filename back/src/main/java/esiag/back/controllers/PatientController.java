@@ -2,9 +2,10 @@ package esiag.back.controllers;
 
 import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.Patient;
-import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.FileAttenteService;
+import esiag.back.services.fileattente.PatientService;
 import esiag.back.models.medical.FileAttente;
-import esiag.back.services.FileAttenteService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

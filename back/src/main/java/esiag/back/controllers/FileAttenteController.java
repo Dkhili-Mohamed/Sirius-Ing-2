@@ -1,7 +1,7 @@
 package esiag.back.controllers;
 
 import esiag.back.models.medical.FileAttente;
-import esiag.back.services.FileAttenteService;
+import esiag.back.services.fileattente.FileAttenteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.parcours;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import esiag.back.models.medical.Symptome;
 import esiag.back.models.medical.TypeActeMedical;
 import esiag.back.repositories.TypeActeMedicalRepository;
+import esiag.back.services.fileattente.SymptomeService;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -31,13 +32,13 @@ public class TypeActeMedicalService {
 
         List<Symptome> symptomesPatient = symptomeService.findSymptomeByIdPatient(idPatient);
         
-        if (symptomesPatient != null || !symptomesPatient.isEmpty()) {
+        if (!symptomesPatient.isEmpty()) {
 
             for (Symptome symptome : symptomesPatient) {
 
                 List<TypeActeMedical> typeActeMedicals = findTypeActeMedicalBySymptomePatient(symptome.getIdSymptome());
 
-                if (typeActeMedicals != null || !typeActeMedicals.isEmpty()) {
+                if (!typeActeMedicals.isEmpty()) {
                     for (TypeActeMedical typeActeMedical : typeActeMedicals) {
                         if (!typeActeMedicalsPatient.contains(typeActeMedical)) {
                             typeActeMedicalsPatient.add(typeActeMedical);

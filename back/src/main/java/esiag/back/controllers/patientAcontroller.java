@@ -1,7 +1,8 @@
 package esiag.back.controllers;
 
 import esiag.back.models.ambulance.PatientA;
-import esiag.back.services.patientAservice;
+import esiag.back.services.ambulance.patientAservice;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

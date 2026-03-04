@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.models.medical.TypeActeMedical;
-import esiag.back.services.TypeActeMedicalService;
+import esiag.back.services.parcours.TypeActeMedicalService;
 
 @RestController
 @RequestMapping("api/type-acte-medical")

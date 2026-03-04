@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.fileattente;
 
 import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.FileAttente;

@@ -1,4 +1,4 @@
-package esiag.back.services;
+package esiag.back.services.fileattente;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ public class SymptomeService {
     @Autowired
     private SymptomeRepository symptomeRepository;
 
-    List<Symptome> findSymptomeByIdPatient(Long idPatient){
+    public List<Symptome> findSymptomeByIdPatient(Long idPatient){
         return symptomeRepository.findSymptomeByIdPatient(idPatient);
     }
 
