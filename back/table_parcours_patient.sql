@@ -49,7 +49,7 @@ CREATE TABLE salle (
     id_salle SERIAL PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
     capacite INTEGER CHECK (capacite > 0),
-    place_disponible INTEGER CHECK (place_disponible <= capacite AND place_disponible >= 0),
+    place_occupee INTEGER CHECK (place_occupee <= capacite AND place_occupee >= 0),
     etat_salle etat_salle_enum NOT NULL,
     id_espace INTEGER NOT NULL,
     CONSTRAINT fk_salle_espace FOREIGN KEY (id_espace) REFERENCES espace(id_espace)

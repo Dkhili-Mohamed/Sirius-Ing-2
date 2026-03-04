@@ -41,7 +41,7 @@ export default function DefinirParcours() {
         const parcours = {
             nomParcours: e.target.nomParcours.value,
             medecin: {
-                idMedecin: 6,
+                idMedecin: 10,
             },
             statutGlobal: "EN_ATTENTE",
             dateCreation: Date.now(),
