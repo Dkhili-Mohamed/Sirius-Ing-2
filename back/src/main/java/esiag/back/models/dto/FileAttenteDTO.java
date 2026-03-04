@@ -1,7 +1,7 @@
 package esiag.back.models.dto;
 
 import esiag.back.models.medical.FileAttente;
-import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.PatientService;
 import lombok.Data;
 
 import java.time.LocalDateTime;
