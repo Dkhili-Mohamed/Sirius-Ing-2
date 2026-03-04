@@ -7,9 +7,10 @@ import PatientModal from './PatientModal';
 const FileAttente = () => {
     const [patients, setPatients] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
-
     useEffect(() => {
         chargerFileAttente();
+        const interval = setInterval(chargerFileAttente, 1000);
+        return () => clearInterval(interval);
     }, []);
 
     const chargerFileAttente = async () => {
@@ -36,7 +37,13 @@ const FileAttente = () => {
     const formatHeure = (dateString) => {
         if (!dateString) return '--:--';
         const date = new Date(dateString);
-        return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+        return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: "2-digit" });
+    };
+
+    const formatJour = (dateString) => {
+        if (!dateString) return '--/--/--';
+        const date = new Date(dateString);
+        return date.toLocaleDateString();
     };
 
     const getNiveauUrgenceStyle = (niveau) => {
@@ -93,7 +100,10 @@ const FileAttente = () => {
                         <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Âge</th>
                         <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Score</th>
                         <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Niveau</th>
+                        <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Jour d'arrivée</th>
                         <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Heure d'arrivée</th>
+                        <th style={{ padding: '12px', textAlign: 'left', border: '1px solid #dee2e6' }}>Temps d'attente estimé (s)</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -125,7 +135,13 @@ const FileAttente = () => {
                                     {patient.niveauUrgence}
                                 </td>
                                 <td style={{ padding: '12px', border: '1px solid #dee2e6' }}>
-                                    {formatHeure(patient.dateArrivee)}
+                                    {formatJour(fileAttente.dateEntree)}
+                                </td>
+                                <td style={{ padding: '12px', border: '1px solid #dee2e6' }}>
+                                    {formatHeure(fileAttente.dateEntree)}
+                                </td>
+                                <td style={{ padding: '12px', border: '1px solid #dee2e6' }}>
+                                    {fileAttente.tempsAttenteEstime}
                                 </td>
                             </tr>
                         );

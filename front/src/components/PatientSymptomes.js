@@ -49,11 +49,6 @@ export default function PatientSymptomes() {
                             </h5>
                             <p className="card-text">
                                 <strong>Âge:</strong> {patient.agePatient} ans<br/>
-                                <strong>Score d'urgence:</strong> {patient.scoreUrgence}<br/>
-                                <strong>Niveau d'urgence:</strong> 
-                                <span className={`badge ${patient.niveauUrgence === 'URGENT' ? 'bg-danger' : patient.niveauUrgence === 'INTERMEDIAIRE' ? 'bg-warning' : 'bg-success'}`}>
-                                    {patient.niveauUrgence}
-                                </span>
                             </p>
                         </div>
                     </div>

@@ -21,6 +21,8 @@ export default function BoxMedicale() {
 
     useEffect(() => {
         setBoxMedicaleData();
+        const interval = setInterval(setBoxMedicaleData, 1000)
+        return() => clearInterval(interval)
     }, []);
 
     if (boxMedicales.length === 0)
@@ -32,20 +34,24 @@ export default function BoxMedicale() {
                 <table className="table table-sm table-bordered table-hover">
                     <thead>
                     <tr>
+                        <th scope="col">Box</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Heure d'entrée</th>
                         <th scope="col">Temps estimé</th>
+                        <th scope="col">Temps restant (secondes)</th>
                     </tr>
                     </thead>
                     <tbody className="table-group-divider">
                     {
                         boxMedicales.map( (boxMedicale) => (
                             <tr key={boxMedicale.idBoxMedicale}>
-                                <td>{boxMedicale.patient.nomPatient}</td>
-                                <td>{boxMedicale.patient.prenomPatient}</td>
-                                <td>{formatHeure(boxMedicale.heureEntree)}</td>
-                                <td>{boxMedicale.tempsEstime}</td>
+                                <td>{boxMedicale.nomBox}</td>
+                                <td>{boxMedicale.patient?.nomPatient || '--'}</td>
+                                <td>{boxMedicale.patient?.prenomPatient || '--'}</td>
+                                <td>{formatHeure(boxMedicale.heureEntree) || '--'}</td>
+                                <td>{boxMedicale.tempsEstime || '--'}</td>
+                                <td>{boxMedicale.tempsRestant || '--'}</td>
                             </tr>
 
 
