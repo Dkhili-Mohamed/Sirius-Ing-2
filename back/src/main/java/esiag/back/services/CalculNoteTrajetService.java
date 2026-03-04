@@ -35,7 +35,7 @@ public class CalculNoteTrajetService {
 
             Ambulance ambulance = ambulances.get(i);
 
-            if (ambulance.getTempstrajet() == null) {
+            if (ambulance.getTempstrajet() == null || ambulance.getTempstrajet() == 0) {
                 System.out.println("Temps trajet non calculé pour ambulance "
                         + ambulance.getIdambulance());
                 continue;
