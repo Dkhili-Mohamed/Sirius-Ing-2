@@ -36,7 +36,7 @@ public interface ParcoursRepository extends JpaRepository<Parcours,Long> {
             FROM Suivre sui
             WHERE sui.patient.idPatient = :idPatient
         )
-        ORDER BY a.ordre ASC
+        ORDER BY p.dateCreation DESC, a.ordre ASC
     """)
     List<ParcoursPatient> getParcoursByPatientId(@Param("idPatient") Long idPatient);
 

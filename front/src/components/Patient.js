@@ -57,7 +57,13 @@ export default function Patient() {
                                     >
                                         Symptômes
                                     </button>
+                                    <button className="btn btn-primary btn-sm mx-1"
+                                        onClick={() => window.location.href = `/api/type-acte-medical/${patient.idPatient}`}
+                                    >   
+                                        Définir parcours
+                                    </button>
                                 </td>
+
 
                             </tr>
 

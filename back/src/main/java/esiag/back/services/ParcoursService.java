@@ -68,4 +68,8 @@ public class ParcoursService {
         return false;
     }
 
+    public Parcours insertParcours(Parcours parcours) {
+        return parcoursRepository.save(parcours);
+    }
+
 }

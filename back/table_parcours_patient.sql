@@ -151,3 +151,28 @@ CREATE TABLE acte_medical (
     CONSTRAINT fk_acte_parcours FOREIGN KEY (id_parcours) REFERENCES parcours(id_parcours),
     CONSTRAINT fk_acte_salle FOREIGN KEY (id_salle) REFERENCES salle(id_salle)
 );
+
+CREATE TABLE symptome(
+    id_symptome SERIAL PRIMARY KEY,
+    libelle VARCHAR(100) NOT NULL,
+    score INTEGER NOT NULL CHECK (score >= 0)
+);
+
+CREATE TABLE patient_symptome (
+    id_patient_symptome SERIAL PRIMARY KEY,
+    id_patient INTEGER NOT NULL,
+    id_symptome INTEGER NOT NULL,
+    date_symptome TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_patient_symptome UNIQUE (id_patient, id_symptome),
+    CONSTRAINT fk_ps_patient FOREIGN KEY (id_patient) REFERENCES patient(id_patient) ON DELETE CASCADE,
+    CONSTRAINT fk_ps_symptome FOREIGN KEY (id_symptome) REFERENCES symptome(id_symptome) ON DELETE CASCADE
+);
+
+CREATE TABLE symptome_acte_medical(
+    id_symptome_acte_medical SERIAL PRIMARY KEY,
+    id_symptome INTEGER NOT NULL,
+    id_type_acte_medical INTEGER NOT NULL,
+    CONSTRAINT uq_symptome_acte UNIQUE (id_symptome, id_type_acte_medical),
+    CONSTRAINT fk_sa_symptome FOREIGN KEY (id_symptome) REFERENCES symptome(id_symptome) ON DELETE CASCADE,
+    CONSTRAINT fk_sa_acte FOREIGN KEY (id_type_acte_medical) REFERENCES type_acte_medical(id_type_acte_medical) ON DELETE CASCADE
+);

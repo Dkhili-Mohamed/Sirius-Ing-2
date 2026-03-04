@@ -7,6 +7,7 @@ import ParcoursPatient from "./ParcoursPatient";
 import Parcours from "./Parcours";
 import FileAttente from "./FileAttente";
 import PatientSymptomes from "./PatientSymptomes";
+import DefinirParcours from "./DefinirParcours";
 
 export default function Router () {
     return (
@@ -21,6 +22,7 @@ export default function Router () {
                     <Route path="/api/patient-symptomes/patient/:id" element={<PatientSymptomes />}/>
                     <Route path="/api/patient/file-attente-dto" element={<FileAttente />}/>
                     <Route path="/api/parcours/all" element={<Parcours />}/>
+                    <Route path="/api/type-acte-medical/:idPatient" element={<DefinirParcours />}/>
                 </Routes>
             </div>
         </BrowserRouter>
