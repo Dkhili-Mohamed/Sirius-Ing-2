@@ -1,5 +1,6 @@
 package esiag.back.services;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +27,7 @@ public class TypeActeMedicalService {
     }
 
     public List<TypeActeMedical> findAllTypeActeMedicalBySymptomePatient(Long idPatient){
-        List<TypeActeMedical> typeActeMedicalsPatient = null;
+        List<TypeActeMedical> typeActeMedicalsPatient = new ArrayList<>();
 
         List<Symptome> symptomesPatient = symptomeService.findSymptomeByIdPatient(idPatient);
         

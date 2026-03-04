@@ -10,7 +10,7 @@ import esiag.back.models.medical.TypeActeMedical;
 
 public interface TypeActeMedicalRepository extends JpaRepository<TypeActeMedical, Long> {
 
-    @Query("SELECT sa.acteMedical FROM SymptomeActeMedical sa WHERE sa.symptome.idSymptome = :idSymptome")
+    @Query("SELECT sa.typeActeMedical FROM SymptomeActeMedical sa WHERE sa.symptome.idSymptome = :idSymptome")
     List<TypeActeMedical> findSymptomesByActeMedicalId(@Param("idSymptome") Long idSymptome);
 
 }

@@ -4,7 +4,13 @@ package esiag.back.models.medical;
 import lombok.Data;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 @Entity
 @Data
@@ -25,6 +31,7 @@ public class Parcours {
     private StatutActeMedical statutGlobal;
 
     @Column(name = "date_creation")
+    @JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
     private LocalDateTime dateCreation;
 
     @Column(name = "nom_parcours")
@@ -39,5 +46,14 @@ public class Parcours {
                 ", dateCreation=" + dateCreation +
                 ", nomParcours='" + nomParcours + '\'' +
                 '}';
+    }
+
+    @JsonProperty("dateCreation")
+    public void setDateCreation(Long tempsMilli) {
+        
+        if (tempsMilli != null) {
+            this.dateCreation = LocalDateTime.ofInstant(Instant.ofEpochMilli(tempsMilli),
+                    ZoneId.systemDefault());
+        }
     }
 }
