@@ -4,19 +4,31 @@ import esiag.back.models.medical.NiveauUrgence;
 import esiag.back.models.medical.Patient;
 import esiag.back.repositories.fileattente.PatientRepository;
 
+import esiag.back.models.medical.*;
+import esiag.back.repositories.fileattente.BoxMedicaleRepository;
+import esiag.back.repositories.fileattente.FileAttenteRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
+
 
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
 @Service
 public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
-
+    @Autowired
+    private FileAttenteRepository fileAttenteRepository;
+    @Autowired
+    private BoxMedicaleRepository boxMedicaleRepository;
 
     public Patient findByIdPatient(Long idPatient) {
         Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
@@ -47,6 +59,7 @@ public class PatientService {
         switch (symptome) {
             case "fievre_elevee":
             case "fievreElevee":
+            case "fievre Elevee":
                 return 3;
             case "douleur_intense":
             case "douleurIntense":
@@ -56,12 +69,15 @@ public class PatientService {
                 return 5;
             case "difficulte_respiratoire":
             case "difficultesRespiratoires":
+            case "difficultes Respiratoires":
                 return 5;
             case "perte_connaissance":
             case "perteConnaissance":
+            case "perte Conaissance":
                 return 5;
             case "hemorragie":
             case "saignementAbondant":
+            case "saignement Abondant":
                 return 5;
             case "douleur_moderee":
             case "douleurModeree":
@@ -77,20 +93,29 @@ public class PatientService {
             case "frissons":
                 return 1;
             case "touxSevere":
+            case "toux Severe":
+            case "toux_severe":
                 return 2;
             case "malaiseGeneral":
+            case "malaise General":
                 return 1;
             case "vertigesIntenses":
+            case "vertiges Intenses":
                 return 2;
             case "mauxTeteSeveres":
+            case "maux Tete Severes":
                 return 1;
             case "visionTroublee":
+            case "vision Troublee":
                 return 2;
             case "difficultesParole":
+            case "difficultes Parole":
                 return 3;
             case "faiblesseBrasJambes":
+            case "faiblesse Bras Jambes":
                 return 2;
             case "engourdissementFace":
+            case "engourdissement Face":
                 return 3;
             default:
                 return 0;
@@ -128,13 +153,16 @@ public class PatientService {
         return NiveauUrgence.NON_URGENT;
     }
 
-    public List<Patient> trierParUrgence(List<Patient> patients) {
-        if (patients == null)
+    public List<FileAttente> trierParUrgence(List<FileAttente> fileAttente) {
+        if (fileAttente == null)
             return new ArrayList<>();
 
-        Collections.sort(patients, new Comparator<Patient>() {
-            @Override
-            public int compare(Patient p1, Patient p2) {
+        Collections.sort(fileAttente, new Comparator<FileAttente>() {
+            //@Override
+            public int compare(FileAttente f1, FileAttente f2) {
+
+                Patient p1 = f1.getPatient();
+                Patient p2 = f2.getPatient();
 
                 NiveauUrgence n1 = getNiveauUrgence(p1);
                 NiveauUrgence n2 = getNiveauUrgence(p2);
@@ -150,8 +178,8 @@ public class PatientService {
                     return Integer.compare(s2, s1);
                 }
 
-                LocalDateTime d1 = p1.getDateArrivee();
-                LocalDateTime d2 = p2.getDateArrivee();
+                LocalDateTime d1 = f1.getDateEntree();
+                LocalDateTime d2 = f2.getDateEntree();
 
                 if (d1 == null && d2 == null)
                     return 0;
@@ -164,7 +192,65 @@ public class PatientService {
             }
         });
 
-        return patients;
+
+
+        return fileAttente;
+    }
+
+    @Scheduled(fixedRate = 60000)
+    @Transactional
+    public void mettrePatientDansFile() {
+        log.info("*****Insertion des patients non consultes dans la file chaque minute*****");
+
+        log.info("Recuperation des patients");
+        List<Patient> patients = patientRepository.findAll();
+        log.info("Recuperation des patients triés de la file");
+        List<FileAttente> fileAttente = fileAttenteRepository.findAll();
+        log.info("Recuperation des box");
+        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
+
+
+        for(Patient p : patients) {
+            if(p.getStatutPatient() !=null && p.getStatutPatient() == StatutPatient.CONSULTE) {
+                continue;
+            }
+
+
+
+            boolean patientDejaDansFile = false;
+            boolean patientDejaDansBox = false;
+            for (FileAttente fa : fileAttente) {
+                if (fa.getPatient().getIdPatient().equals(p.getIdPatient())) {
+                    patientDejaDansFile = true;
+                }
+            }
+
+            for (BoxMedicale bm : boxMedicales) {
+                if (bm.getPatient() != null && bm.getPatient().getIdPatient().equals(p.getIdPatient())) {
+                    patientDejaDansBox = true;
+                }
+            }
+
+            if (!patientDejaDansBox && !patientDejaDansFile) {
+                FileAttente fa = new FileAttente();
+                fa.setPatient(p);
+                fa.setDateEntree(LocalDateTime.now());
+                fileAttente.add(fa);
+                fa.setRang(0);
+
+                if(fa.getPatient() == null ||fa.getPatient().getIdPatient() == null) {
+                    log.info("Impossible d'ajouter un patient null dans la file");
+                    continue;
+                }
+
+                fileAttenteRepository.save(fa);
+            }
+
+            log.info("Patient {} {} inséré dans la box", p.getNomPatient(), p.getPrenomPatient());
+
+        }
+
+
     }
 
 }

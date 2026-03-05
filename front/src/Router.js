@@ -8,6 +8,7 @@ import Parcours from "./modules/parcours/views/Parcours";
 import FileAttente from "./modules/fileattente/components/FileAttente";
 import PatientSymptomes from "./modules/fileattente/views/PatientSymptomes";
 import DefinirParcours from "./modules/parcours/views/DefinirParcours";
+import BoxMedicale from "./modules/fileattente/views/BoxMedicale";
 
 export default function Router () {
     return (
@@ -21,6 +22,7 @@ export default function Router () {
                     <Route path="/api/parcours/:idPatient" element={<ParcoursPatient />}/>
                     <Route path="/api/patient-symptomes/patient/:id" element={<PatientSymptomes />}/>
                     <Route path="/api/patient/file-attente-dto" element={<FileAttente />}/>
+                    <Route path="/api/box-medicale" element={<BoxMedicale />}/>
                     <Route path="/api/parcours/all" element={<Parcours />}/>
                     <Route path="/api/type-acte-medical/:idPatient" element={<DefinirParcours />}/>
                 </Routes>

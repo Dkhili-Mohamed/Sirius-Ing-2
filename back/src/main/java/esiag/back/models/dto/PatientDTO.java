@@ -1,6 +1,8 @@
 package esiag.back.models.dto;
 
 import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.StatutPatient;
+import esiag.back.services.fileattente.PatientService;
 import esiag.back.services.fileattente.PatientService;
 import lombok.Data;
 
@@ -16,6 +18,7 @@ public class PatientDTO {
     private List<String> symptomes;
     private Integer scoreUrgence;
     private String niveauUrgence;
+    private StatutPatient statutPatient;
 
 
     public PatientDTO(Patient patient, PatientService patientService) {
@@ -30,5 +33,7 @@ public class PatientDTO {
             this.scoreUrgence = patientService.calculerScoreUrgence(patient);
             this.niveauUrgence = patientService.getNiveauUrgence(patient).toString();
         }
+
+        this.statutPatient = patient.getStatutPatient();
     }
 }

@@ -1,8 +1,11 @@
 package esiag.back.services.fileattente;
 
 import esiag.back.models.dto.FileAttenteDTO;
+import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.StatutBox;
+import esiag.back.repositories.fileattente.BoxMedicaleRepository;
 import esiag.back.repositories.fileattente.FileAttenteRepository;
 import esiag.back.repositories.fileattente.PatientRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +26,10 @@ public class FileAttenteService {
     private final FileAttenteRepository fileAttenteRepository;
     private final PatientRepository patientRepository;
     private final PatientService patientService;
+    private final BoxMedicaleRepository boxMedicaleRepository;
 
+
+    @Transactional
     public List<FileAttente> getFileAttenteTriee() {
         log.info("Demarrage du tri de la file d'attente");
 
@@ -32,28 +38,30 @@ public class FileAttenteService {
         log.info("Nombre de patients a trier : {}", patients.size());
 
         log.info("-- 2. Lancement de l'algorithme de tri par niveau d'urgence --");
-        List<Patient> patientsTries = patientService.trierParUrgence(patients);
+        List<FileAttente> fileAttenteRecuperee = patientService.trierParUrgence(fileAttenteRepository.findAll());
+        List<FileAttente> fileAttenteTriee = patientService.trierParUrgence(fileAttenteRecuperee);
+
+        log.info("Tri termine. {} patients tries par niveau d'urgence", fileAttenteTriee.size());
+
+        log.info("- Transfert des {} patients tries pour la mise a jour -", fileAttenteTriee.size());
+        if(!fileAttenteTriee.isEmpty()) {
+            log.info("Premier patient trie: {}", fileAttenteTriee.get(0).getPatient());
+            log.info("-> Dernier patient trie: {}", fileAttenteTriee.get(fileAttenteTriee.size()-1).getPatient());
 
 
-        log.info("Tri termine. {} patients tries par niveau d'urgence", patientsTries.size());
-
-        log.info("- Transfert des {} patients tries vers la mise a jour -", patientsTries.size());
-        log.info("Premier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(0).getNomPatient() + " " + patientsTries.get(0).getPrenomPatient());
-
-        log.info("-> Dernier patient trie: {} (Score: {} - Niveau: {})",
-                patientsTries.get(patientsTries.size()-1).getNomPatient() + " " + patientsTries.get(patientsTries.size()-1).getPrenomPatient());
+        }
 
 
-        return mettreAJourFileAttente(patientsTries);
+        return mettreAJourFileAttente(fileAttenteTriee);
     }
 
+    @Transactional
     public List<FileAttenteDTO> getFileAttenteAvecScores() {
         List<FileAttente> fileAttente = getFileAttenteTriee();
         List<FileAttenteDTO> result = new ArrayList<>();
 
         for (FileAttente fa : fileAttente) {
-            FileAttenteDTO dto = new FileAttenteDTO(fa, patientService);
+            FileAttenteDTO dto = new FileAttenteDTO(fa, patientService, 0);
             result.add(dto);
         }
 
@@ -61,8 +69,62 @@ public class FileAttenteService {
     }
 
     @Transactional
-    public List<FileAttente> mettreAJourFileAttente(List<Patient> patients) {
-        log.info("-- 3. Mise a jour de la file d'attente avec {} patients tries --", patients.size());
+    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
+        List<FileAttente> fileAttentes = getFileAttenteTriee();
+
+        if(fileAttentes.isEmpty()) {
+            log.info("Pas de patient dans la file d'attente");
+
+
+            return  new ArrayList<>();
+        }
+
+        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
+
+
+        List<FileAttenteDTO> fileAttenteDTOS = new ArrayList<>();
+
+
+        int temps_minimum_attente = Integer.MAX_VALUE;
+        for (BoxMedicale bm : boxMedicales) {
+            if(bm.getStatutBox() == StatutBox.OCCUPEE) {
+
+                int temps_restant = bm.getTempsRestant();
+                if (temps_restant < temps_minimum_attente) {
+                    temps_minimum_attente = temps_restant;
+                }
+
+            }else if (bm.getStatutBox() == StatutBox.LIBRE) {
+                temps_minimum_attente = 0;
+            }
+
+
+        }
+
+
+        int temps_attente_estime = temps_minimum_attente;
+        for  (int i=0; i<fileAttentes.size(); i++) {
+
+            Patient patient = fileAttentes.get(i).getPatient();
+            int temps_consultation_estime = patientService.getNiveauUrgence(patient).getTempsMoyen();
+
+
+            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente_estime);
+            fileAttenteDTOS.add(fileAttenteDTO);
+
+            temps_attente_estime = temps_attente_estime + temps_consultation_estime;
+
+
+        }
+
+        return fileAttenteDTOS;
+
+    }
+
+
+    @Transactional
+    public List<FileAttente> mettreAJourFileAttente(List<FileAttente> fileAttenteMAJ) {
+        log.info("-- 3. Mise a jour de la file d'attente avec {} patients tries --", fileAttenteMAJ.size());
 
         try {
             if (fileAttenteRepository.count() > 0) {
@@ -74,23 +136,14 @@ public class FileAttenteService {
             List<FileAttente> fileAttente = new ArrayList<>();
             LocalDateTime maintenant = LocalDateTime.now();
 
-            for (int position = 0; position < patients.size(); position++) {
+            for (int position = 0; position < fileAttenteMAJ.size(); position++) {
+                FileAttente fileAttenteTriee = fileAttenteMAJ.get(position);
                 FileAttente entree = new FileAttente();
-                entree.setPatient(patients.get(position));
-                entree.setDateEntree(maintenant.plusSeconds(position));
+                entree.setPatient(fileAttenteTriee.getPatient());
+                entree.setDateEntree(fileAttenteTriee.getDateEntree());
                 entree.setRang(position + 1);
                 fileAttente.add(entree);
-
-
-                Patient p = patients.get(position);
-                log.info("   Position {}: {} - Score: {} - Niveau: {}",
-                        position + 1,
-                        p.getNomPatient() + " " + p.getPrenomPatient(),
-                        patientService.calculerScoreUrgence(p),
-                        patientService.getNiveauUrgence(p));
             }
-
-
 
             return fileAttenteRepository.saveAll(fileAttente);
 

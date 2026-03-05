@@ -10,8 +10,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Data
 @Table(name = "patient")
@@ -35,15 +33,18 @@ public class Patient {
     @Column(name = "age_patient")
     private Integer agePatient;
 
-    @Column(name = "date_arrivee")
-    private LocalDateTime dateArrivee;
+    @Column(name = "statut_patient")
+    private StatutPatient statutPatient;
+//
+//    @Column(name = "date_arrivee")
+//    private LocalDateTime dateArrivee;
 
     @Transient
     private List<String> patient_symptomes;
 
 
 @PrePersist
-public void copierSymptomesEtDate() {
+public void copierSymptomes() {
     System.out.println("patient_symptomes reçu: " + patient_symptomes);
 
     if (patient_symptomes != null && !patient_symptomes.isEmpty()) {
@@ -54,8 +55,12 @@ public void copierSymptomesEtDate() {
         System.out.println("patient_symptomes est null ou vide !");
     }
 
-    if (this.dateArrivee == null) {
-        this.dateArrivee = LocalDateTime.now();
+//    if (this.dateArrivee == null) {
+//        this.dateArrivee = LocalDateTime.now();
+//    }
+
+    if(this.statutPatient == null) {
+        this.statutPatient = StatutPatient.NON_CONSULTE;
     }
 }
 
@@ -80,7 +85,9 @@ public void copierSymptomesEtDate() {
                 ", nomPatient='" + nomPatient + '\'' +
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
-                ", symptomes='" + symptomes + '\'' +
+                ", statutPatient=" + statutPatient +
+//               ", symptomes='" + symptomes + '\'' +
+//                ", date_arrivee='" + dateArrivee+
                 '}';
     }
 }

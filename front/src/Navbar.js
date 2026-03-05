@@ -14,6 +14,9 @@ export default function Navbar() {
                 <Link className="nav-link" to="/api/patient/file-attente-dto">File d'Attente</Link>
             </li>
             <li className="nav-item">
+                <Link className="nav-link" to="/api/box-medicale">Box Médicale</Link>
+            </li>
+            <li className="nav-item">
                 <Link className="nav-link" to="/api/parcours/all">Parcours</Link>
             </li>
         </ul>

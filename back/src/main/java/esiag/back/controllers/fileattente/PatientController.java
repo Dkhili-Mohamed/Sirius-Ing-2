@@ -2,18 +2,22 @@ package esiag.back.controllers.fileattente;
 
 import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.Patient;
-import esiag.back.services.fileattente.FileAttenteService;
+import esiag.back.repositories.fileattente.FileAttenteRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
 import esiag.back.services.fileattente.PatientService;
 import esiag.back.models.medical.FileAttente;
-
+import esiag.back.services.fileattente.FileAttenteService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("api/patient")
 public class PatientController {
@@ -23,6 +27,11 @@ public class PatientController {
 
     @Autowired
     private FileAttenteService fileAttenteService;
+
+    @Autowired
+    private PatientRepository patientRepository;
+    @Autowired
+    private FileAttenteRepository fileAttenteRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Long id){
@@ -50,6 +59,19 @@ public class PatientController {
     public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
         try {
             Patient savedPatient = patientService.save(patient);
+
+            FileAttente fileAttente = new FileAttente();
+            fileAttente.setPatient(savedPatient);
+            fileAttente.setDateEntree(LocalDateTime.now());
+            fileAttente.setRang((int) fileAttenteRepository.count() +1);
+            if(fileAttente.getPatient() == null || fileAttente.getPatient().getIdPatient() == null) {
+                log.info("Impossible d'ajouter un patient null à la file");
+                return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+            }
+
+
+            fileAttenteRepository.save(fileAttente);
+
             return new ResponseEntity<>(savedPatient, HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -68,7 +90,8 @@ public class PatientController {
 
     @GetMapping("file-attente-dto")
     public ResponseEntity<List<FileAttenteDTO>> getFileAttenteDTO() {
-        List<FileAttenteDTO> fileAttente = fileAttenteService.getFileAttenteAvecScores();
+//        List<FileAttenteDTO> fileAttente = fileAttenteService.getFileAttenteAvecScores();
+        List<FileAttenteDTO> fileAttente = fileAttenteService.calculerTempsAttenteEstime();
         return ResponseEntity.ok(fileAttente);
     }
 

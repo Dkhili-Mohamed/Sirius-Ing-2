@@ -21,6 +21,8 @@ export const INSERT_ACTE_MEDICAL = LOCAL_HOST + '/api/acte-medical/insert';
 export const INSERT_PARCOURS = LOCAL_HOST + '/api/parcours/insert';
 export const INSERT_SUIVRE = LOCAL_HOST + '/api/suivre/insert';
 export const SYMPTOME_PATIENT = LOCAL_HOST + '/api/symptome/';
+export const BOX_MEDICALE = LOCAL_HOST + '/api/box-medicale';
+
 
 
 
