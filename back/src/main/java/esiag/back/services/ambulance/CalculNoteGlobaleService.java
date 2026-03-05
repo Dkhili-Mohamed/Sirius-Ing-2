@@ -1,4 +1,4 @@
-package esiag.back.services.ambulance;
+package esiag.back.services;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Service;
 
 import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulance.ambulancerepository;
+import esiag.back.repositories.ambulancerepository;
 
 @DependsOn("calculNoteTrajetService")
 @Service
