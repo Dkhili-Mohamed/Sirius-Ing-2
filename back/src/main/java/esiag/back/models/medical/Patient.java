@@ -32,6 +32,9 @@ public class Patient {
     @Min(value = 0, message = "L'age doit être positif")
     @Column(name = "age_patient")
     private Integer agePatient;
+
+    @Column(name = "statut_patient")
+    private StatutPatient statutPatient;
 //
 //    @Column(name = "date_arrivee")
 //    private LocalDateTime dateArrivee;
@@ -55,6 +58,10 @@ public void copierSymptomes() {
 //    if (this.dateArrivee == null) {
 //        this.dateArrivee = LocalDateTime.now();
 //    }
+
+    if(this.statutPatient == null) {
+        this.statutPatient = StatutPatient.NON_CONSULTE;
+    }
 }
 
     @ElementCollection(fetch = FetchType.EAGER)
@@ -78,6 +85,7 @@ public void copierSymptomes() {
                 ", nomPatient='" + nomPatient + '\'' +
                 ", prenomPatient='" + prenomPatient + '\'' +
                 ", agePatient=" + agePatient +
+                ", statutPatient=" + statutPatient +
 //               ", symptomes='" + symptomes + '\'' +
 //                ", date_arrivee='" + dateArrivee+
                 '}';

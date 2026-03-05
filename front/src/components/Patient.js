@@ -40,6 +40,7 @@ export default function Patient() {
                         <th scope="col">Nom</th>
                         <th scope="col">Prénom</th>
                         <th scope="col">Age</th>
+                        <th scope="col">Consulter</th>
                         <th scope="col">Bilan médical</th>
                     </tr>
                     </thead>
@@ -50,6 +51,7 @@ export default function Patient() {
                                 <td>{patient.nomPatient}</td>
                                 <td>{patient.prenomPatient}</td>
                                 <td>{patient.agePatient}</td>
+                                <td>{patient.statutPatient}</td>
 
                                 <td>
                                     <button className="btn btn-success btn-sm mx-1"
