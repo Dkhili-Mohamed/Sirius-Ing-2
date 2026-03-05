@@ -26,7 +26,7 @@ public class BoxMedicale {
 
     @JoinColumn(name = "statut_box")
     @Enumerated(EnumType.STRING)
-    private StatutBox statutBox;
+    private StatutBox statutBox = StatutBox.LIBRE;
 
     @JoinColumn(name = "heure_entree")
     private LocalDateTime heureEntree;
@@ -46,6 +46,13 @@ public class BoxMedicale {
             return 0;
         Duration tempsRestant = Duration.between(LocalDateTime.now(), libreA);
         return Math.max(0, (int) tempsRestant.toSeconds());
+    }
+
+    @PrePersist
+    public void attribuerNomBox() {
+        if (this.nomBox == null || this.nomBox.trim().isEmpty()) {
+            this.nomBox = "Box " + this.idBoxMedicale;
+        }
     }
 
 
