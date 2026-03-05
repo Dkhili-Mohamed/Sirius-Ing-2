@@ -2,8 +2,9 @@
 
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
-import esiag.back.services.FileAttenteService;
-import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.FileAttenteService;
+import esiag.back.services.fileattente.PatientService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

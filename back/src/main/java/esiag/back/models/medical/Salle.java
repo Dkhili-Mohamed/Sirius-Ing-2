@@ -22,8 +22,8 @@ public class Salle{
     @Enumerated(EnumType.STRING)
     private EtatSalle etatSalle;
 
-    @Column(name = "place_disponible")
-    private int placeDisponible;
+    @Column(name = "place_occupee")
+    private int placeOccupee;
 
     @Column(name = "nom")
     private String nomSalle;
@@ -39,7 +39,7 @@ public class Salle{
                 ", nom=" + nomSalle +
                 ", capacite=" + capacite +
                 ", etatSalle=" + etatSalle +
-                ", placeDisponible=" + placeDisponible +
+                ", placeOccupee=" + placeOccupee +
                 ", espace=" + espace +
                 '}';
     }

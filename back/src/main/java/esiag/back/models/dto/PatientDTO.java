@@ -3,6 +3,7 @@ package esiag.back.models.dto;
 import esiag.back.models.medical.Patient;
 import esiag.back.models.medical.StatutPatient;
 import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.PatientService;
 import lombok.Data;
 
 import java.util.ArrayList;

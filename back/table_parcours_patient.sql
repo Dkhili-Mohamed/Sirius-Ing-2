@@ -29,7 +29,8 @@ CREATE TABLE etage (
 CREATE TABLE espace (
     id_espace SERIAL PRIMARY KEY,
     numero_espace VARCHAR(20) NOT NULL,
-    type_espace type_espace_enum NOT NULL,
+    x INTEGER NOT NULL,
+    y INTEGER NOT NULL,
     id_etage INTEGER NOT NULL,
     CONSTRAINT fk_espace_etage FOREIGN KEY (id_etage) REFERENCES etage(id_etage)
 );
@@ -48,7 +49,7 @@ CREATE TABLE salle (
     id_salle SERIAL PRIMARY KEY,
     nom VARCHAR(50) NOT NULL,
     capacite INTEGER CHECK (capacite > 0),
-    place_disponible INTEGER CHECK (place_disponible <= capacite AND place_disponible >= 0),
+    place_occupee INTEGER CHECK (place_occupee <= capacite AND place_occupee >= 0),
     etat_salle etat_salle_enum NOT NULL,
     id_espace INTEGER NOT NULL,
     CONSTRAINT fk_salle_espace FOREIGN KEY (id_espace) REFERENCES espace(id_espace)
@@ -120,7 +121,12 @@ CREATE TABLE ambulance (
     equipementambulance DOUBLE PRECISION,    
     experienceambulance DOUBLE PRECISION,     
     ambulancelatitude DOUBLE PRECISION,        
-    ambulancelongitude DOUBLE PRECISION
+    ambulancelongitude DOUBLE PRECISION,
+    tempstrajet DOUBLE PRECISION,
+    tempstrajetminutes VARCHAR(10),
+    notetrajet DOUBLE PRECISION,
+    noteglobale DOUBLE PRECISION
+
 );
 
 
@@ -144,4 +150,29 @@ CREATE TABLE acte_medical (
     CONSTRAINT fk_acte_type FOREIGN KEY (id_type_acte_medical) REFERENCES type_acte_medical(id_type_acte_medical),
     CONSTRAINT fk_acte_parcours FOREIGN KEY (id_parcours) REFERENCES parcours(id_parcours),
     CONSTRAINT fk_acte_salle FOREIGN KEY (id_salle) REFERENCES salle(id_salle)
+);
+
+CREATE TABLE symptome(
+    id_symptome SERIAL PRIMARY KEY,
+    libelle VARCHAR(100) NOT NULL,
+    score INTEGER NOT NULL CHECK (score >= 0)
+);
+
+CREATE TABLE patient_symptome (
+    id_patient_symptome SERIAL PRIMARY KEY,
+    id_patient INTEGER NOT NULL,
+    id_symptome INTEGER NOT NULL,
+    date_symptome TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT uq_patient_symptome UNIQUE (id_patient, id_symptome),
+    CONSTRAINT fk_ps_patient FOREIGN KEY (id_patient) REFERENCES patient(id_patient) ON DELETE CASCADE,
+    CONSTRAINT fk_ps_symptome FOREIGN KEY (id_symptome) REFERENCES symptome(id_symptome) ON DELETE CASCADE
+);
+
+CREATE TABLE symptome_acte_medical(
+    id_symptome_acte_medical SERIAL PRIMARY KEY,
+    id_symptome INTEGER NOT NULL,
+    id_type_acte_medical INTEGER NOT NULL,
+    CONSTRAINT uq_symptome_acte UNIQUE (id_symptome, id_type_acte_medical),
+    CONSTRAINT fk_sa_symptome FOREIGN KEY (id_symptome) REFERENCES symptome(id_symptome) ON DELETE CASCADE,
+    CONSTRAINT fk_sa_acte FOREIGN KEY (id_type_acte_medical) REFERENCES type_acte_medical(id_type_acte_medical) ON DELETE CASCADE
 );
