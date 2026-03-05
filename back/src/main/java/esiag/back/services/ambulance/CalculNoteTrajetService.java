@@ -30,15 +30,7 @@ public class CalculNoteTrajetService {
             return;
         }
 
-        // Trier par temps de trajet
-        for (Ambulance ambulance : ambulances) {
-            if (ambulance.getTempstrajet()== null) {
-                System.out.println("Temps trajet non calculé pour ambulance "
-                        + ambulance.getIdambulance());
-            }
-
-            return;
-        } 
+        // Trier par temps de trajet 
         ambulances.sort(Comparator.comparing(Ambulance::getTempstrajet));
 
         int noteMax = 10;
