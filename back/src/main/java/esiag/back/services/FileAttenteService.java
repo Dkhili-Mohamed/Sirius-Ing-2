@@ -27,7 +27,6 @@ import java.util.List;
 public class FileAttenteService {
 
     private final FileAttenteRepository fileAttenteRepository;
-    private final BoxMedicaleService boxMedicaleService;
     private final PatientRepository patientRepository;
     private final PatientService patientService;
     private final BoxMedicaleRepository boxMedicaleRepository;
@@ -48,11 +47,12 @@ public class FileAttenteService {
         log.info("Tri termine. {} patients tries par niveau d'urgence", fileAttenteTriee.size());
 
         log.info("- Transfert des {} patients tries pour la mise a jour -", fileAttenteTriee.size());
-        log.info("Premier patient trie: {}",
-                fileAttenteTriee.get(0).getPatient());
+        if(!fileAttenteTriee.isEmpty()) {
+            log.info("Premier patient trie: {}", fileAttenteTriee.get(0).getPatient());
+            log.info("-> Dernier patient trie: {}", fileAttenteTriee.get(fileAttenteTriee.size()-1).getPatient());
 
-        log.info("-> Dernier patient trie: {}",
-                fileAttenteTriee.get(fileAttenteTriee.size()-1).getPatient());
+
+        }
 
 
         return mettreAJourFileAttente(fileAttenteTriee);

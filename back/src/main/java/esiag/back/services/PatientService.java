@@ -1,21 +1,30 @@
 package esiag.back.services;
 
-import esiag.back.models.medical.FileAttente;
-import esiag.back.models.medical.NiveauUrgence;
-import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.*;
+import esiag.back.repositories.BoxMedicaleRepository;
+import esiag.back.repositories.FileAttenteRepository;
 import esiag.back.repositories.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import lombok.extern.slf4j.Slf4j;
+
 
 import javax.persistence.Transient;
 import java.time.LocalDateTime;
 import java.util.*;
 
+@Slf4j
 @Service
 public class PatientService {
 
     @Autowired
     private PatientRepository patientRepository;
+    @Autowired
+    private FileAttenteRepository fileAttenteRepository;
+    @Autowired
+    private BoxMedicaleRepository boxMedicaleRepository;
 
     public Patient findByIdPatient(Long idPatient) {
         Optional<Patient> optionalPatient = patientRepository.findById(idPatient);
@@ -182,6 +191,56 @@ public class PatientService {
 
 
         return fileAttente;
+    }
+
+    @Scheduled(fixedRate = 60000)
+    @Transactional
+    public void mettrePatientDansFile() {
+        log.info("*****Insertion des patients non consultes dans la file chaque minute*****");
+
+        log.info("Recuperation des patients");
+        List<Patient> patients = patientRepository.findAll();
+        log.info("Recuperation des patients triés de la file");
+        List<FileAttente> fileAttente = fileAttenteRepository.findAll();
+        log.info("Recuperation des box");
+        List<BoxMedicale> boxMedicales = boxMedicaleRepository.findAll();
+
+
+        for(Patient p : patients) {
+            if(p.getStatutPatient() !=null && p.getStatutPatient() == StatutPatient.CONSULTE) {
+                continue;
+            }
+
+
+
+            boolean patientDejaDansFile = false;
+            boolean patientDejaDansBox = false;
+            for (FileAttente fa : fileAttente) {
+                if (fa.getPatient().getIdPatient().equals(p.getIdPatient())) {
+                    patientDejaDansFile = true;
+                }
+            }
+
+            for (BoxMedicale bm : boxMedicales) {
+                if (bm.getPatient() != null && bm.getPatient().getIdPatient().equals(p.getIdPatient())) {
+                    patientDejaDansBox = true;
+                }
+            }
+
+            if (!patientDejaDansBox && !patientDejaDansFile) {
+                FileAttente fa = new FileAttente();
+                fa.setPatient(p);
+                fa.setDateEntree(LocalDateTime.now());
+                fileAttente.add(fa);
+                fa.setRang(0);
+                fileAttenteRepository.save(fa);
+            }
+
+            log.info("Patient {} {} inséré dans la box", p.getNomPatient(), p.getPrenomPatient());
+
+        }
+
+
     }
 
 }

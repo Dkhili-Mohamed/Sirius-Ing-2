@@ -1,4 +1,4 @@
-package esiag.back;
+/*package esiag.back;
 
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
@@ -38,3 +38,4 @@ public class TestFileAttente implements CommandLineRunner {
         System.out.println("=== FIN DU TEST ===");
     }
 }
+ */
