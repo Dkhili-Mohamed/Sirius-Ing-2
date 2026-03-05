@@ -37,28 +37,6 @@ public class BoxMedicaleController {
     }
 
 
-    @PostMapping("/assigner")
-    public ResponseEntity<BoxMedicale> mettrePatientDansBox() {
-        try{
-            BoxMedicale boxMedicaleRemplie = boxMedicaleService.mettrePatientDansBox();
-
-            if(boxMedicaleRemplie != null){
-                return ResponseEntity.ok().body(boxMedicaleRemplie);
-            } else {
-                return ResponseEntity.badRequest().build();
-            }
-
-        } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-//    @PostMapping("/{id}/liberer")
-//    public ResponseEntity<BoxMedicale> libererBox() {
-//
-//
-//    }
-
 
 
 
