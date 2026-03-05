@@ -31,7 +31,9 @@ public class CalculNoteTrajetService {
         }
 
         // Trier par temps de trajet 
-        ambulances.sort(Comparator.comparing(Ambulance::getTempstrajet));
+        //ambulances.sort(Comparator.comparing(Ambulance::getTempstrajet));
+        ambulances.sort(Comparator.comparing(Ambulance::getTempstrajet, Comparator.nullsLast(Double::compareTo)));
+
 
         int noteMax = 10;
 
