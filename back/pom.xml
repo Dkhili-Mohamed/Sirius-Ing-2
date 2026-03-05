@@ -105,7 +105,7 @@
         <id>prod</id>
         <properties>
           <datasource.username>toto</datasource.username>
-          <db.url>jdbc:postgresql://172.31.250.128:5432/clinicpro_db</db.url>
+          <db.url>jdbc:postgresql://172.31.252.79:5432/clinicpro_db</db.url>
           <db.password>toto</db.password>
         </properties>
       </profile>
