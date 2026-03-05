@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
-import '../styles/Table.css';
-import {BOX_MEDICALE} from "../constants/back";
+import '../../../styles/Table.css';
+import {BOX_MEDICALE} from "../../../constants/back";
 
 export default function BoxMedicale() {
     const [boxMedicales, setBoxMedicales] = useState([]);

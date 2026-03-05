@@ -1,15 +1,10 @@
 package esiag.back.models.dto;
 
 import esiag.back.models.medical.FileAttente;
-import esiag.back.repositories.BoxMedicaleRepository;
-import esiag.back.services.FileAttenteService;
-import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.PatientService;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
 
 @Data
 public class FileAttenteDTO {

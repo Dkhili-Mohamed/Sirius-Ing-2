@@ -1,22 +1,19 @@
-package esiag.back.services;
+package esiag.back.services.fileattente;
 
-import esiag.back.models.dto.BoxMedicaleDTO;
 import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.models.medical.Patient;
 import esiag.back.models.medical.StatutBox;
-import esiag.back.repositories.BoxMedicaleRepository;
-import esiag.back.repositories.FileAttenteRepository;
-import esiag.back.repositories.PatientRepository;
+import esiag.back.repositories.fileattente.BoxMedicaleRepository;
+import esiag.back.repositories.fileattente.FileAttenteRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
-import java.io.File;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

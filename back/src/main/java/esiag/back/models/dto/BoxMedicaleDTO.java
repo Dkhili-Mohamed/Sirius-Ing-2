@@ -2,11 +2,10 @@ package esiag.back.models.dto;
 
 import esiag.back.models.medical.BoxMedicale;
 import esiag.back.models.medical.StatutBox;
-import esiag.back.services.BoxMedicaleService;
-import esiag.back.services.PatientService;
+import esiag.back.services.fileattente.BoxMedicaleService;
+import esiag.back.services.fileattente.PatientService;
 import lombok.Data;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 

@@ -1,7 +1,7 @@
-package esiag.back.controllers;
+package esiag.back.controllers.fileattente;
 
 import esiag.back.models.medical.BoxMedicale;
-import esiag.back.services.BoxMedicaleService;
+import esiag.back.services.fileattente.BoxMedicaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

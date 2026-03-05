@@ -5,9 +5,9 @@ import esiag.back.models.medical.Patient;
 import esiag.back.repositories.fileattente.PatientRepository;
 
 import esiag.back.models.medical.*;
-import esiag.back.repositories.BoxMedicaleRepository;
-import esiag.back.repositories.FileAttenteRepository;
-import esiag.back.repositories.PatientRepository;
+import esiag.back.repositories.fileattente.BoxMedicaleRepository;
+import esiag.back.repositories.fileattente.FileAttenteRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -237,6 +237,12 @@ public class PatientService {
                 fa.setDateEntree(LocalDateTime.now());
                 fileAttente.add(fa);
                 fa.setRang(0);
+
+                if(fa.getPatient() == null ||fa.getPatient().getIdPatient() == null) {
+                    log.info("Impossible d'ajouter un patient null dans la file");
+                    continue;
+                }
+
                 fileAttenteRepository.save(fa);
             }
 

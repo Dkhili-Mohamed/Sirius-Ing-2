@@ -1,19 +1,17 @@
-package esiag.back.services;
+package esiag.back.services.fileattente;
 
 import esiag.back.models.medical.*;
-import esiag.back.repositories.BoxMedicaleRepository;
-import esiag.back.repositories.FileAttenteRepository;
-import esiag.back.repositories.PatientRepository;
+import esiag.back.repositories.fileattente.BoxMedicaleRepository;
+import esiag.back.repositories.fileattente.FileAttenteRepository;
+import esiag.back.repositories.fileattente.PatientRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -112,7 +110,7 @@ public class BoxMedicaleService {
             if(bm.getStatutBox() == StatutBox.OCCUPEE) {
                 log.info("Box {} - Temps restant {} - Libre a: {}", bm.getNomBox(), bm.getTempsRestant(), bm.getLibreA());
             }
-            log.info("Attribution du statut CONSULTE au patient {} {}", bm.getPatient().getNomPatient(), bm.getPatient().getPrenomPatient());
+            //log.info("Attribution du statut CONSULTE au patient {} {}", bm.getPatient().getNomPatient(), bm.getPatient().getPrenomPatient());
             if(bm.getPatient() != null) {
                 bm.getPatient().setStatutPatient(StatutPatient.CONSULTE);
                 patientRepository.save(bm.getPatient());

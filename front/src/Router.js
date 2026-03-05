@@ -8,7 +8,7 @@ import Parcours from "./modules/parcours/views/Parcours";
 import FileAttente from "./modules/fileattente/components/FileAttente";
 import PatientSymptomes from "./modules/fileattente/views/PatientSymptomes";
 import DefinirParcours from "./modules/parcours/views/DefinirParcours";
-import BoxMedicale from "./BoxMedicale";
+import BoxMedicale from "./modules/fileattente/views/BoxMedicale";
 
 export default function Router () {
     return (
