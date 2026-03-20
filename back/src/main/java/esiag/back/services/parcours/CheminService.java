@@ -148,7 +148,7 @@ public class CheminService {
     }
 
     @Transactional
-    public Chemin nextActeMedical(Long idParcours, int ordre, Long idDepart) {
+    public List<Chemin> nextActeMedical(Long idParcours, int ordre, Long idDepart) {
 
         if (ordre == 0) {
 
@@ -212,7 +212,7 @@ public class CheminService {
         return chemin;
     }
     
-    public Chemin rechercheSalleDisponible(Long idParcours, int ordre, Long idDepart){
+    public List<Chemin> rechercheSalleDisponible(Long idParcours, int ordre, Long idDepart){
 
         /*
          * Récupère la salle associée à un acte médical
@@ -229,9 +229,11 @@ public class CheminService {
         List<List<Espace>> cheminsPossibles = new ArrayList<>();
 
         if (salles.isEmpty()) {
+            List<Chemin> chemins = new ArrayList<>();
             Chemin chemin = new Chemin();
             chemin.setSalleDisponible(false);
-            return chemin;
+            chemins.add(chemin);
+            return chemins;
             // throw new IllegalStateException(
             // "Aucune salle disponible pour l'acte médical " +
             // prochainActeMedical.getIdActeMedical());
@@ -281,10 +283,10 @@ public class CheminService {
 
         //return cheminEnCoordonnees(plusCourtChemin);
 
-        return null;
+        return diviserChemin(plusCourtChemin);
     }
 
-    public List<Chemin> divisionChemin(List<Espace> cheminEspaces){
+    public List<Chemin> diviserChemin(List<Espace> cheminEspaces){
 
         List<Chemin> chemins = new ArrayList<>();
         List<CheminSurEtage> cheminSurEtages = new ArrayList<>();
