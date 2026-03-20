@@ -91,9 +91,9 @@ CREATE TABLE medecin (
 
 CREATE TABLE patient (
     id_patient SERIAL PRIMARY KEY,
-    nom VARCHAR(100) NOT NULL,
-    prenom VARCHAR(100) NOT NULL,
-    age INTEGER NOT NULL
+    nom_patient VARCHAR(100) NOT NULL,
+    prenom_patient VARCHAR(100) NOT NULL,
+    age_patient INTEGER NOT NULL
 );
 
 CREATE TABLE parcours (

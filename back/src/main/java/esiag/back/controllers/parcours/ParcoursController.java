@@ -56,7 +56,7 @@ public class ParcoursController {
     }
 
     @PostMapping("chemin/{idParcours}/{ordre}/{idDepart}")
-    public ResponseEntity<Chemin> findChemin(
+    public ResponseEntity<List<Chemin>> findChemin(
             @PathVariable Long idParcours,
             @PathVariable int ordre,
             @PathVariable Long idDepart) {
