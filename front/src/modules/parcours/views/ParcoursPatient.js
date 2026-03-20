@@ -30,14 +30,14 @@ export default function ParcoursPatient() {
     }
   }, [idPatient]);
 
-  const [chemin, setChemin] = useState(null);
+  const [chemins, setChemins] = useState([]);
 
   const clickTermine = async (parcours) => {
     const reponce = await axios.post(
       `${CHEMIN}/${parcours.idParcours}/${parcours.ordre}/${parcours.idEspace}`,
     );
 
-    setChemin(reponce.data);
+    setChemins(reponce.data);
 
     await setParoursPatientData(idPatient);
   };
@@ -45,9 +45,9 @@ export default function ParcoursPatient() {
 
   const commencer = async (parcours) => {
     if (parcours && parcours.statut === "EN_ATTENTE") {
-      const reponce = await axios.post(`${CHEMIN}/${parcours.idParcours}/0/1`);
+      const reponce = await axios.post(`${CHEMIN}/${parcours.idParcours}/0/8`);
 
-      setChemin(reponce.data);
+      setChemins(reponce.data);
 
       await setParoursPatientData(idPatient);
     } else {
@@ -127,7 +127,7 @@ export default function ParcoursPatient() {
         </table>
       </div>
 
-      {chemin && (
+      {chemins &&  chemins.map((chemin) =>(
         <div className="mt-5 p-4 border rounded bg-light">
           <div>
             <div className="d-flex justify-content-center align-items-center flex-wrap">
@@ -179,13 +179,13 @@ export default function ParcoursPatient() {
           </div>
           <button
             className="btn btn-sm btn-secondary mt-2"
-            onClick={() => setChemin(null)}
+            onClick={() => setChemins(null)}
           >
             Fermer le chemin
           </button>
         </div>
-      )}
-      {chemin && !chemin.salleDisponible && (
+      ))}
+      {chemins && !chemins.salleDisponible && (
         <div className="salleIndisponible" role="alert">
           <p>Aucune salle disponible pour le prochain acte médical !</p>
           <p>Veillez patientez !</p>
