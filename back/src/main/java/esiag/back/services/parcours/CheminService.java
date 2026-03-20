@@ -293,17 +293,18 @@ public class CheminService {
         
         List<String> listNumeroEtages = new ArrayList<>();
 
-        String numeroEtageCourant = cheminEspaces.get(0).getEtage().getNumeroEtage();
-        listNumeroEtages.add(numeroEtageCourant);
-
         log.info("Identification des numéros d'étage");
 
         for(Espace espace : cheminEspaces){
-            if(!espace.getEtage().getNumeroEtage().equals(numeroEtageCourant)){
-                numeroEtageCourant = espace.getEtage().getNumeroEtage();
-                listNumeroEtages.add(numeroEtageCourant);
+            log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
+            
+            if(!listNumeroEtages.contains(espace.getEtage().getNumeroEtage())){
+               
+                listNumeroEtages.add(espace.getEtage().getNumeroEtage());
             }
         }
+
+        log.info("List Etage ----------> "+listNumeroEtages);
 
         if (listNumeroEtages.size() == 1){
             CheminSurEtage cse = new CheminSurEtage();
@@ -320,8 +321,9 @@ public class CheminService {
                 if (listNumeroEtages.get(0).equals(espace.getEtage().getNumeroEtage())) {
 
                     espaceEtage1.add(espace);
+                    log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
                 } else {
-
+                    log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
                     espaceEtage2.add(espace);
                 }
 
@@ -348,6 +350,8 @@ public class CheminService {
             Chemin chemin = cheminEnCoordonnees(liste.getChemin(), liste.getNumeroEtage());
 
             chemins.add(chemin);
+
+            log.info("Chemin sur étage : " + liste.getNumeroEtage());
 
         }
 
