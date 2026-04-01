@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL, SYMPTOME_PATIENT } from '../../../constants/back';
+import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL, SYMPTOME_PATIENT, LIBERER_BOX } from '../../../constants/back';
 
 
 export default function DefinirParcours() {
 
-    const{idPatient} = useParams();
+    const{idPatient, idBoxMedicale} = useParams();
     const[typeActeMedical, setTypeActeMedical] = useState([]);
     const[acteParcours, setActeParcours] = useState([]);
 
@@ -73,10 +73,12 @@ export default function DefinirParcours() {
                 statut: "EN_ATTENTE",
             }
 
-            await axios.post(INSERT_ACTE_MEDICAL, acteMedical);
         }
 
-        window.location.href = "/api/patient/all";
+
+        //axios.post(LIBERER_BOX, idBoxMedicale)
+        //await axios.post(`${LIBERER_BOX}/${idBoxMedicale}/${idPatient}`);
+        //window.location.href = "/api/box-medicale";
         
     };
     
