@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import esiag.back.models.ambulance.Intervention;
 import esiag.back.repositories.ambulance.InterventionRepository;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://172.31.253.208:3000")
 @RestController
 @RequestMapping("/interventions")
 public class InterventionController {
