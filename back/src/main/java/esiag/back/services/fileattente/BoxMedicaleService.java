@@ -12,7 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 
 @Slf4j
@@ -98,42 +100,36 @@ public class BoxMedicaleService {
     }
 
 
-    @Scheduled(fixedRate = 10000)
     @Transactional
-    public void libererBox() {
-        log.info("*****'Liberation' des box medicales toutes les 10 secondes  *****");
-        List<BoxMedicale> boxMedicale = boxMedicaleRepository.findAll();
+    public boolean libererBox(long idBoxMedicale) {
+        Optional<BoxMedicale> OptionalBoxMedicale = boxMedicaleRepository.findById(idBoxMedicale);
+
+            if(OptionalBoxMedicale.isPresent()) {
+                BoxMedicale bm = OptionalBoxMedicale.get();
+
+                    if(bm.getPatient() != null) {
+                        bm.getPatient().setStatutPatient(StatutPatient.CONSULTE);
+                        patientRepository.saveAndFlush(bm.getPatient());
+                    }
+
+                    bm.setStatutBox(StatutBox.LIBRE);
+                    bm.setPatient(null);
+                    bm.setHeureEntree(null);
+                    bm.setLibreA(null);
+                    bm.setTempsEstime(null);
+                    bm.setTempsRestant(0);
 
 
 
-        for(BoxMedicale bm : boxMedicale) {
-            if(bm.getStatutBox() == StatutBox.OCCUPEE) {
-                log.info("Box {} - Temps restant {} - Libre a: {}", bm.getNomBox(), bm.getTempsRestant(), bm.getLibreA());
-            }
-            //log.info("Attribution du statut CONSULTE au patient {} {}", bm.getPatient().getNomPatient(), bm.getPatient().getPrenomPatient());
-            if(bm.getPatient() != null) {
-                bm.getPatient().setStatutPatient(StatutPatient.CONSULTE);
-                patientRepository.save(bm.getPatient());
-            }
-
-            log.info("Liberation des box dont le temps de consultation est ecoule");
-            if(bm.getStatutBox() == StatutBox.OCCUPEE && bm.getTempsRestant() == 0) {
-
-                bm.setStatutBox(StatutBox.LIBRE);
-                bm.setPatient(null);
-                bm.setHeureEntree(null);
-                bm.setLibreA(null);
-                bm.setTempsEstime(null);
-                bm.setTempsRestant(0);
-
-                log.info("Box {} liberee", bm.getNomBox());
 
 
+                    boxMedicaleRepository.saveAndFlush(bm);
+                    log.info("Box {} liberee", bm.getNomBox());
 
-            }
+                    return true;
+                }
 
-        }
-        boxMedicaleRepository.saveAll(boxMedicale);
+        return false;
     }
 
 
