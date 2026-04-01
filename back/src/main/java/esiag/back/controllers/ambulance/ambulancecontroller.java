@@ -60,4 +60,10 @@ public class ambulancecontroller {
     public ResponseEntity<Ambulance> findLast() {
         return new ResponseEntity<>(ambulanceservice.findLastAmbulance(), HttpStatus.OK);
     }
+
+    @GetMapping("/available-and-sorted")
+    public ResponseEntity<List<Ambulance>> getAvailableSortedAmbulances() {
+        List<Ambulance> ambulances = ambulanceservice.findAvailableAmbulances();
+        return new ResponseEntity<>(ambulances, HttpStatus.OK);
+    }
 }
