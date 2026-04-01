@@ -18,6 +18,9 @@ public class ambulanceservice {
     public Ambulance findLastAmbulance() {
         return ambulancerepository.findLastAmbulance();
     }
+    public List<Ambulance> findAvailableAmbulances() {
+        return ambulancerepository.findAvailableAmbulances();
+    }
 
     
     public Ambulance findById(Long id) {
