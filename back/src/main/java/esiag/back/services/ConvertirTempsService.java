@@ -34,7 +34,7 @@ public class ConvertirTempsService {
                 continue;
             }
             int heures = temps.intValue(); 
-            int minutes = (int) ((temps - heures) * 60);
+            int minutes = (int) ((temps - heures) * 60) + 10;
             String t = heures + "H" + minutes + "Min";
 
             ambulance.setTempstrajetminutes(t);

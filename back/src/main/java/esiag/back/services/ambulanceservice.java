@@ -1,12 +1,13 @@
 package esiag.back.services;
 
-import esiag.back.models.ambulance.Ambulance;
-import esiag.back.repositories.ambulancerepository;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import esiag.back.models.ambulance.Ambulance;
+import esiag.back.repositories.ambulancerepository;
 
 @Service
 public class ambulanceservice {
@@ -17,6 +18,11 @@ public class ambulanceservice {
     public Ambulance findLastAmbulance() {
         return ambulancerepository.findLastAmbulance();
     }
+    public List<Ambulance> findAvailableAmbulances() {
+        return ambulancerepository.findAvailableAmbulances();
+    }
+    
+
 
     
     public Ambulance findById(Long id) {

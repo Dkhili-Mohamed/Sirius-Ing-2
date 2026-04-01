@@ -28,6 +28,8 @@ public class PatientA {
 
     @Column(name = "patientalongitude")
     private Double patientAlongitude;
+    @Column(name = "patientstatut")
+    private String patientAtatut;
 
     public Long getIdpatientA() {
         return idpatientA;
@@ -54,6 +56,10 @@ public class PatientA {
         return patientAlongitude; 
     }
 
+    public String getPatientAstatut() {
+        return patientAtatut ;
+    }
+
 
     public void setPatientAlatitude(Double patientAlatitude) {
     this.patientAlatitude = patientAlatitude;
@@ -72,6 +78,9 @@ public class PatientA {
     public void setNumeropatientA(String numeropatientA) {
         this.numeropatientA = numeropatientA;
     }
+    public void setPatientAstatut(String patientAstatut) {
+        this.patientAtatut = patientAstatut;
+    }
 
 
     @Override
@@ -82,6 +91,7 @@ public class PatientA {
                 ", adresssepatientA" + adressepatientA +
                 ", numeropatientA" + numeropatientA +
                 ", patientAlatitude=" + patientAlatitude +
+                ", patientAstatut=" + patientAtatut +
                 ", patientAlongitude=" + patientAlongitude +
                 '}';
     }
