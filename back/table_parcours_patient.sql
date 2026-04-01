@@ -109,7 +109,16 @@ CREATE TABLE patientA (
     adressepatientA VARCHAR(255),
     numeropatientA VARCHAR(50),
     patientAlatitude DOUBLE PRECISION,        
-    patientAlongitude DOUBLE PRECISION
+    patientAlongitude DOUBLE PRECISION,
+    patientAstatut VARCHAR(255)
+);
+
+CREATE TABLE intervention (
+    idintervention SERIAL PRIMARY KEY,
+    nomintervention VARCHAR(255) NOT NULL,
+    adresseintervention VARCHAR(255),
+    interventionstatut VARCHAR(255),
+    dateintervention DATE DEFAULT CURRENT_DATE
 );
 CREATE TABLE ambulance (
     idambulance SERIAL PRIMARY KEY,        
@@ -125,6 +134,12 @@ CREATE TABLE ambulance (
     notetrajet DOUBLE PRECISION,
     noteglobale DOUBLE PRECISION
 
+);
+
+CREATE TABLE ambulancelogin (
+    idambulancelogin SERIAL PRIMARY KEY,
+    ambulanceloginadresse VARCHAR(255),
+    ambulanceloginmdps VARCHAR(255)
 );
 
 
