@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import esiag.back.models.ambulance.AmbulanceLogin;
-import esiag.back.services.AmbulanceLoginService;
+import esiag.back.services.ambulance.AmbulanceLoginService;
 
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://172.31.253.208:3000")
 @RestController
 @RequestMapping("/api/ambulancelogin")
 public class AmbulanceLoginController {
