@@ -45,11 +45,15 @@ public class MeilleureAmbulanceService {
         if (meilleure != null) {
             PatientA patient = patientArepository.findLastPatientA();
             if (patient != null) {
-                Intervention intervention = new Intervention();
-                intervention.setNomintervention(patient.getNompatientA());
-                intervention.setAdresseintervention(patient.getAdressepatientA());
-                intervention.setInterventionstatut("Ambulance attribuée");
-                interventionrepository.save(intervention);
+                boolean dejaAttribue = interventionrepository.existsByAdresseinterventionAndInterventionstatut(
+                    patient.getAdressepatientA(),"Ambulance attribuée");
+                if (!dejaAttribue) {
+                    Intervention intervention = new Intervention();
+                    intervention.setNomintervention(patient.getNompatientA());
+                    intervention.setAdresseintervention(patient.getAdressepatientA());
+                    intervention.setInterventionstatut("Ambulance attribuée");
+                    interventionrepository.save(intervention);
+                }
             }
         }
         return idMeilleure;

@@ -80,10 +80,27 @@ public class MockService {
                 "Robin", "Clement", "Morin", "Nicolas", "Henry",
                 "Roussel", "Mathieu", "Gautier", "Masson", "Marchand"
         );
+        List<String> prenoms = List.of(
+                // Hommes
+                "Jean","Pierre","Michel","Alain","Louis","Paul","Nicolas","Thomas","Lucas","Hugo",
+                "Gabriel","Arthur","Raphaël","Jules","Adam","Léo","Nathan","Mathis","Enzo","Noah",
+                "Maxime","Antoine","Julien","Romain","Alexandre","Victor","Baptiste","Clément","Quentin","Adrien",
+                "Damien","Théo","Valentin","Sébastien","Florian","Guillaume","Hugo","Axel","Yanis","Mehdi",
+                "Karim","Samir","Ibrahim","Youssef","Amine","Kylian","Dylan","Ethan","Noé","Maël",
+                
+                // Femmes
+                "Marie","Camille","Léa","Chloé","Manon","Sarah","Julie","Laura","Inès","Anna",
+                "Emma","Louise","Alice","Lina","Zoé","Jade","Clara","Eva","Rose","Ambre",
+                "Lucie","Agathe","Jeanne","Elsa","Pauline","Amandine","Charlotte","Mathilde","Océane","Mélanie",
+                "Elise","Margaux","Justine","Célia","Anaïs","Fanny","Hélène","Nina","Sophie","Juliette",
+                "Aya","Maya","Leïla","Imane","Nour","Yasmine","Salomé","Louna","Capucine","Noémie"
+        );
 
         //Je remplis les tableaux
+        String prenom = prenoms.get(random.nextInt(prenoms.size()));
+        String nom = noms.get(random.nextInt(noms.size()));
         PatientA patient = new PatientA();
-        patient.setNompatientA(noms.get(random.nextInt(noms.size())));
+        patient.setNompatientA(prenom + " " + nom);
         patient.setAdressepatientA(adresses.get(random.nextInt(adresses.size())));
         patient.setNumeropatientA(numerodetelephone());
 

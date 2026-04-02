@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from "axios";
 import '../../../styles/Table.css';
-import {BOX_MEDICALE} from "../../../constants/back";
+import {BOX_MEDICALE, CHEMIN, LIBERER_BOX} from "../../../constants/back";
 
 export default function BoxMedicale() {
     const [boxMedicales, setBoxMedicales] = useState([]);
@@ -25,6 +25,16 @@ export default function BoxMedicale() {
         return() => clearInterval(interval)
     }, []);
 
+    const liberer_box = async (boxMedicale) => {
+        if (boxMedicale.statutBox === "OCCUPEE") {
+            await axios.post(`${LIBERER_BOX}/${boxMedicale.idBoxMedicale}/${boxMedicale.patient?.idPatient}`);
+
+        } else {
+            alert("Pas de patient dans la box");
+        }
+
+    };
+
     if (boxMedicales.length === 0)
         return (<div className="container text-center" >Pas de box medicale</div>)
     return (
@@ -40,6 +50,7 @@ export default function BoxMedicale() {
                         <th scope="col">Heure d'entrée</th>
                         <th scope="col">Temps estimé</th>
                         <th scope="col">Temps restant (secondes)</th>
+                        <th scope="col">Action</th>
                     </tr>
                     </thead>
                     <tbody className="table-group-divider">
@@ -52,11 +63,42 @@ export default function BoxMedicale() {
                                 <td>{formatHeure(boxMedicale.heureEntree) || '--'}</td>
                                 <td>{boxMedicale.tempsEstime || '--'}</td>
                                 <td>{boxMedicale.tempsRestant || '--'}</td>
+
+                                <td>
+                                    <button className="btn btn-primary btn-sm mx-1"
+                                            onClick={() => {
+                                                window.location.href = `/api/type-acte-medical/${boxMedicale.idBoxMedicale}/${boxMedicale.patient?.idPatient}`
+                                            }}
+                                            disabled={!boxMedicale.patient}
+
+
+                                    >
+                                        Définir parcours
+                                    </button>
+
+
+                                    <button
+                                        onClick={() =>
+                                            liberer_box(boxMedicale)
+                                        }
+                                        disabled={!boxMedicale.patient}
+                                    >
+                                        Liberer_box
+
+                                    </button>
+                                </td>
+
+
+
+
+
                             </tr>
+
 
 
                         ))
                     }
+
 
                     </tbody>
                 </table>
