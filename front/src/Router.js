@@ -24,7 +24,7 @@ export default function Router () {
                     <Route path="/api/patient/file-attente-dto" element={<FileAttente />}/>
                     <Route path="/api/box-medicale" element={<BoxMedicale />}/>
                     <Route path="/api/parcours/all" element={<Parcours />}/>
-                    <Route path="/api/type-acte-medical/:idPatient" element={<DefinirParcours />}/>
+                    <Route path="/api/type-acte-medical/:idPatient/:idBoxMedicale" element={<DefinirParcours />}/>
                 </Routes>
             </div>
         </BrowserRouter>

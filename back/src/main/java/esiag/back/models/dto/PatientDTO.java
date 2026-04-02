@@ -30,7 +30,8 @@ public class PatientDTO {
             new ArrayList<>(patient.getSymptomes()) : null;
 
         if (patientService != null) {
-            this.scoreUrgence = patientService.calculerScoreUrgence(patient);
+            //this.scoreUrgence = patientService.calculerScoreUrgence(patient);
+            this.scoreUrgence = patientService.calculerScore(patient);
             this.niveauUrgence = patientService.getNiveauUrgence(patient).toString();
         }
 
