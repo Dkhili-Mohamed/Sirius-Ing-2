@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import '../../../styles/Table.css';
+import '../../../styles/ParcoursPatientCSS.css';
 import { PARCOURS_PATIENT, CHEMIN} from "../../../constants/back";
 import { useParams } from "react-router-dom";
 import planHopital from "../../../assets/plan_hopital_test.png";
@@ -185,7 +185,7 @@ export default function ParcoursPatient() {
           </button>
         </div>
       ))}
-      {chemins && !chemins.salleDisponible && (
+     {chemins && !chemins.salleDisponible && (
         <div className="salleIndisponible" role="alert">
           <p>Aucune salle disponible pour le prochain acte médical !</p>
           <p>Veillez patientez !</p>
