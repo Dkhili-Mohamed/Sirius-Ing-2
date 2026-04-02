@@ -18,7 +18,7 @@
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
     <java.version>17</java.version>
-    <maven.test.skip>true</maven.test.skip>
+    <maven.test.skip>false</maven.test.skip>
   </properties>
 
 
@@ -63,6 +63,13 @@
       <artifactId>json</artifactId>
       <version>20231013</version>
     </dependency>
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
     <profiles>
@@ -105,7 +112,7 @@
         <id>prod</id>
         <properties>
           <datasource.username>toto</datasource.username>
-          <db.url>jdbc:postgresql://172.31.252.79:5432/clinicpro_db</db.url>
+          <db.url>jdbc:postgresql://172.31.252.16:5432/clinicpro_db</db.url>
           <db.password>toto</db.password>
         </properties>
       </profile>

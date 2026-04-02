@@ -1,18 +1,29 @@
 package esiag.back.services.parcours;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.Queue;
+import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import esiag.back.models.architecture.Connexion;
 import esiag.back.models.architecture.Espace;
 import esiag.back.models.dto.Chemin;
+import esiag.back.models.dto.CheminSurEtage;
 import esiag.back.models.medical.ActeMedical;
 import esiag.back.models.medical.Salle;
 import esiag.back.repositories.parcours.ConnexionRepository;
 import esiag.back.repositories.parcours.EspaceRepository;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.*;
 
 @Log4j2
 @Service
@@ -137,7 +148,7 @@ public class CheminService {
     }
 
     @Transactional
-    public Chemin nextActeMedical(Long idParcours, int ordre, Long idDepart) {
+    public List<Chemin> nextActeMedical(Long idParcours, int ordre, Long idDepart) {
 
         if (ordre == 0) {
 
@@ -186,9 +197,10 @@ public class CheminService {
 
     }
 
-    public Chemin cheminEnCoordonnees(List<Espace> cheminEspace) {
+    public Chemin cheminEnCoordonnees(List<Espace> cheminEspace, String numeroEtage) {
         Chemin chemin = new Chemin();
         chemin.setDebut(cheminEspace.get(0).getX() +" "+ cheminEspace.get(0).getY());
+        chemin.setNumeroEtage(numeroEtage);
         String numeroEspaceChemin = "";
 
         for (Espace espace : cheminEspace) {
@@ -200,7 +212,7 @@ public class CheminService {
         return chemin;
     }
     
-    public Chemin rechercheSalleDisponible(Long idParcours, int ordre, Long idDepart){
+    public List<Chemin> rechercheSalleDisponible(Long idParcours, int ordre, Long idDepart){
 
         /*
          * Récupère la salle associée à un acte médical
@@ -217,9 +229,11 @@ public class CheminService {
         List<List<Espace>> cheminsPossibles = new ArrayList<>();
 
         if (salles.isEmpty()) {
+            List<Chemin> chemins = new ArrayList<>();
             Chemin chemin = new Chemin();
             chemin.setSalleDisponible(false);
-            return chemin;
+            chemins.add(chemin);
+            return chemins;
             // throw new IllegalStateException(
             // "Aucune salle disponible pour l'acte médical " +
             // prochainActeMedical.getIdActeMedical());
@@ -267,6 +281,82 @@ public class CheminService {
                 salleProchainActe.getIdSalle());
         log.info("Update statut acte_medical to EN_COURS : " + prochainActeMedical.getIdActeMedical());
 
-        return cheminEnCoordonnees(plusCourtChemin);
+        //return cheminEnCoordonnees(plusCourtChemin);
+
+        return diviserChemin(plusCourtChemin);
     }
+
+    public List<Chemin> diviserChemin(List<Espace> cheminEspaces){
+
+        List<Chemin> chemins = new ArrayList<>();
+        List<CheminSurEtage> cheminSurEtages = new ArrayList<>();
+        
+        List<String> listNumeroEtages = new ArrayList<>();
+
+        log.info("Identification des numéros d'étage");
+
+        for(Espace espace : cheminEspaces){
+            log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
+            
+            if(!listNumeroEtages.contains(espace.getEtage().getNumeroEtage())){
+               
+                listNumeroEtages.add(espace.getEtage().getNumeroEtage());
+            }
+        }
+
+        log.info("List Etage ----------> "+listNumeroEtages);
+
+        if (listNumeroEtages.size() == 1){
+            CheminSurEtage cse = new CheminSurEtage();
+            cse.setChemin(cheminEspaces);
+            cse.setNumeroEtage(cheminEspaces.get(0).getEtage().getNumeroEtage());
+            cheminSurEtages.add(cse);
+        }else{
+            List<Espace> espaceEtage1 = new ArrayList<>();
+            List<Espace> espaceEtage2 = new ArrayList<>();
+                
+           
+            for (Espace espace : cheminEspaces) {
+
+                if (listNumeroEtages.get(0).equals(espace.getEtage().getNumeroEtage())) {
+
+                    espaceEtage1.add(espace);
+                    log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
+                } else {
+                    log.info("Espce de mon chemin --------->" +espace.getNumeroEspace() +" Etage --------> "+ espace.getEtage().getNumeroEtage());
+                    espaceEtage2.add(espace);
+                }
+
+            }
+
+            CheminSurEtage cse1 = new CheminSurEtage();
+
+            cse1.setChemin(espaceEtage1);
+            cse1.setNumeroEtage(listNumeroEtages.get(0));
+
+            CheminSurEtage cse2 = new CheminSurEtage();
+
+            cse2.setChemin(espaceEtage2);
+            cse2.setNumeroEtage(listNumeroEtages.get(1));
+
+            cheminSurEtages.add(cse1);
+            cheminSurEtages.add(cse2);
+
+        }
+
+        log.info("Construction des différents chemins par étage");
+        for (CheminSurEtage liste : cheminSurEtages) {
+
+            Chemin chemin = cheminEnCoordonnees(liste.getChemin(), liste.getNumeroEtage());
+
+            chemins.add(chemin);
+
+            log.info("Chemin sur étage : " + liste.getNumeroEtage());
+
+        }
+
+        return chemins;
+
+    }
+
 }

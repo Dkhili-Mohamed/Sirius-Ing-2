@@ -12,6 +12,7 @@ public class Chemin {
     private String coordonneesChemin = "";
     private String debut = "";
     private boolean salleDisponible = true;
+    private String numeroEtage;
 
     public Chemin(String coordonneesChemin, String debut, boolean salleDisponible) {
         this.coordonneesChemin = coordonneesChemin;

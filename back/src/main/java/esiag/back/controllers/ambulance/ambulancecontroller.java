@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.services.ambulance.ambulanceservice;
 
-@CrossOrigin(origins = "http://172.31.252.215:3000")
+@CrossOrigin(origins = "http://172.31.253.208:3000")
 @RestController
 @RequestMapping("api/ambulance")
 public class ambulancecontroller {
@@ -59,5 +59,11 @@ public class ambulancecontroller {
     @GetMapping("/last")
     public ResponseEntity<Ambulance> findLast() {
         return new ResponseEntity<>(ambulanceservice.findLastAmbulance(), HttpStatus.OK);
+    }
+
+    @GetMapping("/available-and-sorted")
+    public ResponseEntity<List<Ambulance>> getAvailableSortedAmbulances() {
+        List<Ambulance> ambulances = ambulanceservice.findAvailableAmbulances();
+        return new ResponseEntity<>(ambulances, HttpStatus.OK);
     }
 }
