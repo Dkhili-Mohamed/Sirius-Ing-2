@@ -1,0 +1,158 @@
+
+:root {
+  --primary: #99D9EA;
+  --primary-dark: #6fc3da;
+  --primary-light: #c7ecf5;
+  --accent: #4aa3c0;
+  --text-dark: #2c3e50;
+  --text-light: #6c7a89;
+  --background: #f4fbfd;
+  --white: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.08);
+}
+
+body {
+  background: linear-gradient(135deg, var(--background), #eaf7fb);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-dark);
+}
+
+.container {
+  margin-top: 40px;
+}
+
+
+h4 {
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: var(--accent);
+  letter-spacing: 0.5px;
+}
+
+.table {
+  background: var(--white);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px var(--shadow);
+  border: none;
+}
+
+
+.table thead {
+  background: var(--primary);
+  color: var(--text-dark);
+}
+
+.table thead th {
+  border: none;
+  padding: 15px;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+
+.table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.table tbody tr:nth-child(even) {
+  background: #f9fcfd;
+}
+
+.table tbody tr:hover {
+  background: var(--primary-light);
+  transform: scale(1.01);
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+
+.table td {
+  padding: 14px;
+  border: none;
+  vertical-align: middle;
+  font-size: 0.95rem;
+}
+
+
+.status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.status-en-cours {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-termine {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-attente {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  border: none;
+  border-radius: 25px;
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px var(--shadow);
+}
+
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-dark), var(--accent));
+  transform: translateY(-2px);
+  box-shadow: 0 6px 14px var(--shadow);
+}
+
+
+.btn-primary:active {
+  transform: scale(0.95);
+}
+
+
+.container.text-center {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-light);
+  padding: 50px;
+}
+
+
+@media (max-width: 768px) {
+  .table thead {
+    display: none;
+  }
+
+  .table tbody tr {
+    display: block;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px var(--shadow);
+    padding: 10px;
+  }
+
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px;
+  }
+
+  .table td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    color: var(--accent);
+  }
+}

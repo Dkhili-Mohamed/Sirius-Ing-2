@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import '../../../styles/DefinirParcoursCSS.css';
 import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL, SYMPTOME_PATIENT, LIBERER_BOX } from '../../../constants/back';
 
 
@@ -96,7 +97,7 @@ export default function DefinirParcours() {
                 <span>Type acte médical</span>
                 {typeActeMedical && Array.isArray(typeActeMedical) && typeActeMedical.map((typeActe) => (
 
-                    <div key={typeActe.idTypeActeMedical}>
+                    <div className="checkbox-group" key={typeActe.idTypeActeMedical}>
 
                         <input type="checkbox" name="typeActeMedical" value={typeActe.idTypeActeMedical} 
                         checked = {acteParcours.includes(typeActe)} 
@@ -139,12 +140,12 @@ function SymptomePatient({idPatient}){
     }, [idPatient]);
 
     return(
-        <div>
+        <div className='symptomes-container'>
             <h2>Symptômes du patient</h2>
             {symptome && symptome.map((symptome) => (
 
                 <div>
-                    <p>{symptome.libelle}</p>
+                    <p key={symptome.id}>{symptome.libelle}</p>
 
                 </div>
             ))}
