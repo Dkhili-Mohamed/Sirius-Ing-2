@@ -13,6 +13,12 @@ _R2_
 * Afficher le chemin du trajet sur le plan de l'hopital : Terminé
 * Définir le parcours d'un patient : Terminé
 
+_R3_
+* Navigation interétage : Terminé
+* Test unitaire d'une méthode (diviserChemin): Terminé
+* Connexion box-médicale et parcours patient: En cours
+
+
 ## __AGATHINE Shaina__ :
 _R1_
 * Créer l'algorithme de tri des patients : Terminé

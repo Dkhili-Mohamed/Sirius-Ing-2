@@ -7,7 +7,7 @@ import { TYPE_ACTE_MEDICAL, INSERT_PARCOURS, INSERT_SUIVRE, INSERT_ACTE_MEDICAL,
 
 export default function DefinirParcours() {
 
-    const{idPatient, idBoxMedicale} = useParams();
+    const{idPatient} = useParams();
     const[typeActeMedical, setTypeActeMedical] = useState([]);
     const[acteParcours, setActeParcours] = useState([]);
 
@@ -36,9 +36,11 @@ export default function DefinirParcours() {
         }
     }, [idPatient]);
 
+
     const insererParcours = async (e) => {
+
         e.preventDefault();
-       
+        
         const parcours = {
             nomParcours: e.target.nomParcours.value,
             medecin: {
@@ -74,12 +76,11 @@ export default function DefinirParcours() {
                 statut: "EN_ATTENTE",
             }
 
+            await axios.post(INSERT_ACTE_MEDICAL, acteMedical);
+
         }
 
-
-        //axios.post(LIBERER_BOX, idBoxMedicale)
-        //await axios.post(`${LIBERER_BOX}/${idBoxMedicale}/${idPatient}`);
-        //window.location.href = "/api/box-medicale";
+        window.location.href = "/api/box-medicale";
         
     };
     

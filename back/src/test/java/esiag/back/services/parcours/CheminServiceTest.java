@@ -1,10 +1,6 @@
 
 package esiag.back.services.parcours;
 
-//import static org.junit.Assert.assertNotNull;
-//import static org.junit.Assert.assertEquals;
-//import org.junit.Test;
-
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,8 +17,58 @@ public class CheminServiceTest {
 
     private CheminService cheminService = new CheminService(null);
 
+
     @Test
-    public void testCalculerChemin() {
+    public void testCalculerChemin1Etage() {
+
+        // Création des deux étages
+
+        Etage etage1 = new Etage();
+        etage1.setIdEtage(1L);
+        etage1.setNumeroEtage("Etage 1");
+
+        // Création des espaces associés aux étages
+
+        Espace espace1 = new Espace();
+        espace1.setIdEspace(1L);
+        espace1.setEtage(etage1);
+        espace1.setX(0);
+        espace1.setY(0);
+
+        Espace espace2 = new Espace();
+        espace2.setIdEspace(2L);
+        espace2.setEtage(etage1);
+        espace2.setX(20);
+        espace2.setY(20);
+
+        Espace espace3 = new Espace();
+        espace3.setIdEspace(3L);
+        espace3.setEtage(etage1);
+        espace3.setX(30);
+        espace3.setY(30);
+
+        Espace espace4 = new Espace();
+        espace4.setIdEspace(4L);
+        espace4.setEtage(etage1);
+        espace4.setX(40);
+        espace4.setY(40);
+
+        // Le chemin en espace
+        List<Espace> espaces = Arrays.asList(espace1, espace2, espace3, espace4);
+
+        List<Chemin> chemins = cheminService.diviserChemin(espaces);
+
+        // Vérification des résultats
+        assertNotNull(chemins);
+        assertEquals(1, chemins.size());
+        assertEquals("0 0 20 20 30 30 40 40 ", chemins.get(0).getCoordonneesChemin());
+
+    }
+
+
+
+    @Test
+    public void testCalculerChemin2Etage() {
 
         // Création des deux étages
 

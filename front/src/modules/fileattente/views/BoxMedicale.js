@@ -29,6 +29,9 @@ export default function BoxMedicale() {
         if (boxMedicale.statutBox === "OCCUPEE") {
             await axios.post(`${LIBERER_BOX}/${boxMedicale.idBoxMedicale}/${boxMedicale.patient?.idPatient}`);
 
+            window.location.href = `/api/type-acte-medical/${boxMedicale.patient?.idPatient}`
+        
+
         } else {
             alert("Pas de patient dans la box");
         }
@@ -67,24 +70,10 @@ export default function BoxMedicale() {
                                 <td>
                                     <button className="btn btn-primary btn-sm mx-1"
                                             onClick={() => {
-                                                window.location.href = `/api/type-acte-medical/${boxMedicale.idBoxMedicale}/${boxMedicale.patient?.idPatient}`
-                                            }}
-                                            disabled={!boxMedicale.patient}
-
-
-                                    >
+                                                
+                                           liberer_box(boxMedicale)}
+                                    }>
                                         Définir parcours
-                                    </button>
-
-
-                                    <button
-                                        onClick={() =>
-                                            liberer_box(boxMedicale)
-                                        }
-                                        disabled={!boxMedicale.patient}
-                                    >
-                                        Liberer_box
-
                                     </button>
                                 </td>
 
