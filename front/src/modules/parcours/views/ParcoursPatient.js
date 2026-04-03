@@ -45,7 +45,7 @@ export default function ParcoursPatient() {
 
   const commencer = async (parcours) => {
     if (parcours && parcours.statut === "EN_ATTENTE") {
-      const reponce = await axios.post(`${CHEMIN}/${parcours.idParcours}/0/8`);
+      const reponce = await axios.post(`${CHEMIN}/${parcours.idParcours}/0/1`);
 
       setChemins(reponce.data);
 
