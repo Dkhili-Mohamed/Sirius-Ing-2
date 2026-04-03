@@ -3,6 +3,11 @@ export const LOCAL_HOST_AMBULANCE = 'http://172.31.250.222:8081/api/ambulance/';
 export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE + 'all';
 export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 
+
+// URLs pour les interventions
+export const LOCAL_HOST_INTERVENTIONS = 'http://localhost:8081/interventions/';
+export const GET_INTERVENTIONS = LOCAL_HOST_INTERVENTIONS + 'recentes';
+
 //export const LOCAL_HOST = 'http://172.31.249.73:8081';
 
 //Table Patients +
