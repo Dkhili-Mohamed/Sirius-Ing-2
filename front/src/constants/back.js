@@ -29,7 +29,7 @@ export const INSERT_SUIVRE = LOCAL_HOST + '/api/suivre/insert';
 export const SYMPTOME_PATIENT = LOCAL_HOST + '/api/symptome/';
 export const BOX_MEDICALE = LOCAL_HOST + '/api/box-medicale';
 export const LIBERER_BOX = LOCAL_HOST + '/api/box-medicale/liberer';
-
+export const SYMPTOME = LOCAL_HOST + '/api/symptome';
 
 
 
