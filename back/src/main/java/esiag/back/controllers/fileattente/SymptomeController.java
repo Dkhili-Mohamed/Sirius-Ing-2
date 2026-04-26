@@ -25,6 +25,12 @@ public class SymptomeController {
     
         return new ResponseEntity<>(symptomeService.findSymptomeByIdPatient(idPatient), HttpStatus.OK);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<esiag.back.models.medical.Symptome>> findAll() {
+
+        return new ResponseEntity<>(symptomeService.findAllSymptome(), HttpStatus.OK);
+    }
     
 
 }
