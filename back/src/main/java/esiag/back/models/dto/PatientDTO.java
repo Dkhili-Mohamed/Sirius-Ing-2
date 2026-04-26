@@ -26,8 +26,9 @@ public class PatientDTO {
         this.nomPatient = patient.getNomPatient();
         this.prenomPatient = patient.getPrenomPatient();
         this.agePatient = patient.getAgePatient();
-        this.symptomes = patient.getSymptomes() != null ? 
-            new ArrayList<>(patient.getSymptomes()) : null;
+        this.symptomes = null;
+//        this.symptomes = patient.getSymptomes() != null ?
+//            new ArrayList<>(patient.getSymptomes()) : null;
 
         if (patientService != null) {
             //this.scoreUrgence = patientService.calculerScoreUrgence(patient);
