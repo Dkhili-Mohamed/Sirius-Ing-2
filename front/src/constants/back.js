@@ -30,7 +30,10 @@ export const SYMPTOME_PATIENT = LOCAL_HOST + '/api/symptome/';
 export const BOX_MEDICALE = LOCAL_HOST + '/api/box-medicale';
 export const LIBERER_BOX = LOCAL_HOST + '/api/box-medicale/liberer';
 export const SYMPTOME = LOCAL_HOST + '/api/symptome/all';
-
+export const NOMBRE_PATIENTS_FILE = LOCAL_HOST + '/api/file-attente/nombre-patients';
+export const NOMBRE_PATIENTS_FILE_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/urgents';
+export const NOMBRE_PATIENTS_FILE_INTERMEDIAIRES = LOCAL_HOST + '/api/file-attente/nombre-patients/intermediaires';
+export const NOMBRE_PATIENTS_FILE_NON_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/non-urgents';
 
 
 
