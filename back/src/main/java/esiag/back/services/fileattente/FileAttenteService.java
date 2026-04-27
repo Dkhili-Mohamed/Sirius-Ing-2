@@ -154,4 +154,26 @@ public class FileAttenteService {
 
     }
 
+    @Transactional
+    public Long getNombrePatients() {
+        return fileAttenteRepository.countNombrePatients();
+    }
+
+    @Transactional
+    public Long getNombrePatientsUrgents() {
+        return fileAttenteRepository.countNombrePatientsUrgents();
+    }
+
+    @Transactional
+    public Long getNombrePatientsIntermediaires() {
+        return fileAttenteRepository.countNombrePatientsIntermediaires();
+    }
+
+    @Transactional
+    public Long getNombrePatientsNonUrgents() {
+        return fileAttenteRepository.countNombrePatientsNonUrgents();
+    }
+
+
+
 }
