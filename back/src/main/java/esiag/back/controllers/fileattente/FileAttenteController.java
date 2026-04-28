@@ -49,7 +49,7 @@ public class FileAttenteController {
 
     }
 
-    @GetMapping("/nombre-patients/intermediaire")
+    @GetMapping("/nombre-patients/intermediaires")
     public ResponseEntity<Long> getNombrePatientsIntermediaire() {
         try {
             long nombrePatientsIntermediaires = fileAttenteService.getNombrePatientsIntermediaires();
