@@ -34,6 +34,6 @@ export const NOMBRE_PATIENTS_FILE = LOCAL_HOST + '/api/file-attente/nombre-patie
 export const NOMBRE_PATIENTS_FILE_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/urgents';
 export const NOMBRE_PATIENTS_FILE_INTERMEDIAIRES = LOCAL_HOST + '/api/file-attente/nombre-patients/intermediaires';
 export const NOMBRE_PATIENTS_FILE_NON_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/non-urgents';
-
+export const NOMBRE_BOX_LIBRES = LOCAL_HOST + '/api/box-medicale/libres';
 
 
