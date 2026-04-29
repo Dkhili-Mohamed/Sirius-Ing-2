@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import esiag.back.models.ambulance.Ambulance;
 import esiag.back.models.ambulance.PatientA;
-import esiag.back.services.DistanceService;
+import esiag.back.services.ambulance.DistanceService;
 
 public class AmbulancePatientDistanceServiceTest {
 
