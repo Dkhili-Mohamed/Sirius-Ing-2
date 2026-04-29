@@ -44,10 +44,7 @@ public class CheminService {
         this.connexionRepository = connexionRepository;
     }
 
-    public Map<Long, List<Long>> getGrapheDuPlan() {
-
-        List<Connexion> connexions = connexionRepository.findAll();
-        log.info("Lecture des connexions");
+    public Map<Long, List<Long>> getGrapheDuPlan(List<Connexion> connexions) {
 
         Map<Long, List<Long>> grapheDuPlan = new HashMap<>();
 
@@ -67,7 +64,7 @@ public class CheminService {
         return grapheDuPlan;
     }
 
-    public List<Espace> findChemin(Long idDepart, Long idArrive) {
+    public List<Long> findCheminId(Long idDepart, Long idArrive, Map<Long, List<Long>> plan) {
         /*
          * Parcours du graphe en largeur pour trouver le chemin le plus cours entre
          * l'espace de départ
@@ -80,7 +77,6 @@ public class CheminService {
         Queue<Long> queue = new LinkedList<>();
         Set<Long> sommetsVisites = new HashSet<>();
         Map<Long, Long> arbreCouvrant = new HashMap<>();
-        Map<Long, List<Long>> grapheDuPlan = getGrapheDuPlan();
 
         // Initialisation
 
@@ -102,7 +98,7 @@ public class CheminService {
                 break;
             }
 
-            for (Long voisin : grapheDuPlan.get(sommetCourant)) {
+            for (Long voisin : plan.get(sommetCourant)) {
                 if (!sommetsVisites.contains(voisin)) {
                     sommetsVisites.add(voisin);
                     arbreCouvrant.put(voisin, sommetCourant);
@@ -134,18 +130,30 @@ public class CheminService {
         // Inversion du chemin pour avoir le bon ordre
         Collections.reverse(chemin);
 
+        return chemin;
+    }
+
+    public List<Espace> findCheminEspace(Long idDepart, Long idArrive, Map<Long, List<Long>> plan){
+
+        // Donne le chemin contenant uniquement les id des espaces
+
+        List<Long> cheminId = findCheminId(idDepart, idArrive, plan);
+
         // Conversion des IDs en objets Espace
         List<Espace> cheminEspace = new ArrayList<>();
 
-        for (Long id : chemin) {
+        for (Long id : cheminId) {
             Espace espace = espaceRepository.findById(id)
                     .orElseThrow(() -> new IllegalStateException(
                             "Espace introuvable pour l'id " + id));
             cheminEspace.add(espace);
         }
-        
+
         return cheminEspace;
+
     }
+
+
 
     @Transactional
     public List<Chemin> nextActeMedical(Long idParcours, int ordre, Long idDepart) {
@@ -250,8 +258,14 @@ public class CheminService {
                     throw new IllegalStateException("L'espace de départ est nul.");
                 }
             }
+
+            List<Connexion> connexions = connexionRepository.findAll();
+            log.info("Lecture des connexions");
+            Map<Long, List<Long>> plan = getGrapheDuPlan(connexions);
+            log.info("Construction du plan !!!");
+
             for (Salle salle : salles) {
-                List<Espace> chemin = findChemin(idDepart, salle.getEspace().getIdEspace());
+                List<Espace> chemin = findCheminEspace(idDepart, salle.getEspace().getIdEspace(), plan);
                 cheminsPossibles.add(chemin);
             }
         }
