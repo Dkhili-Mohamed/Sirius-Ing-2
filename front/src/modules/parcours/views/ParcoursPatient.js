@@ -3,7 +3,9 @@ import axios from "axios";
 import '../../../styles/ParcoursPatientCSS.css';
 import { PARCOURS_PATIENT, CHEMIN} from "../../../constants/back";
 import { useParams } from "react-router-dom";
-import planHopital from "../../../assets/plan_hopital_test.png";
+import etage1 from "../../../assets/etage_1.png";
+import etage2 from "../../../assets/etage_2.png";
+
 
 export default function ParcoursPatient() {
   const { idPatient } = useParams();
@@ -128,6 +130,7 @@ export default function ParcoursPatient() {
       </div>
 
       {chemins &&  chemins.map((chemin) =>(
+        
         <div className="mt-5 p-4 border rounded bg-light">
           <div>
             <div className="d-flex justify-content-center align-items-center flex-wrap">
@@ -150,8 +153,9 @@ export default function ParcoursPatient() {
                     <polygon points="0 0, 4 1.5, 0 3" fill="green" />
                   </marker>
                 </defs>
-                <image
-                  href={planHopital}
+
+               <image
+                  href={chemin.numeroEtage === "R+1" ? etage1 : etage2}
                   x="0"
                   y="0"
                   height="400"
@@ -185,13 +189,6 @@ export default function ParcoursPatient() {
           </button>
         </div>
       ))}
-     {chemins && !chemins.salleDisponible && (
-        <div className="salleIndisponible" role="alert">
-          <p>Aucune salle disponible pour le prochain acte médical !</p>
-          <p>Veillez patientez !</p>
-
-        </div>
-      ) }
     </div>
   );
 }
