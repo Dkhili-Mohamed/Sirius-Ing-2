@@ -89,7 +89,7 @@ const FileAttente = () => {
                 <h3>Statistiques</h3>
                 <div style={{ display: 'flex', gap: '20px'}}>
                     <div>Box libres: <strong style={{ color: 'blue'}}>{stats.boxLibres}/3</strong></div>
-                    <div>Total: <strong style={{ color: 'black'}}>{stats.total}/20</strong></div>
+                    <div>Total: <strong style={{ color: 'black'}}>{stats.total}/10</strong></div>
                     <div>Urgents: <strong style={{ color: 'red'}}>{stats.urgents}/{stats.total}</strong></div>
                     <div>Intermédiaires: <strong style={{ color: 'orange'}}>{stats.intermediaires}/{stats.total}</strong></div>
                     <div>Non urgents: <strong style={{ color: 'green'}}>{stats.nonUrgents}/{stats.total}</strong></div>
