@@ -20,7 +20,7 @@ import net.bytebuddy.asm.Advice.Local;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class ParcoursIntegrationTest {
 
-    // Url de la vidéo youtube qui m'a aidé à écrire ce test :
+    // lien de la vidéo youtube qui m'a aidé à écrire ce test :
     // https://www.youtube.com/watch?v=Hh17JDpsKqc
 
     @LocalServerPort
@@ -49,7 +49,7 @@ public class ParcoursIntegrationTest {
         Parcours response = restTemplate.postForObject(localHost, parcours, Parcours.class);
         
         assertEquals("Examens généraux", response.getNomParcours());
-        assertEquals("EN_ATTENTE", response.getStatutGlobal());
+        assertEquals(StatutActeMedical.EN_ATTENTE, response.getStatutGlobal());
 
         
     }
@@ -57,7 +57,7 @@ public class ParcoursIntegrationTest {
 
 
     @Test
-    public void testFindParcoursById() {
+    public void testFindActeMedicalByIdPatient() {
 
         String localHost = "http://localhost:" + port + "/api/type-acte-medical/1";
 
