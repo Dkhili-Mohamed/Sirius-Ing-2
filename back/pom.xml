@@ -86,7 +86,7 @@
         <id>maxdev</id>
         <properties>
           <datasource.username>postgres</datasource.username>
-          <db.url>jdbc:postgresql://172.31.252.201:5432/clinicpro_db</db.url>
+          <db.url>jdbc:postgresql://172.31.250.154:5432/clinicpro_db</db.url>
           <db.password>toto</db.password>
         </properties>
       </profile>
