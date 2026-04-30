@@ -2,8 +2,11 @@ package esiag.back.controllers.fileattente;
 
 import esiag.back.models.dto.FileAttenteDTO;
 import esiag.back.models.medical.Patient;
+import esiag.back.models.medical.PatientSymptome;
 import esiag.back.repositories.fileattente.FileAttenteRepository;
 import esiag.back.repositories.fileattente.PatientRepository;
+import esiag.back.repositories.fileattente.PatientSymptomeRepository;
+import esiag.back.repositories.fileattente.SymptomeRepository;
 import esiag.back.services.fileattente.PatientService;
 import esiag.back.models.medical.FileAttente;
 import esiag.back.services.fileattente.FileAttenteService;
@@ -32,6 +35,10 @@ public class PatientController {
     private PatientRepository patientRepository;
     @Autowired
     private FileAttenteRepository fileAttenteRepository;
+    @Autowired
+    private PatientSymptomeRepository patientSymptomeRepository;
+    @Autowired
+    private SymptomeRepository symptomeRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<Patient> findById(@PathVariable Long id){
@@ -59,6 +66,17 @@ public class PatientController {
     public ResponseEntity<Patient> createPatient(@Valid @RequestBody Patient patient) {
         try {
             Patient savedPatient = patientService.save(patient);
+
+            if(savedPatient.getPatient_symptomes() != null) {
+                for(Long idSymptome : savedPatient.getPatient_symptomes()) {
+                    PatientSymptome patientSymptome = new PatientSymptome();
+
+                    patientSymptome.setPatient(savedPatient);
+                    patientSymptome.setSymptome(symptomeRepository.findById(idSymptome).orElse(null));
+                    patientSymptomeRepository.save(patientSymptome);
+
+                }
+            }
 
             FileAttente fileAttente = new FileAttente();
             fileAttente.setPatient(savedPatient);

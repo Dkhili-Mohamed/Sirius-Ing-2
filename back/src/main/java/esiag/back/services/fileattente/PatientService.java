@@ -252,6 +252,14 @@ public class PatientService {
                 }
             }
 
+            List<FileAttente> fileAttenteCourante = fileAttenteRepository.findAll();
+            if(fileAttenteCourante.size() >= 10) {
+                log.info("La file est saturée : {}/10 patients en attente.", fileAttenteCourante.size());
+                return;
+            }
+
+
+
             if (!patientDejaDansBox && !patientDejaDansFile) {
                 FileAttente fa = new FileAttente();
                 fa.setPatient(p);

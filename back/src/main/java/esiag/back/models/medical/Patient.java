@@ -35,49 +35,16 @@ public class Patient {
 
     @Column(name = "statut_patient")
     private StatutPatient statutPatient;
-//
-//    @Column(name = "date_arrivee")
-//    private LocalDateTime dateArrivee;
-
     @Transient
-    private List<String> patient_symptomes;
+    private List<Long> patient_symptomes;
 
 
 @PrePersist
-public void copierSymptomes() {
-    System.out.println("patient_symptomes reçu: " + patient_symptomes);
-
-    if (patient_symptomes != null && !patient_symptomes.isEmpty()) {
-
-        this.symptomes.clear();
-        this.symptomes.addAll(patient_symptomes);
-    } else {
-        System.out.println("patient_symptomes est null ou vide !");
-    }
-
-//    if (this.dateArrivee == null) {
-//        this.dateArrivee = LocalDateTime.now();
-//    }
-
+public void statutPatient() {
     if(this.statutPatient == null) {
         this.statutPatient = StatutPatient.NON_CONSULTE;
     }
 }
-
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(
-            name = "patient_symptomes",
-            joinColumns = @JoinColumn(name = "id_patient")
-    )
-    @Column(name = "symptome", nullable = false)
-    @Size(min = 1, message = "Veuillez insérer au moins un symptome")
-    private Set<String> symptomes = new HashSet<>();
-
-    public void addSymptome(String symptome) {
-        this.symptomes.add(symptome);
-    }
-
-
     @Override
     public String toString() {
         return "Patient{" +

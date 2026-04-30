@@ -50,6 +50,17 @@ public class BoxMedicaleController {
 
     }
 
+    @GetMapping("/libres")
+    public ResponseEntity<Long> getNombreBoxMedicaleLibres() {
+        try {
+            long nombreBoxMedicalesLibres = boxMedicaleService.countBoxMedicaleLibres();
+            return ResponseEntity.ok(nombreBoxMedicalesLibres);
+        } catch (Exception e) {
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
 
 
 

@@ -1,30 +1,72 @@
 import React, { useState, useEffect } from 'react';
-import { patientService } from './patientService';
+import axios from "axios";
+import { patientService} from './patientService';
+import {SYMPTOME} from '../../../constants/back';
 
 const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
     const [nom, setNom] = useState('');
     const [prenom, setPrenom] = useState('');
     const [age, setAge] = useState('');
-    
-    const [symptomes, setSymptomes] = useState({
-        douleurThoracique: false,
-        difficultesRespiratoires: false,
-        perteConnaissance: false,
-        confusion: false,
-        saignementAbondant: false,
-        vomissementsPersistants: false,
-        fievreElevee: false,
-        frissons: false,
-        touxSevere: false,
-        malaiseGeneral: false,
-        fatigueExtreme: false,
-        vertigesIntenses: false,
-        mauxTeteSeveres: false,
-        visionTroublee: false,
-        difficultesParole: false,
-        faiblesseBrasJambes: false,
-        engourdissementFace: false
-    });
+    const [symptome, setSymptome] = useState([]);
+    const [symptomeCoche, setSymptomeCoche] = useState([]);
+
+
+    const setSymptomeData = async () => {
+        axios.get(SYMPTOME).then(response => {
+            setSymptome(response.data);
+        }).catch(erreur => {
+            console.error("Erreur lors du chargement des symptômes"+ erreur);
+        });
+
+    }
+
+
+    const gestionCheckbox = (e) => {
+        const idSymptome = parseInt(e.target.value);
+
+        if(e.target.checked) {
+            const symptomeSelectionne = symptome.find(s => s.idSymptome === idSymptome);
+
+            setSymptomeCoche([...symptomeCoche, symptomeSelectionne]);
+
+        } else {
+
+            const symptomesChoisis = []
+
+            for (const s of symptomeCoche) {
+                if (s.idSymptome !== idSymptome) {
+
+                    symptomesChoisis.push(s);
+                }
+            }
+            setSymptomeCoche(symptomesChoisis);
+        }
+
+    };
+
+    useEffect(() => {
+        setSymptomeData();
+    }, []);
+
+    const calculerScore = () => {
+        let score = 0
+        for (const symptome of symptomeCoche) {
+            score =  score + symptome.score;
+        }
+
+        const ageNum = parseInt(age) || 0;
+
+        if (age && ageNum > 0) {
+            if (ageNum == 1) score += 4;
+            else if (ageNum <= 5) score += 3;
+            else if (ageNum <= 12) score += 2;
+            else if (ageNum <= 17) score += 1;
+            else if (ageNum >= 65) score += 3;
+        }
+
+        return score;
+    };
+
 
     const [score, setScore] = useState(0);
     const [niveau, setNiveau] = useState('NON_URGENT');
@@ -43,41 +85,8 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
         
         setScore(nouveauScore);
         setNiveau(nouveauNiveau);
-    }, [symptomes, age]);
+    }, [symptomeCoche, age]);
 
-    const calculerScore = () => {
-        let score = 0;
-        
-        if (symptomes.douleurThoracique) score += 5;
-        if (symptomes.difficultesRespiratoires) score += 5;
-        if (symptomes.perteConnaissance) score += 5;
-        if (symptomes.confusion) score += 2;
-        if (symptomes.saignementAbondant) score += 5;
-        if (symptomes.vomissementsPersistants) score += 2;
-        if (symptomes.fievreElevee) score += 2;
-        if (symptomes.frissons) score += 1;
-        if (symptomes.touxSevere) score += 2;
-        if (symptomes.malaiseGeneral) score += 1;
-        if (symptomes.fatigueExtreme) score += 1;
-        if (symptomes.vertigesIntenses) score += 2;
-        if (symptomes.mauxTeteSeveres) score += 1;
-        if (symptomes.visionTroublee) score += 2;
-        if (symptomes.difficultesParole) score += 3;
-        if (symptomes.faiblesseBrasJambes) score += 2;
-        if (symptomes.engourdissementFace) score += 3;
-        
-        const ageNum = parseInt(age) || 0;
-        
-        if (age && ageNum > 0) {
-            if (ageNum == 1) score += 4;
-            else if (ageNum <= 5) score += 3;
-            else if (ageNum <= 12) score += 2;
-            else if (ageNum <= 17) score += 1;
-            else if (ageNum >= 65) score += 3;
-        }
-        
-        return score;
-    };
 
     
     const getNiveauUrgenceStyle = (niveau) => {
@@ -93,12 +102,6 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
         }
     };
 
-    const handleSymptomeChange = (symptome) => {
-        setSymptomes(prev => ({
-            ...prev,
-            [symptome]: !prev[symptome]
-        }));
-    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -113,34 +116,15 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
         } else {
             niveauFinal = 'NON_URGENT';
         }
-        
+
+
         const patientData = {
             nomPatient: nom,
             prenomPatient: prenom,
             agePatient: parseInt(age),
             scoreUrgence: scoreFinal,
-            patient_symptomes: Object.keys(symptomes).filter(key => symptomes[key]).map(s => {
-                const map = {
-                    douleurThoracique: 'douleur_thoracique',
-                    difficultesRespiratoires: 'difficulte_respiratoire',
-                    perteConnaissance: 'perte_connaissance',
-                    saignementAbondant: 'hemorragie',
-                    fievreElevee: 'fievre_elevee',
-                    vomissementsPersistants: 'nausee',
-                    frissons: 'frissons',
-                    touxSevere: 'toux_severe',
-                    malaiseGeneral: 'malaise_general',
-                    fatigueExtreme: 'fatigue',
-                    vertigesIntenses: 'vertiges_intenses',
-                    mauxTeteSeveres: 'maux_tete_severes',
-                    visionTroublee: 'vision_troublee',
-                    difficultesParole: 'difficultes_parole',
-                    faiblesseBrasJambes: 'faiblesse_bras_jambes',
-                    engourdissementFace: 'engourdissement_face',
-                    confusion: 'confusion'
-                };
-                return map[s] || s;
-            })
+            patient_symptomes: symptomeCoche.map(s => s.idSymptome)
+
         };
         
         console.log('Données envoyées:', patientData);
@@ -149,7 +133,7 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
         setNom('');
         setPrenom('');
         setAge('');
-        setSymptomes(Object.keys(symptomes).reduce((acc, key) => ({ ...acc, [key]: false }), {}));
+        setSymptomeCoche([]);
         onClose();
     };
 
@@ -256,6 +240,7 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
                         </div>
                     </div>
 
+
                     <div style={{ marginBottom: '20px' }}>
                         <label style={{ display: 'block', marginBottom: '10px', fontWeight: '600', color: '#374151' }}>
                              Symptômes:
@@ -271,8 +256,9 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
                             padding: '15px',
                             backgroundColor: '#f9fafb'
                         }}>
-                            {Object.entries(symptomes).map(([key, value]) => (
-                                <label key={key} style={{ 
+
+                            {symptome && symptome.map((s) => (
+                                <label key={s.idSymptome} style={{
                                     display: 'flex', 
                                     alignItems: 'center', 
                                     cursor: 'pointer',
@@ -282,12 +268,13 @@ const PatientModal = ({ isOpen, onClose, onPatientAdd }) => {
                                 }}>
                                     <input
                                         type="checkbox"
-                                        checked={value}
-                                        onChange={() => handleSymptomeChange(key)}
+                                        value={s.idSymptome}
+                                        checked={symptomeCoche.includes(s)}
+                                        onChange={gestionCheckbox}
                                         style={{ marginRight: '8px', transform: 'scale(1.2)' }}
                                     />
                                     <span style={{ fontSize: '14px', color: '#4b5563' }}>
-                                        {key.replace(/([A-Z])/g, ' $1').trim()}
+                                        {s.libelle}
                                     </span>
                                 </label>
                             ))}

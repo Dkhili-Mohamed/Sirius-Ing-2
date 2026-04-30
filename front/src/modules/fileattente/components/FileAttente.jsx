@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import { patientService } from './patientService';
 import { LOCAL_HOST_PATIENT } from '../../../constants/back';
+import {NOMBRE_PATIENTS_FILE, NOMBRE_PATIENTS_FILE_URGENTS, NOMBRE_PATIENTS_FILE_INTERMEDIAIRES, NOMBRE_PATIENTS_FILE_NON_URGENTS, NOMBRE_BOX_LIBRES} from '../../../constants/back';
 import PatientModal from './PatientModal';
 
 const FileAttente = () => {
     const [patients, setPatients] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [stats, setStats] = useState({total: 0, urgents: 0, intermediaires: 0, nonUrgents: 0, boxLibres: 0});
     useEffect(() => {
         chargerFileAttente();
         const interval = setInterval(chargerFileAttente, 1000);
@@ -59,12 +61,58 @@ const FileAttente = () => {
         }
     };
 
+    const setStatsData = async () => {
+        const nombrePatients = await axios.get(NOMBRE_PATIENTS_FILE);
+        const nombrePatientsUrgents = await axios.get(NOMBRE_PATIENTS_FILE_URGENTS);
+        const nombrePatientsIntermediaires = await axios.get(NOMBRE_PATIENTS_FILE_INTERMEDIAIRES);
+        const nombrePatientsNonUrgents = await axios.get(NOMBRE_PATIENTS_FILE_NON_URGENTS);
+        const nombreBoxLibres = await axios.get(NOMBRE_BOX_LIBRES);
+
+
+        const statsMAJ = {total: nombrePatients.data, urgents: nombrePatientsUrgents.data, intermediaires: nombrePatientsIntermediaires.data, nonUrgents: nombrePatientsNonUrgents.data, boxLibres: nombreBoxLibres.data};
+        setStats(statsMAJ);
+
+
+
+    }
+
+    useEffect(() => {
+        setStatsData();
+        const interval = setInterval(setStatsData, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     return (
         <div style={{ padding: '20px' }}>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-                <h2>File d'Attente</h2>
+                <h1>File d'Attente</h1>
+                <h3>Statistiques</h3>
+                <div style={{ display: 'flex', gap: '20px'}}>
+                    <div>Box libres: <strong style={{ color: 'blue'}}>{stats.boxLibres}/3</strong></div>
+                    <div>Total: <strong style={{ color: 'black'}}>{stats.total}/20</strong></div>
+                    <div>Urgents: <strong style={{ color: 'red'}}>{stats.urgents}/{stats.total}</strong></div>
+                    <div>Intermédiaires: <strong style={{ color: 'orange'}}>{stats.intermediaires}/{stats.total}</strong></div>
+                    <div>Non urgents: <strong style={{ color: 'green'}}>{stats.nonUrgents}/{stats.total}</strong></div>
+
+
+
+                </div>
+
+                {stats.total > 5 && stats.total < 10 && (
+                    <div>
+                        <h5><span>File d'attente presque saturée. Veuillez libérer les box.</span></h5>
+                    </div>
+                )}
+
+                {stats.total >= 10 && (
+                    <div>
+                        <h5><span>File d'attente saturée! Impossible d'ajouter des patients.</span></h5>
+                    </div>
+                )}
+
                 <button 
                     onClick={() => setIsModalOpen(true)}
+                    disabled={stats.total >= 10}
                     style={{
                         backgroundColor: '#007bff',
                         color: 'white',
