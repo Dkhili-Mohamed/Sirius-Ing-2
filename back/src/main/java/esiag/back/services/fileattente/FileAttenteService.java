@@ -52,6 +52,7 @@ public class FileAttenteService {
         return mettreAJourFileAttente(fileAttenteTriee);
     }
 
+    /*
     @Transactional
     public List<FileAttenteDTO> getFileAttenteAvecScores() {
         List<FileAttente> fileAttente = getFileAttenteTriee();
@@ -65,11 +66,16 @@ public class FileAttenteService {
         return result;
     }
 
-    @Transactional
-    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
-        List<FileAttente> fileAttentes = getFileAttenteTriee();
+     */
 
-        if(fileAttentes.isEmpty()) {
+
+
+    @Transactional(readOnly = true)
+    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
+        List<FileAttente> fileAttentes = fileAttenteRepository.findAll();
+        List<FileAttente> fileAttenteTriees = patientService.trierParUrgence(fileAttentes);
+
+        if(fileAttenteTriees.isEmpty()) {
             log.info("Pas de patient dans la file d'attente");
 
 
@@ -100,13 +106,13 @@ public class FileAttenteService {
 
 
         int temps_attente_estime = temps_minimum_attente;
-        for  (int i=0; i<fileAttentes.size(); i++) {
+        for  (int i=0; i<fileAttenteTriees.size(); i++) {
 
-            Patient patient = fileAttentes.get(i).getPatient();
+            Patient patient = fileAttenteTriees.get(i).getPatient();
             int temps_consultation_estime = patientService.getNiveauUrgence(patient).getTempsMoyen();
 
 
-            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente_estime);
+            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttenteTriees.get(i), patientService, temps_attente_estime);
             fileAttenteDTOS.add(fileAttenteDTO);
 
             temps_attente_estime = temps_attente_estime + temps_consultation_estime;
