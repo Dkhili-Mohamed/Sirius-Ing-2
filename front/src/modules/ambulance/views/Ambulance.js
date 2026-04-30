@@ -160,7 +160,7 @@ export default function Ambulance() {
         <table className="table table-sm table-bordered table-hover">
           <thead>
             <tr>
-              <th scope="col">Id</th>
+              <th scope="col">Numero</th>
               <th scope="col">Adresse</th>
               <th scope="col">Disponibilité</th>
               <th scope="col">Vitesse Moyenne(km/H)</th>
