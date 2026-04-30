@@ -11,8 +11,8 @@ export const GET_INTERVENTIONS = LOCAL_HOST_INTERVENTIONS + 'recentes';
 //export const LOCAL_HOST = 'http://172.31.249.73:8081';
 
 //Table Patients +
-export const LOCAL_HOST = 'http://172.31.250.222:8081';
-//export const LOCAL_HOST = 'http://localhost:8081';
+//export const LOCAL_HOST = 'http://172.31.250.222:8081';
+export const LOCAL_HOST = 'http://localhost:8081';
 export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/api/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
 export const UPDATE_PATIENT = LOCAL_HOST_PATIENT + 'update';
