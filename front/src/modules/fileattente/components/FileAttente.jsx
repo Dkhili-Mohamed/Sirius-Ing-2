@@ -98,13 +98,13 @@ const FileAttente = () => {
 
                 </div>
 
-                {stats.total > 10 && stats.total < 20 && (
+                {stats.total > 5 && stats.total < 10 && (
                     <div>
                         <h5><span>File d'attente presque saturée. Veuillez libérer les box.</span></h5>
                     </div>
                 )}
 
-                {stats.total >= 20 && (
+                {stats.total >= 10 && (
                     <div>
                         <h5><span>File d'attente saturée! Impossible d'ajouter des patients.</span></h5>
                     </div>
@@ -112,7 +112,7 @@ const FileAttente = () => {
 
                 <button 
                     onClick={() => setIsModalOpen(true)}
-                    disabled={stats.total >= 20}
+                    disabled={stats.total >= 10}
                     style={{
                         backgroundColor: '#007bff',
                         color: 'white',
