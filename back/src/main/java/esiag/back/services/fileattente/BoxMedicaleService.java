@@ -137,6 +137,9 @@ public class BoxMedicaleService {
     public List<BoxMedicale> getAllBoxMedicales() {
         return boxMedicaleRepository.findAll();
     }
+
+    @Transactional
+    public long countBoxMedicaleLibres() {return boxMedicaleRepository.countBoxMedicaleLibres();}
 //
 //    @Transactional
 //    public List<BoxMedicale> getBoxMedicaleLibre(){

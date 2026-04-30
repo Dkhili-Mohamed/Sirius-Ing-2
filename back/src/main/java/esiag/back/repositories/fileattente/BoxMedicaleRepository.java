@@ -19,6 +19,9 @@ public interface BoxMedicaleRepository extends JpaRepository<BoxMedicale,Long> {
     @Query("SELECT COUNT(b) FROM BoxMedicale b")
     long countBoxMedicale();
 
+    @Query("SELECT COUNT(b) FROM BoxMedicale b WHERE b.statutBox = 'LIBRE'")
+    long countBoxMedicaleLibres();
+
     @Query("SELECT b FROM BoxMedicale b WHERE b.nomBox IS NULL")
     List<BoxMedicale> findBoxMedicaleSansNom();
 }

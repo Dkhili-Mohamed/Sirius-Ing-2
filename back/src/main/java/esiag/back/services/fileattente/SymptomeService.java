@@ -20,4 +20,8 @@ public class SymptomeService {
         return symptomeRepository.findSymptomeByIdPatient(idPatient);
     }
 
+    public List<Symptome> findAllSymptome(){
+        return symptomeRepository.findAll();
+    }
+
 }
