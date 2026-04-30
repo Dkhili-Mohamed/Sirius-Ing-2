@@ -1,10 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from "axios";
-
-import { GET_AMBULANCES, LOCAL_HOST_AMBULANCE } from "../../../constants/back";
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import redMarker from '../assets/red-marker.png';
+
+
+const patientIcon = L.icon({
+  iconUrl: redMarker,   
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png'), 
+  iconSize: [50, 41],
+  iconAnchor: [12, 41]
+});
 
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -13,14 +20,29 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
+export const LOCAL_HOST_AMBULANCE_LOGIN = 'http://localhost:8081/api/ambulancelogin/';
+export const LOGIN_AMBULANCE = LOCAL_HOST_AMBULANCE_LOGIN + 'login';
+
+export const LOCAL_HOST_AMBULANCE_DATA = 'http://localhost:8081/api/ambulance/';
+export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE_DATA + 'available-and-sorted';
+export const GET_MEILLEURE_AMBULANCE = LOCAL_HOST_AMBULANCE_DATA + 'meilleure';
+
+export const GET_PATIENTS = 'http://localhost:8081/api/patientA/all';
+export const GET_INTERVENTIONS = 'http://localhost:8081/interventions/recentes';
+
 export default function Ambulance() {   
   const [ambulances, setAmbulances] = useState([]);
-  const [idMeilleure, setIdMeilleure] = useState(null);  // ✅ nouvel état
+  const [idMeilleure, setIdMeilleure] = useState(null);  
   const mapRef = useRef(null);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [adresse, setAdresse] = useState("");
+  const [mdps, setMdps] = useState("");
+  const [error, setError] = useState("");
+  const [patient, setPatient] = useState(null);
+  const [historique, setHistorique] = useState([]);
 
-  const GET_MEILLEURE_AMBULANCE = LOCAL_HOST_AMBULANCE + "meilleure"; // endpoint pour la meilleure ambulance
+  
 
-  // Récupérer toutes les ambulances
   const setAmbulanceData = async () => {
     try {
       const response = await axios.get(GET_AMBULANCES);
@@ -30,7 +52,6 @@ export default function Ambulance() {
     }
   }
 
-  // Récupérer la meilleure ambulance
   const fetchMeilleureAmbulance = async () => {
     try {
       const response = await axios.get(GET_MEILLEURE_AMBULANCE);
@@ -39,14 +60,25 @@ export default function Ambulance() {
       console.log("Erreur lors de la récupération de la meilleure ambulance ", error);
     }
   }
+    
+  const fetchPatient = async () => {
+    try {
+        const response = await axios.get(GET_PATIENTS);
+        setPatient(response.data[0]); 
+    } catch (error) {
+      console.log("Erreur lors de la récupération du patient", error);
+    }
+  }
 
-  // Charger les données au démarrage
-  useEffect(() => {
-    setAmbulanceData();
-    fetchMeilleureAmbulance();
-  }, []);
+  const fetchHistorique = async () => {
+    try {
+      const res = await axios.get(GET_INTERVENTIONS);
+      setHistorique(res.data); 
+    } catch (error) {
+      console.log("Erreur lors de la récupération des interventions:", error);
+    }
+  }
 
-  // Ajuster automatiquement la carte 
   useEffect(() => {
     if (ambulances.length && mapRef.current) {
       const bounds = ambulances
@@ -59,21 +91,71 @@ export default function Ambulance() {
     }
   }, [ambulances]);
 
+  const handleLogin = async () => {
+    setError("");
+    try {
+      const response = await axios.post(LOGIN_AMBULANCE, {
+        ambulanceloginadresse: adresse,
+        ambulanceloginmdps: mdps
+      });
+
+      if (response.data) {
+        setLoggedIn(true);
+        setAmbulanceData();
+        fetchMeilleureAmbulance();
+        fetchPatient();
+        fetchHistorique();
+      } else {
+        setError("Adresse ou mot de passe incorrect");
+      }
+    } catch (error) {
+      setError("Erreur lors de la connexion : " + error.message);
+    }
+  }
+
+  if (!loggedIn) {
+    return (
+      <div className="container text-center mt-5">
+        <h4>Connexion Ambulance</h4>
+        <div className="form-group my-2">
+          <input 
+            type="text" 
+            className="form-control" 
+            placeholder="Adresse" 
+            value={adresse} 
+            onChange={e => setAdresse(e.target.value)} 
+          />
+        </div>
+        <div className="form-group my-2">
+          <input 
+            type="password" 
+            className="form-control" 
+            placeholder="Mot de passe" 
+            value={mdps} 
+            onChange={e => setMdps(e.target.value)} 
+          />
+        </div>
+        <button className="btn btn-primary my-2" onClick={handleLogin}>Connexion</button>
+        {error && <div className="text-danger mt-2">{error}</div>}
+      </div>
+    );
+  }
   if (ambulances.length === 0)
      return (<div className="container text-center">Aucune ambulance</div>);
+  const meilleureAmbulance = ambulances.find(
+    a => a.idambulance === idMeilleure
+  );
+
 
   return (
     <div className="container text-center">
       <h4 className="mx-2">Liste des ambulances</h4>
-
-      {/* Affichage de la meilleure ambulance */}
-      {idMeilleure && (
+      {idMeilleure && meilleureAmbulance && patient &&(
         <div className="alert alert-success mt-2">
-           L'ambulance la plus adaptée est l'ambulance {idMeilleure}
+           L'ambulance n°{idMeilleure} arrivera à l'adresse {patient.adressepatientA} pour prendre en charge Mr/Mme {patient.nompatientA} dans {meilleureAmbulance.tempstrajetminutes}.
         </div>
       )}
 
-      {/* Tableau des ambulances */}
       <div className="row">
         <table className="table table-sm table-bordered table-hover">
           <thead>
@@ -82,13 +164,12 @@ export default function Ambulance() {
               <th scope="col">Adresse</th>
               <th scope="col">Disponibilité</th>
               <th scope="col">Vitesse Moyenne(km/H)</th>
-              <th scope="col">Equipement</th>
-              <th scope="col">Expérience</th>
+              
               <th scope="col">Latitude</th>
               <th scope="col">Longitude</th>
               <th scope="col">Distance(Km)</th>
               <th scope="col">Temps Trajet </th>
-              <th scope="col">Score Trajet</th>
+              
               <th scope="col">Score Global</th>
             </tr>
           </thead>
@@ -99,21 +180,47 @@ export default function Ambulance() {
                 <td>{ambulance.adresseambulance}</td>
                 <td>{ambulance.disponibiliteambulance ? "Oui" : "Non"}</td>
                 <td>{ambulance.vitessemoyambulance}</td>
-                <td>{ambulance.equipementambulance}</td>
-                <td>{ambulance.experienceambulance}</td>
+                
                 <td>{ambulance.ambulancelatitude}</td>
                 <td>{ambulance.ambulancelongitude}</td>
                 <td>{ambulance.ambulancedistance}</td>
                 <td>{ambulance.tempstrajetminutes}</td>
-                <td>{ambulance.notetrajet}</td>
+                
                 <td>{ambulance.noteglobale}</td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-
-      {/* Carte Leaflet sous le tableau */}
+      <div className="row mt-4">
+        <h5>Historique des interventions</h5>
+        <div style={{ maxHeight: "200px", overflowY: "scroll" }}>
+          <table className="table table-sm table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>N°Intervention</th>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Statut</th>
+                <th>Date</th> 
+              </tr>
+            </thead>
+            <tbody>
+              {historique.map((intervention, index) => (
+                <tr key={index}>
+                  <td>{intervention.idintervention}</td>
+                  <td>{intervention.nomintervention}</td>
+                  <td>{intervention.adresseintervention}</td>
+                  <td>{intervention.interventionstatut}</td>
+                  <td>{intervention.dateintervention}</td> 
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    
+      
       <div className="row mt-4">
         <MapContainer
           ref={mapRef}
@@ -126,7 +233,6 @@ export default function Ambulance() {
             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributeurs'
           />
 
-          {/* Markers des ambulances */}
           {ambulances
             .filter(a => a.ambulancelatitude && a.ambulancelongitude)
             .map((ambulance, index) => (
@@ -141,6 +247,33 @@ export default function Ambulance() {
                 </Popup>
               </Marker>
           ))}
+
+          {patient && patient.patientAlatitude && patient.patientAlongitude && (
+              <Marker
+                position={[patient.patientAlatitude, patient.patientAlongitude]}
+                icon={patientIcon}
+              >
+                <Popup>
+                  Id: {patient.idpatientA}<br/>
+                  Nom: {patient.nompatientA}<br/>
+                  Adresse: {patient.adressepatientA}
+                </Popup>
+              </Marker>
+          )}
+
+          {meilleureAmbulance && patient &&
+              meilleureAmbulance.ambulancelatitude && meilleureAmbulance.ambulancelongitude &&
+              patient.patientAlatitude && patient.patientAlongitude && (
+                <Polyline
+                  positions={[
+                    [meilleureAmbulance.ambulancelatitude, meilleureAmbulance.ambulancelongitude],
+                    [patient.patientAlatitude, patient.patientAlongitude]
+                  ]}
+                  color="red"
+                  weight={3}
+                  dashArray="8, 6"
+                />
+            )}
 
         </MapContainer>
       </div>
