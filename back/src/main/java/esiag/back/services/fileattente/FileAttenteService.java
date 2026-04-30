@@ -1,10 +1,7 @@
 package esiag.back.services.fileattente;
 
 import esiag.back.models.dto.FileAttenteDTO;
-import esiag.back.models.medical.BoxMedicale;
-import esiag.back.models.medical.FileAttente;
-import esiag.back.models.medical.Patient;
-import esiag.back.models.medical.StatutBox;
+import esiag.back.models.medical.*;
 import esiag.back.repositories.fileattente.BoxMedicaleRepository;
 import esiag.back.repositories.fileattente.FileAttenteRepository;
 import esiag.back.repositories.fileattente.PatientRepository;
@@ -55,6 +52,7 @@ public class FileAttenteService {
         return mettreAJourFileAttente(fileAttenteTriee);
     }
 
+    /*
     @Transactional
     public List<FileAttenteDTO> getFileAttenteAvecScores() {
         List<FileAttente> fileAttente = getFileAttenteTriee();
@@ -68,11 +66,16 @@ public class FileAttenteService {
         return result;
     }
 
-    @Transactional
-    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
-        List<FileAttente> fileAttentes = getFileAttenteTriee();
+     */
 
-        if(fileAttentes.isEmpty()) {
+
+
+    @Transactional(readOnly = true)
+    public List<FileAttenteDTO> calculerTempsAttenteEstime() {
+        List<FileAttente> fileAttentes = fileAttenteRepository.findAll();
+        List<FileAttente> fileAttenteTriees = patientService.trierParUrgence(fileAttentes);
+
+        if(fileAttenteTriees.isEmpty()) {
             log.info("Pas de patient dans la file d'attente");
 
 
@@ -103,13 +106,13 @@ public class FileAttenteService {
 
 
         int temps_attente_estime = temps_minimum_attente;
-        for  (int i=0; i<fileAttentes.size(); i++) {
+        for  (int i=0; i<fileAttenteTriees.size(); i++) {
 
-            Patient patient = fileAttentes.get(i).getPatient();
+            Patient patient = fileAttenteTriees.get(i).getPatient();
             int temps_consultation_estime = patientService.getNiveauUrgence(patient).getTempsMoyen();
 
 
-            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttentes.get(i), patientService, temps_attente_estime);
+            FileAttenteDTO fileAttenteDTO = new FileAttenteDTO(fileAttenteTriees.get(i), patientService, temps_attente_estime);
             fileAttenteDTOS.add(fileAttenteDTO);
 
             temps_attente_estime = temps_attente_estime + temps_consultation_estime;
@@ -153,5 +156,55 @@ public class FileAttenteService {
         }
 
     }
+
+    @Transactional
+    public Long getNombrePatients() {
+        return fileAttenteRepository.countNombrePatients();
+    }
+
+    @Transactional
+    public Long getNombrePatientsUrgents() {
+        List<FileAttente> fileAttente = fileAttenteRepository.findAll();
+        long nombre_patients_urgents = 0;
+
+        for(FileAttente fa : fileAttente) {
+            if (patientService.getNiveauUrgence(fa.getPatient()).equals(NiveauUrgence.URGENT)) {
+                nombre_patients_urgents = nombre_patients_urgents + 1;
+            }
+        }
+
+        return nombre_patients_urgents;
+    }
+
+    @Transactional
+    public Long getNombrePatientsIntermediaires() {
+        List<FileAttente> fileAttente = fileAttenteRepository.findAll();
+        long nombre_patients_intermediaires = 0;
+
+        for(FileAttente fa : fileAttente) {
+            if (patientService.getNiveauUrgence(fa.getPatient()).equals(NiveauUrgence.INTERMEDIAIRE)) {
+                nombre_patients_intermediaires = nombre_patients_intermediaires + 1;
+            }
+        }
+
+        return nombre_patients_intermediaires;
+    }
+
+    @Transactional
+    public Long getNombrePatientsNonUrgents() {
+        List<FileAttente> fileAttente = fileAttenteRepository.findAll();
+        long nombre_patients_non_urgents = 0;
+
+        for(FileAttente fa : fileAttente) {
+            if (patientService.getNiveauUrgence(fa.getPatient()).equals(NiveauUrgence.NON_URGENT)) {
+                nombre_patients_non_urgents = nombre_patients_non_urgents + 1;
+            }
+        }
+
+        return nombre_patients_non_urgents;
+    }
+
+
+
 
 }

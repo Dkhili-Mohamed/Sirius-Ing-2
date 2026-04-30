@@ -1,17 +1,17 @@
 // URLs pour Ambulance
-export const LOCAL_HOST_AMBULANCE = 'http://172.31.250.122:8081/api/ambulance/';
+export const LOCAL_HOST_AMBULANCE = 'http://172.31.250.76:8081/api/ambulance/';
 export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE + 'all';
 export const UPDATE_AMBULANCE = LOCAL_HOST_AMBULANCE + 'update';
 
 
 // URLs pour les interventions
-export const LOCAL_HOST_INTERVENTIONS = 'http://172.31.250.122:8081/interventions/';
+export const LOCAL_HOST_INTERVENTIONS = 'http://172.31.250.76:8081/interventions/';
 export const GET_INTERVENTIONS = LOCAL_HOST_INTERVENTIONS + 'recentes';
 
 //export const LOCAL_HOST = 'http://172.31.249.73:8081';
 
 //Table Patients +
-export const LOCAL_HOST = 'http://172.31.250.122:8081';
+export const LOCAL_HOST = '';
 //export const LOCAL_HOST = 'http://localhost:8081';
 export const LOCAL_HOST_PATIENT = LOCAL_HOST + '/api/patient/';
 export const GET_PATIENTS = LOCAL_HOST_PATIENT + 'all';
@@ -29,8 +29,11 @@ export const INSERT_SUIVRE = LOCAL_HOST + '/api/suivre/insert';
 export const SYMPTOME_PATIENT = LOCAL_HOST + '/api/symptome/';
 export const BOX_MEDICALE = LOCAL_HOST + '/api/box-medicale';
 export const LIBERER_BOX = LOCAL_HOST + '/api/box-medicale/liberer';
-
-
-
+export const SYMPTOME = LOCAL_HOST + '/api/symptome/all';
+export const NOMBRE_PATIENTS_FILE = LOCAL_HOST + '/api/file-attente/nombre-patients';
+export const NOMBRE_PATIENTS_FILE_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/urgents';
+export const NOMBRE_PATIENTS_FILE_INTERMEDIAIRES = LOCAL_HOST + '/api/file-attente/nombre-patients/intermediaires';
+export const NOMBRE_PATIENTS_FILE_NON_URGENTS = LOCAL_HOST + '/api/file-attente/nombre-patients/non-urgents';
+export const NOMBRE_BOX_LIBRES = LOCAL_HOST + '/api/box-medicale/libres';
 
 
