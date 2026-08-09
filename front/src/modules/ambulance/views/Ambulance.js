@@ -20,15 +20,15 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
-export const LOCAL_HOST_AMBULANCE_LOGIN = 'http://172.31.250.20:8081/api/ambulancelogin/';
+export const LOCAL_HOST_AMBULANCE_LOGIN = 'http://172.31.252.223:8081/api/ambulancelogin/';
 export const LOGIN_AMBULANCE = LOCAL_HOST_AMBULANCE_LOGIN + 'login';
 
-export const LOCAL_HOST_AMBULANCE_DATA = 'http://172.31.250.20:8081/api/ambulance/';
+export const LOCAL_HOST_AMBULANCE_DATA = 'http://172.31.252.223:8081/api/ambulance/';
 export const GET_AMBULANCES = LOCAL_HOST_AMBULANCE_DATA + 'available-and-sorted';
 export const GET_MEILLEURE_AMBULANCE = LOCAL_HOST_AMBULANCE_DATA + 'meilleure';
 
-export const GET_PATIENTS = 'http://172.31.250.20:8081/api/patientA/all';
-export const GET_INTERVENTIONS = 'http://172.31.250.20:8081/interventions/recentes';
+export const GET_PATIENTS = 'http://172.31.252.223:8081/api/patientA/all';
+export const GET_INTERVENTIONS = 'http://172.31.252.223:8081/interventions/recentes';
 
 export default function Ambulance() {   
   const [ambulances, setAmbulances] = useState([]);
