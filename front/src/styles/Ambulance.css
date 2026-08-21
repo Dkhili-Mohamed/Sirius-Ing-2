@@ -1,0 +1,126 @@
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background-color: #ffffff;
+  color: #333333;
+}
+
+/* la page de connexion  */
+.container.text-center.mt-5 {
+  max-width: 420px;
+  margin: 60px auto;
+  padding: 35px 30px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-top: 4px solid #61dafb;
+}
+
+.container.text-center.mt-5 h4 {
+  color: #282c34;
+  font-weight: 600;
+  margin-bottom: 25px;
+}
+
+/* Les champs du formulaire de connection */
+.form-group input {
+  width: 100%;
+  max-width: 320px;
+  margin: 0 auto;
+  border-radius: 6px;
+  border: 1px solid #b8c0cc;
+  background-color: #ffffff;
+  color: #222222;
+  font-size: 15px;
+  padding: 11px 13px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: #9aa2af;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #61dafb;
+  box-shadow: 0 0 0 3px rgba(97, 218, 251, 0.25);
+}
+
+/* Le message qui affiche l'ambulance la plus adaptée */
+.alert-success {
+  background-color: #eaf7fb;
+  border: 1px solid #61dafb;
+  color: #1a6b82;
+  border-radius: 8px;
+  font-size: 15px;
+  padding: 12px;
+}
+
+/* Les taableaux des ambulances et de l'historique des interventions */
+.table {
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  font-size: 14px;
+}
+
+.table thead {
+  background-color: #282c34;
+  color: #61dafb;
+}
+
+.table thead th {
+  text-align: center;
+  vertical-align: middle;
+  border: none;
+  padding: 10px;
+}
+
+.table tbody td,
+.table tbody th {
+  text-align: center;
+  vertical-align: middle;
+  padding: 8px;
+}
+
+.table tbody tr:hover {
+  background-color: #eaf7fb;
+}
+
+/* Zone historique scrollable */
+.row div[style*="overflow"] {
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+/* La carte */
+.leaflet-container {
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  margin-top: 10px;
+}
+
+/* L'espacement des sections */
+.row {
+  margin-bottom: 25px;
+}
+
+/* Les boutons */
+.btn-primary {
+  background-color: #61dafb;
+  border: none;
+  color: #282c34;
+  border-radius: 6px;
+  padding: 8px 24px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.btn-primary:hover {
+  background-color: #4fc3e8;
+  color: #282c34;
+}
