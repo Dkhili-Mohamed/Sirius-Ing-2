@@ -3,7 +3,8 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
-import redMarker from '../../../assets/red-marker.png';;
+import redMarker from '../../../assets/red-marker.png';
+import '../../../styles/Ambulance.css';
 
 
 const patientIcon = L.icon({
