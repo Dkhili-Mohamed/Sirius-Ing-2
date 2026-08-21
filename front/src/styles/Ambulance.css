@@ -68,6 +68,8 @@
   font-size: 14px;
 }
 .container .table thead th {
+  --bs-table-bg: #282c34;
+  --bs-table-color: #61dafb;
   background-color: #282c34 !important;
   color: #61dafb !important;
   text-align: center;
